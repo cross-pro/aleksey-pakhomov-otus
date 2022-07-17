@@ -1,4 +1,4 @@
-const sum = function (...args) {
+const { sum } = function(...args) {
     let counter = 0;
 
     const getSum = (...args) => {
@@ -10,10 +10,12 @@ const sum = function (...args) {
         return sumValue;
     }
 
-    return function (...args) {
-        if (args.length === 0)
-            return counter;
-        else
-            return getSum(...args);
+    return {
+        sum(...args) {
+            if (args.length === 0)
+                return counter;
+            else
+                return getSum(...args);
+        }
     }
 }()

@@ -1,16 +1,10 @@
 const sum = function() {
-    let counter
-    return function summator(argument) {
+    return function summator(argument, lastValue = 0) {
         if (!argument) {
-            let result = counter
-            counter = undefined //сбросывает для следующиего вызова
-            return result
+            return lastValue
         } else {
-            if (!counter)
-                counter = 0
-            counter += argument
             return (nextParam) => {
-                return summator(nextParam)
+                return summator(nextParam, lastValue + argument)
             }
         }
     }

@@ -1,21 +1,17 @@
-const { sum } = function(...args) {
-    let counter = 0;
-
-    const getSum = (...args) => {
-        let sumValue = 0;
-        for (i = 0; i < args.length; i++) {
-            sumValue = sumValue + args[i];
-        }
-        counter += sumValue;
-        return sumValue;
-    }
-
-    return {
-        sum(...args) {
-            if (args.length === 0)
-                return counter;
-            else
-                return getSum(...args);
+const sum = function() {
+    let counter
+    return function summator(argument) {
+        if (!argument) {
+            let result = counter
+            counter = undefined //сбросывает для следующиего вызова
+            return result
+        } else {
+            if (!counter)
+                counter = 0
+            counter += argument
+            return (nextParam) => {
+                return summator(nextParam)
+            }
         }
     }
 }()

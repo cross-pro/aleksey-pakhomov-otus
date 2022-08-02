@@ -10,7 +10,7 @@ function promiseReduce(asyncFunctions, reduce, initialValue) {
             return promise().then((memo) => reduce(memo, initialValue))
         }
 
-        return Promise.resolve(result)
+        return result
     }
     return wrapper()
 }

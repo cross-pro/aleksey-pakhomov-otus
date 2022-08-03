@@ -2,14 +2,14 @@ function promiseReduce(asyncFunctions, reduce, initialValue) {
     async function wrapper() {
         let result
 
-        while (asyncFunctions.length > 0) {
-            result = await runTask(asyncFunctions.shift(), initialValue);
+        async function runTask(promise, memo) {
+            return promise().then((value) => reduce(memo, value))
         }
 
-        async function runTask(promise, initialValue) {
-            return promise().then((memo) => reduce(memo, initialValue))
+        for (i = 0, memo = initialValue; i < asyncFunctions.length; i++) {
+            memo = await runTask(asyncFunctions[i], memo)
+            result = memo
         }
-
         return result
     }
     return wrapper()

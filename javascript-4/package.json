@@ -1,0 +1,16 @@
+{
+    "name": "javascript-4",
+    "version": "1.0.0",
+    "description": "directory viewer",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "vitest"
+    },
+    "author": "Aleksey.Pakhomov",
+    "license": "ISC",
+    "devDependencies": {
+        "c8": "^7.12.0",
+        "vitest": "^0.21.1"
+    }
+}

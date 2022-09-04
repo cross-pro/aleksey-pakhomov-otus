@@ -1,23 +1,25 @@
 import { promises } from "fs"
 
+const path = process.env.npm_config_path;
+
 let result = {
     files: [],
     folders: []
 }
 
-async function readDir(dir) {
+const readDir = async(dir) => {
     return await parseContent(dir, await getFolderContent(dir))
 }
 
-function concatPath(dir, path) {
+const concatPath = (dir, path) => {
     return dir + "/" + path
 }
 
-async function getFolderContent(dir) {
+const getFolderContent = async(dir) => {
     return promises.readdir(dir).then((filenames) => filenames)
 }
 
-async function parseContent(dir, content) {
+const parseContent = async(dir, content) => {
     for (let file of content) {
         let fsObject = concatPath(dir, file)
         let type = await getType(fsObject)
@@ -33,12 +35,12 @@ async function parseContent(dir, content) {
 }
 
 /* файл или директория */
-async function getType(fsObject) {
+const getType = async(fsObject) => {
     async function getFileStat(fsObject) {
         return promises.stat(fsObject)
     }
 
-    async function getFileType(fsObject) {
+    const getFileType = async(fsObject) => {
         let statistics = await getFileStat(fsObject)
 
         switch (statistics.mode) {
@@ -48,8 +50,18 @@ async function getType(fsObject) {
                 return "file"
         }
     }
-
     return getFileType(fsObject)
 }
 
-export { readDir }
+const tree = async() => {
+    if (path == undefined) {
+        console.error("Необходимо указать параметр --path")
+        return
+    }
+
+    console.debug("using path: ", path)
+    let result = await readDir(path)
+    console.log(result)
+}
+
+export { readDir, tree }

@@ -1,6 +1,6 @@
 import { promises } from "fs"
 
-const path = process.env.npm_config_path;
+const PATH = process.env.npm_config_path;
 
 let result = {
     files: [],
@@ -54,13 +54,13 @@ const getType = async(fsObject) => {
 }
 
 const tree = async() => {
-    if (path == undefined) {
+    if (PATH == undefined) {
         console.error("Необходимо указать параметр --path")
         return
     }
 
-    console.debug("using path: ", path)
-    let result = await readDir(path)
+    console.debug("using path: ", PATH)
+    let result = await readDir(PATH)
     console.log(result)
 }
 

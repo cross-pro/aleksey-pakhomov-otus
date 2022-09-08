@@ -1,4 +1,4 @@
-import { promises } from "fs"
+import { opendir } from 'fs/promises';
 
 const PATH = process.env.npm_config_path;
 
@@ -7,50 +7,28 @@ let result = {
     folders: []
 }
 
-const readDir = async(dir) => {
-    return await parseContent(dir, await getFolderContent(dir))
+const readDir = async(directory) => {
+    console.log(directory)
+    try {
+        const dir = await opendir(directory);
+        for await (const dirent of dir) {
+            let fsObject = concatPath(directory, dirent.name)
+
+            if (dirent.isDirectory()) {
+                result.folders.push(fsObject)
+                await readDir(fsObject)
+            } else if (dirent.isFile()) {
+                result.files.push(fsObject)
+            }
+        }
+        return result
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 const concatPath = (dir, path) => {
     return dir + "/" + path
-}
-
-const getFolderContent = async(dir) => {
-    return promises.readdir(dir).then((filenames) => filenames)
-}
-
-const parseContent = async(dir, content) => {
-    for (let file of content) {
-        let fsObject = concatPath(dir, file)
-        let type = await getType(fsObject)
-
-        if (type === "file") {
-            result.files.push(fsObject)
-        } else if (type === "folder") {
-            result.folders.push(fsObject)
-            await parseContent(fsObject, await getFolderContent(fsObject))
-        }
-    }
-    return result
-}
-
-/* файл или директория */
-const getType = async(fsObject) => {
-    async function getFileStat(fsObject) {
-        return promises.stat(fsObject)
-    }
-
-    const getFileType = async(fsObject) => {
-        let statistics = await getFileStat(fsObject)
-
-        switch (statistics.mode) {
-            case 16822:
-                return "folder"
-            case 33206:
-                return "file"
-        }
-    }
-    return getFileType(fsObject)
 }
 
 const tree = async() => {

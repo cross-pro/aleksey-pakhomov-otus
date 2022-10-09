@@ -1,0 +1,25 @@
+{
+    "name": "javascript-5",
+    "version": "1.0.0",
+    "description": "",
+    "main": "script.js",
+    "type": "module",
+    "scripts": {
+        "test": "vitest",
+        "start": "node --max-old-space-size=50 script.js",
+        "generate-data": "node generate-data.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cross-pro/aleksey-pakhomov-otus.git"
+    },
+    "author": "Aleksey Pakhomov",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/cross-pro/aleksey-pakhomov-otus/issues"
+    },
+    "homepage": "https://github.com/cross-pro/aleksey-pakhomov-otus#readme",
+    "devDependencies": {
+        "vitest": "^0.22.1"
+    }
+}

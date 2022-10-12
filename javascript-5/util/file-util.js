@@ -1,4 +1,4 @@
-import { createWriteStream, stat } from "fs"
+import { createWriteStream, existsSync, mkdirSync, stat } from "fs"
 import { generateNumberBetween } from "./random-util.js"
 
 export async function createRandomFile(fileName) {
@@ -7,6 +7,8 @@ export async function createRandomFile(fileName) {
     writeStream.on("finish", () => {
         getFileSize(fileName)
     })
+
+    
 
     console.log("generating random data to file: ", fileName, ". . .")
 
@@ -18,6 +20,8 @@ export async function createRandomFile(fileName) {
     }
 
     await generate()
+
+    createDir("test-data")
 
     console.log("generating completed!");
     console.log("file writing. . .")
@@ -31,4 +35,10 @@ export async function getFileSize(fileName) {
         console.log("file size: ", size, " bytes")
         return size
     })
+}
+
+function createDir(dir) {
+    if (!existsSync(dir)){
+        mkdirSync(dir);
+    }
 }

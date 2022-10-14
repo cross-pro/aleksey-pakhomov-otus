@@ -7,7 +7,7 @@
     "scripts": {
         "test": "vitest",
         "start": "node --max-old-space-size=50 script.js",
-        "generate-data": "node generate-data.js"
+        "generate-data": "node --max-old-space-size=50 generate-data.js"
     },
     "repository": {
         "type": "git",

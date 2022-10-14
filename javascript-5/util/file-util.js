@@ -1,29 +1,37 @@
-import { createWriteStream, existsSync, mkdirSync, stat } from "fs"
-import { generateNumberBetween } from "./random-util.js"
+import {existsSync, mkdirSync, stat} from "fs"
+import {generateNumberBetween} from "./random-util.js"
+
+import {once} from "events"
+
+import {WriteStream} from "fs"
 
 export async function createRandomFile(fileName) {
-    let writeStream = new createWriteStream(fileName)
+
+    let writeStream = WriteStream(fileName);
 
     writeStream.on("finish", () => {
         getFileSize(fileName)
     })
 
-    writeStream.on("data",(data)=>{
-        console.log("received: ",data)
+    writeStream.on("", chunk => {
+        console.log(`received: ${chunk}`)
     })
+
+    createDir("test-data")
 
     console.log("generating random data to file: ", fileName, ". . .")
 
-    const generate = async() => {
+    const generate = async () => {
         for (let i = 0; i < 7000000; i++) {
             let number = await generateNumberBetween(1, 999999999999999)
-            writeStream.write(number.toString() + "\n")
+            let canWrite = writeStream.write(number.toString() + "\n")
+
+            if (!canWrite)
+                await once(writeStream, 'drain');
         }
     }
 
     await generate()
-
-    createDir("test-data")
 
     console.log("generating completed!");
     console.log("file writing. . .")
@@ -31,16 +39,16 @@ export async function createRandomFile(fileName) {
     writeStream.end();
 }
 
-export async function getFileSize(fileName) {
+function getFileSize(fileName) {
     stat(fileName, (err, stats) => {
         let size = stats.size
-        console.log("file size: ", size, " bytes")
+        console.log(`${fileName}  ${size}: bytes`)
         return size
     })
 }
 
 function createDir(dir) {
-    if (!existsSync(dir)){
+    if (!existsSync(dir)) {
         mkdirSync(dir);
     }
 }

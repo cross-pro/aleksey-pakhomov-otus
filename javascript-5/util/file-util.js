@@ -8,7 +8,9 @@ export async function createRandomFile(fileName) {
         getFileSize(fileName)
     })
 
-    
+    writeStream.on("data",(data)=>{
+        console.log("received: ",data)
+    })
 
     console.log("generating random data to file: ", fileName, ". . .")
 

@@ -1,20 +1,13 @@
-import {existsSync, mkdirSync, stat} from "fs"
+import {existsSync, mkdirSync, stat, WriteStream} from "fs"
 import {generateNumberBetween} from "./random-util.js"
-
 import {once} from "events"
-
-import {WriteStream} from "fs"
 
 export async function createRandomFile(fileName) {
 
-    let writeStream = WriteStream(fileName);
+    let writeStream = new WriteStream(fileName);
 
     writeStream.on("finish", () => {
         getFileSize(fileName)
-    })
-
-    writeStream.on("", chunk => {
-        console.log(`received: ${chunk}`)
     })
 
     createDir("test-data")

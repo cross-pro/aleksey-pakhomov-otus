@@ -3,7 +3,6 @@ import {once} from "events";
 
 class LineTransformer extends Transform {
 
-
     constructor(opts) {
         super(opts)
     }
@@ -16,9 +15,7 @@ class LineTransformer extends Transform {
 
         this._lastLineData = lines.splice(lines.length - 1, 1)[0]
 
-        this.pause()
         lines.forEach(this.push.bind(this))
-        this.resume()
         done()
     }
 
@@ -27,20 +24,6 @@ class LineTransformer extends Transform {
         this._lastLineData = null
         done()
     }
-
-    _read(size) {
-        //console.log("readed:",size,"bytes")
-        //this.pause()
-        return super._read(size)
-
-    }
-
-   /* async write(data) {
-        let canWrite = super.write(data.toString())
-        if (!canWrite) {
-            await once(this, "drain")
-        }
-    }*/
 }
 
 export {LineTransformer}

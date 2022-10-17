@@ -1,6 +1,7 @@
 import {existsSync, mkdirSync, stat, WriteStream} from "fs"
 import {generateNumberBetween} from "./random-util.js"
 import {once} from "events"
+import {writeLine} from "./write-util.js"
 
 export async function createRandomFile(fileName) {
 
@@ -17,10 +18,10 @@ export async function createRandomFile(fileName) {
     const generate = async () => {
         for (let i = 0; i < 7000000; i++) {
             let number = await generateNumberBetween(1, 999999999999999)
-            let canWrite = writeStream.write(number.toString() + "\n")
 
-            if (!canWrite)
-                await once(writeStream, 'drain');
+            await writeLine(writeStream, number.toString())
+            //let canWrite = writeStream.write(number.toString())
+
         }
     }
 

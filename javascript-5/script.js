@@ -7,7 +7,7 @@ import {EventEmitter} from "events"
 
 const dataFileName = "./test-data/random-file.txt"
 const resultFileName = "./test-data/result-file.txt"
-const filesCount = 5
+const filesCount = 35
 const writers = []
 let current = 0
 const files = []

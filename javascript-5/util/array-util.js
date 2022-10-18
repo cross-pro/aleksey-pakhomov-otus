@@ -41,7 +41,14 @@ const getMinimal = (arr) => {
     if (arr.length===1)
         return arr[0]
 
-    return Math.min(...arr)
+    let len = arr.length
+    let min = arr[0]
+
+    while (len--) {
+        min = arr[len] < min ? arr[len] : min
+    }
+    return min
+
 }
 
 const removeElement = (arr, element) =>{

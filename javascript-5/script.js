@@ -136,7 +136,7 @@ function sortFile(fileName) {
 
 async function mergeFiles() {
     console.log("===============================")
-    console.log("Старт слияния файлов")
+    console.log("Слияние файлов")
 
     let numberFiles = filesCount
     let liners = []
@@ -167,59 +167,65 @@ async function mergeFiles() {
         reader.pipe(liner)
     }
 
+    resultFile.on("finish", () => {
+        console.log(`Итоговый файл записан`)
+    })
+
     mergeEmitter.on("write-array", () => {
-        console.log("===========================")
         processArray()
     })
 
     mergeEmitter.on("write-to-file", (value) => {
-        console.log("write-to-file:", value)
-        resultFile.write(value + "\n")
-        processArray()
+        writeLine(resultFile,value)
+            .then(()=>{
+                if (liners.length > 0) {
+                    mergeEmitter.emit("wake-up-liners")
+                } else {
+                    mergeEmitter.emit("write-array")
+                }
+            })
     })
 
 
     mergeEmitter.on("wake-up-liners", () => {
-        for (let liner of liners) {
-            liner.resume()
-        }
+        if (liners.length === 0)
+            mergeEmitter.emit("write-array")
+        else
+            for (let liner of liners) {
+                liner.resume()
+            }
     })
 
     function processArray() {
-        let minValue = getMinimal(arrayStream)
-        console.log("minimal:", minValue, arrayStream)
-
-        if (minValue === null) {
-            mergeEmitter.emit("wake-up-liners")
-        } else {
-            removeElement(arrayStream, minValue)
-            mergeEmitter.emit("write-to-file", minValue)
+        if (arrayStream.length === 0) {
+            resultFile.end()
+            return
         }
 
-    }
+        let minValue = getMinimal(arrayStream)
+        //console.log("В памяти находится", arrayStream.length,"элементов")
 
+        removeElement(arrayStream, minValue)
+        mergeEmitter.emit("write-to-file", minValue)
+    }
 
     for (let liner of liners) {
         liner.on("end", () => {
-            console.log("liner end")
             numberFiles--
             removeElement(liners, liner)
+            if (liners.length === 0)
+                mergeEmitter.emit("write-array")
         })
     }
 
-    function readOneFromAllFiles() {
+    ;(() => {
         for (let liner of liners)
             liner.on("data", (data) => {
-                console.log(data)
                 arrayStream.push(Number(data))
                 liner.pause()
                 incLiner()
             })
-    }
-
-    readOneFromAllFiles()
-
-
+    })()
 }
 
 run()

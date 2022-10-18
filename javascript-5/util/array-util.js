@@ -34,4 +34,27 @@ const mergeSort = (arr) => {
 
 }
 
-export {mergeSort}
+const getMinimal = (arr) => {
+    if (arr===undefined || arr.length===0)
+        return null
+
+    if (arr.length===1)
+        return arr[0]
+
+    return Math.min(...arr)
+}
+
+const removeElement = (arr, element) =>{
+
+    if (arr.length===1 && arr[0] == element) {
+        arr.shift()
+    }
+
+    const index = arr.indexOf(element)
+    if (index > -1) {
+        arr.splice(index, 1);
+    }
+
+}
+
+export {mergeSort, getMinimal, removeElement}

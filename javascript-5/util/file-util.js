@@ -16,12 +16,10 @@ export async function createRandomFile(fileName) {
     console.log("generating random data to file: ", fileName, ". . .")
 
     const generate = async () => {
-        for (let i = 0; i < 7000000; i++) {
-            let number = await generateNumberBetween(1, 999999999999999)
+        for (let i = 0; i < 100; i++) {
+            let number = await generateNumberBetween(1, 10000)
 
             await writeLine(writeStream, number.toString())
-            //let canWrite = writeStream.write(number.toString())
-
         }
     }
 

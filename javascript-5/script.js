@@ -1,12 +1,13 @@
 import {ReadStream, createWriteStream} from "fs"
 import {LineTransformer} from "./stream/line-transformer.js"
 import {writeLine} from "./util/write-util.js";
-import {mergeSort} from "./util/array-util.js";
+import {mergeSort, removeElement, getMinimal} from "./util/array-util.js";
 import {EventEmitter} from "events"
 
 
-const testFileName = "./test-data/random-file.txt"
-const filesCount = 35
+const dataFileName = "./test-data/random-file.txt"
+const resultFileName = "./test-data/result-file.txt"
+const filesCount = 5
 const writers = []
 let current = 0
 const files = []
@@ -41,7 +42,7 @@ const prepareCommands = () => {
         }
     })
 
-    signal.on("merge-files",()=> mergeFiles())
+    signal.on("merge-files", () => mergeFiles())
 }
 
 const createFiles = async () => {
@@ -58,7 +59,7 @@ const createFiles = async () => {
 
 const separateFile = () => {
 
-    let readStream = new ReadStream(testFileName, {highWaterMark: 1024})
+    let readStream = new ReadStream(dataFileName, {highWaterMark: 1024})
     let liner = new LineTransformer({objectMode: true})
 
     readStream.pipe(liner)
@@ -84,11 +85,8 @@ const separateFile = () => {
 
 
 function run() {
-
     prepareCommands()
     signal.emit("start")
-
-
 }
 
 async function changeWriter() {
@@ -136,9 +134,92 @@ function sortFile(fileName) {
     })
 }
 
-function mergeFiles() {
+async function mergeFiles() {
     console.log("===============================")
     console.log("Старт слияния файлов")
+
+    let numberFiles = filesCount
+    let liners = []
+    let arrayStream = []
+    let resultFile = createWriteStream(resultFileName)
+
+    let mergeEmitter = new EventEmitter()
+
+    let currentLiner = 0
+
+    const resetLiner = () => {
+        currentLiner = 0
+    }
+
+    const incLiner = () => {
+        currentLiner++
+
+        if (currentLiner === numberFiles) {
+            resetLiner()
+            mergeEmitter.emit("write-array")
+        }
+    }
+
+    for (let file of files) {
+        let reader = new ReadStream(file, {highWaterMark: 1024})
+        let liner = new LineTransformer({objectMode: true, highWaterMark: 1024})
+        liners.push(liner)
+        reader.pipe(liner)
+    }
+
+    mergeEmitter.on("write-array", () => {
+        console.log("===========================")
+        processArray()
+    })
+
+    mergeEmitter.on("write-to-file", (value) => {
+        console.log("write-to-file:", value)
+        resultFile.write(value + "\n")
+        processArray()
+    })
+
+
+    mergeEmitter.on("wake-up-liners", () => {
+        for (let liner of liners) {
+            liner.resume()
+        }
+    })
+
+    function processArray() {
+        let minValue = getMinimal(arrayStream)
+        console.log("minimal:", minValue, arrayStream)
+
+        if (minValue === null) {
+            mergeEmitter.emit("wake-up-liners")
+        } else {
+            removeElement(arrayStream, minValue)
+            mergeEmitter.emit("write-to-file", minValue)
+        }
+
+    }
+
+
+    for (let liner of liners) {
+        liner.on("end", () => {
+            console.log("liner end")
+            numberFiles--
+            removeElement(liners, liner)
+        })
+    }
+
+    function readOneFromAllFiles() {
+        for (let liner of liners)
+            liner.on("data", (data) => {
+                console.log(data)
+                arrayStream.push(Number(data))
+                liner.pause()
+                incLiner()
+            })
+    }
+
+    readOneFromAllFiles()
+
+
 }
 
 run()

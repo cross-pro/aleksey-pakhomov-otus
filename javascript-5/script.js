@@ -1,7 +1,7 @@
 import {ReadStream, createWriteStream} from "fs"
 import {LineTransformer} from "./stream/line-transformer.js"
 import {writeLine} from "./util/write-util.js";
-import {mergeSort, removeElement, getMinimal} from "./util/array-util.js";
+import {mergeSort, removeElement} from "./util/array-util.js";
 import {EventEmitter} from "events"
 
 
@@ -129,38 +129,63 @@ function sortFile(fileName) {
         for (let n of arr) {
             fileWriter.write(n + "\n")
         }
-
+        arr = []
         fileWriter.end()
     })
+}
+
+
+/*Слияние файлов*/
+let completed = false
+let liners = []
+let currentArray = []
+let currentLiner
+let minimum = Infinity
+let object
+let resultFile = createWriteStream(resultFileName)
+let mergeEmitter = new EventEmitter()
+
+mergeEmitter.on("parse-data", () => {
+    parseData()
+})
+
+mergeEmitter.on("remove-element", (element) => {
+    currentArray = removeElement(currentArray, element)
+})
+
+mergeEmitter.on("write-element", (number) => {
+    writeLine(resultFile, number)
+        .then(() => currentLiner.resume())
+})
+
+function parseData() {
+    console.log(currentArray.length)
+    if (currentArray.length === 0 && completed) {
+        resultFile.end()
+        return
+    }
+
+    if (currentArray.length < liners.length) {
+        return
+    } else {
+        minimum = Infinity
+
+        for (let p of currentArray) {
+            if (p.data < minimum) {
+                minimum = p.data
+                object = p
+                currentLiner = p.liner
+            }
+        }
+
+        mergeEmitter.emit("remove-element", object)
+        mergeEmitter.emit("write-element", minimum)
+    }
 }
 
 async function mergeFiles() {
     console.log("===============================")
     console.log("Слияние файлов")
-
-    let isActive = false
-    let numberFiles = filesCount
-    let liners = []
-    let arrayStream = []
-    let currentArray = []
-    let resultFile = createWriteStream(resultFileName)
-
-    let mergeEmitter = new EventEmitter()
-
-    let currentLiner = 0
-
-    const resetLiner = () => {
-        currentLiner = 0
-    }
-
-    const incLiner = () => {
-        currentLiner++
-
-        if (currentLiner === numberFiles) {
-            resetLiner()
-            mergeEmitter.emit("write-array")
-        }
-    }
 
     for (let file of files) {
         let reader = new ReadStream(file, {highWaterMark: 1024})
@@ -173,85 +198,27 @@ async function mergeFiles() {
         console.log(`Итоговый файл записан`)
     })
 
-    mergeEmitter.on("write-array", () => {
-        processArray()
-    })
-
-    mergeEmitter.on("wake-up-liners", () => {
-        if (liners.length === 0)
-            mergeEmitter.emit("write-array")
-        else
-            for (let liner of liners) {
-                try {
-                    liner.resume()
-                } catch (e) {
-                    console.error(e)
-                }
-            }
-    })
-
-    async function processArray() {
-        isActive = true
-        let minValue
-        if (currentArray.length == 0 && arrayStream.length === 0) {
-            resultFile.end()
-            return
-        }
-
-        console.log("==============================\n")
-        console.log("current: ", currentArray, "general:", arrayStream)
-
-        if (currentArray.length === 0) {
-            minValue = arrayStream[arrayStream.length - 1]
-        } else {
-            /*минимальное значение для текущей итерации*/
-            minValue = getMinimal(currentArray)
-
-            arrayStream = arrayStream.concat(currentArray)
-            currentArray = []
-            arrayStream = mergeSort(arrayStream)
-            console.log("sorted:", arrayStream)
-
-            console.log("В памяти находится", arrayStream.length, "элементов, min:", minValue)
-        }
-
-
-        w().then(() => console.log("end w()"))
-            .then(()=>isActive = false)
-            .then(() => mergeEmitter.emit("wake-up-liners"))
-
-        async function w() {
-            for (let i = 0; i < arrayStream.length; i++) {
-                let n = arrayStream[i]
-                if (n <= minValue)
-                    writeLine(resultFile, n)
-                        .then(() => console.log("write:", n))
-                        .then(() => removeElement(arrayStream, n))
-                else {
-                    return
-                }
-            }
-        }
-    }
-
     for (let liner of liners) {
         liner.on("end", () => {
-            numberFiles--
             removeElement(liners, liner)
-            console.log("liner end, count:", liners.length)
 
-            if (liners.length === 0 || isActive === false) {
-                mergeEmitter.emit("write-array")
+            if (liners.length === 0) {
+                completed = true
+                return
             }
+            mergeEmitter.emit("parse-data")
         })
     }
+
+
+
 
     ;(() => {
         for (let liner of liners)
             liner.on("data", (data) => {
-                currentArray.push(Number(data))
+                currentArray.push({"liner": liner, "data": Number(data)})
                 liner.pause()
-                incLiner()
+                mergeEmitter.emit("parse-data")
             })
     })()
 }

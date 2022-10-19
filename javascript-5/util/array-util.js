@@ -60,6 +60,7 @@ const removeElement = (arr, element) =>{
     if (index > -1) {
         arr.splice(index, 1);
     }
+    return arr
 }
 
 export {mergeSort, getMinimal, removeElement, merge}

@@ -17,7 +17,6 @@ const merge = (left, right) => {
     ]
 }
 
-
 const mergeSort = (arr) => {
     if (arr === undefined || arr === null || arr.length === 0)
         return null;
@@ -61,7 +60,6 @@ const removeElement = (arr, element) =>{
     if (index > -1) {
         arr.splice(index, 1);
     }
-
 }
 
-export {mergeSort, getMinimal, removeElement}
+export {mergeSort, getMinimal, removeElement, merge}

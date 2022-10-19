@@ -138,9 +138,11 @@ async function mergeFiles() {
     console.log("===============================")
     console.log("Слияние файлов")
 
+    let isActive = false
     let numberFiles = filesCount
     let liners = []
     let arrayStream = []
+    let currentArray = []
     let resultFile = createWriteStream(resultFileName)
 
     let mergeEmitter = new EventEmitter()
@@ -175,53 +177,79 @@ async function mergeFiles() {
         processArray()
     })
 
-    mergeEmitter.on("write-to-file", (value) => {
-        writeLine(resultFile,value)
-            .then(()=>{
-                if (liners.length > 0) {
-                    mergeEmitter.emit("wake-up-liners")
-                } else {
-                    mergeEmitter.emit("write-array")
-                }
-            })
-    })
-
-
     mergeEmitter.on("wake-up-liners", () => {
         if (liners.length === 0)
             mergeEmitter.emit("write-array")
         else
             for (let liner of liners) {
-                liner.resume()
+                try {
+                    liner.resume()
+                } catch (e) {
+                    console.error(e)
+                }
             }
     })
 
-    function processArray() {
-        if (arrayStream.length === 0) {
+    async function processArray() {
+        isActive = true
+        let minValue
+        if (currentArray.length == 0 && arrayStream.length === 0) {
             resultFile.end()
             return
         }
 
-        let minValue = getMinimal(arrayStream)
-        //console.log("В памяти находится", arrayStream.length,"элементов")
+        console.log("==============================\n")
+        console.log("current: ", currentArray, "general:", arrayStream)
 
-        removeElement(arrayStream, minValue)
-        mergeEmitter.emit("write-to-file", minValue)
+        if (currentArray.length === 0) {
+            minValue = arrayStream[arrayStream.length - 1]
+        } else {
+            /*минимальное значение для текущей итерации*/
+            minValue = getMinimal(currentArray)
+
+            arrayStream = arrayStream.concat(currentArray)
+            currentArray = []
+            arrayStream = mergeSort(arrayStream)
+            console.log("sorted:", arrayStream)
+
+            console.log("В памяти находится", arrayStream.length, "элементов, min:", minValue)
+        }
+
+
+        w().then(() => console.log("end w()"))
+            .then(()=>isActive = false)
+            .then(() => mergeEmitter.emit("wake-up-liners"))
+
+        async function w() {
+            for (let i = 0; i < arrayStream.length; i++) {
+                let n = arrayStream[i]
+                if (n <= minValue)
+                    writeLine(resultFile, n)
+                        .then(() => console.log("write:", n))
+                        .then(() => removeElement(arrayStream, n))
+                else {
+                    return
+                }
+            }
+        }
     }
 
     for (let liner of liners) {
         liner.on("end", () => {
             numberFiles--
             removeElement(liners, liner)
-            if (liners.length === 0)
+            console.log("liner end, count:", liners.length)
+
+            if (liners.length === 0 || isActive === false) {
                 mergeEmitter.emit("write-array")
+            }
         })
     }
 
     ;(() => {
         for (let liner of liners)
             liner.on("data", (data) => {
-                arrayStream.push(Number(data))
+                currentArray.push(Number(data))
                 liner.pause()
                 incLiner()
             })

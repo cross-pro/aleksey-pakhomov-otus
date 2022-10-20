@@ -1,4 +1,4 @@
-import {once} from "events";
+import {once} from "events"
 
 export async function writeLine(writer, data) {
     try {

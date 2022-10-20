@@ -4,15 +4,17 @@ import {writeLine} from "./util/write-util.js";
 import {mergeSort, removeElement} from "./util/array-util.js";
 import {EventEmitter} from "events"
 
-
-const dataFileName = "./test-data/random-file.txt"
-const resultFileName = "./test-data/result-file.txt"
-const filesCount = 35
+const filePath = "./"
+const dataFileName = `${filePath}test-data/random-file.txt`
+const resultFileName = `${filePath}test-data/result-file.txt`
+const filesCount = 10
 const writers = []
 let current = 0
 const files = []
 let signal = new EventEmitter()
 let fileIndex = 0;
+let arr = []
+
 
 const incrementIndex = () => {
     fileIndex++
@@ -22,42 +24,34 @@ const resetIndex = () => {
     fileIndex = 0
 }
 
-const prepareCommands = () => {
+signal.on("start", () => createFiles())
 
-    signal.on("start", () => createFiles())
-
-    signal.on("separate-file", () => separateFile())
-
-    signal.on("sort-files", () => sortFiles())
-
-    signal.on("next-file", (fileName) => {
-        if (fileName === undefined) {
-            console.log("===============================")
-            console.log("Все файлы отсортированы")
-            resetIndex()
-            signal.emit("merge-files")
-        } else {
-            sortFile(fileName)
+async function doNextFile(fileName) {
+    if (fileName === undefined) {
+        console.log("===============================")
+        console.log("Все файлы отсортированы")
+        resetIndex()
+        await mergeFiles()
+    } else {
+        sortFile(fileName).then(() => {
             incrementIndex()
-        }
-    })
-
-    signal.on("merge-files", () => mergeFiles())
+        })
+    }
 }
 
 const createFiles = async () => {
     for (let i = 1; i <= filesCount; i++) {
-        let fileName = `./test-data/${i}.txt`
+        let fileName = `${filePath}test-data/${i}.txt`
         writers.push(createWriteStream(fileName))
         files.push(fileName)
         console.log("===============================")
         console.log(`Создан файл ${fileName}`)
     }
 
-    signal.emit("separate-file")
+    await separateFile()
 }
 
-const separateFile = () => {
+const separateFile = async () => {
 
     let readStream = new ReadStream(dataFileName, {highWaterMark: 1024})
     let liner = new LineTransformer({objectMode: true})
@@ -79,15 +73,10 @@ const separateFile = () => {
             w.end()
         }
 
-        signal.emit("sort-files")
+        sortFiles()
     })
 }
 
-
-function run() {
-    prepareCommands()
-    signal.emit("start")
-}
 
 async function changeWriter() {
     if (current === filesCount - 1)
@@ -96,19 +85,19 @@ async function changeWriter() {
         current++
 }
 
-function sortFiles() {
+async function sortFiles() {
     console.log("===============================")
     console.log("Начало сортировки файлов")
     resetIndex()
 
-    signal.emit("next-file", files[fileIndex])
+    await doNextFile(files[fileIndex])
+
 }
 
-function sortFile(fileName) {
+async function sortFile(fileName) {
     console.log("===============================")
     console.log(`Сортировка файла: ${fileName} `)
     let reader = new ReadStream(fileName, {highWaterMark: 1024})
-    let arr = []
 
     let liner = new LineTransformer({objectMode: true, highWaterMark: 1024})
 
@@ -124,63 +113,107 @@ function sortFile(fileName) {
         console.log(`файл ${fileName} отсортирован`)
         let fileWriter = createWriteStream(fileName)
 
-        fileWriter.on("close", () => signal.emit("next-file", files[fileIndex]))
+        fileWriter.on("close", () => {
+            arr = []
+            doNextFile(files[fileIndex])
+        })
 
-        for (let n of arr) {
-            fileWriter.write(n + "\n")
-        }
-        arr = []
-        fileWriter.end()
+        writeArrayToFile(fileWriter).then(() => {
+            fileWriter.end()
+        })
     })
 }
 
+async function writeArrayToFile(fileWriter) {
+    console.log("Запись на диск")
+    let element
+    while ((element = arr.shift()) != undefined) {
+        await writeLine(fileWriter, element)
+    }
+}
 
 /*Слияние файлов*/
 let completed = false
 let liners = []
 let currentArray = []
-let currentLiner
 let minimum = Infinity
-let object
 let resultFile = createWriteStream(resultFileName)
 let mergeEmitter = new EventEmitter()
+let number = 0
+let linerCount = filesCount
 
 mergeEmitter.on("parse-data", () => {
     parseData()
 })
 
-mergeEmitter.on("remove-element", (element) => {
-    currentArray = removeElement(currentArray, element)
+mergeEmitter.on("write-element", (minimum) => {
+    writeLine(resultFile, minimum)
+        .then(() => removeWritedElement(number))
+        .then(() => {
+            //console.log("continue liner:", number, "liners length:", liners.length)
+            if (liners[number] != undefined)
+                liners[number].resume()
+        })
 })
 
-mergeEmitter.on("write-element", (number) => {
-    writeLine(resultFile, number)
-        .then(() => currentLiner.resume())
-})
+async function writeElement(minimum) {
+    //console.log('write: ', minimum)
+    writeLine(resultFile, minimum)
+        .then(() => removeWritedElement(number))
+        .then(() => {
+            //console.log("continue liner:", number, "liners length:", liners.length)
+            if (liners[number] != undefined)
+                liners[number].resume()
+            else
+            //mergeEmitter.emit("parse-data")
+                parseData()
+        })
+}
+
+function removeWritedElement(index) {
+    for (let i = 0; i < currentArray.length; i++) {
+        if (currentArray[i].index == index) {
+            currentArray.splice(i, 1)
+            return
+        }
+    }
+}
 
 function parseData() {
-    console.log(currentArray.length)
-    if (currentArray.length === 0 && completed) {
+   // console.log("array length:", currentArray.length)
+
+    if (completed) {
+        console.log("completed")
+        liners = []
         resultFile.end()
         return
     }
 
-    if (currentArray.length < liners.length) {
+    if (currentArray.length < linerCount) {
+        console.log("Еще набрать")
         return
     } else {
         minimum = Infinity
 
         for (let p of currentArray) {
-            if (p.data < minimum) {
-                minimum = p.data
-                object = p
-                currentLiner = p.liner
+            //console.log("P:", p)
+            if (Number(p.data) < minimum) {
+                minimum = Number(p.data)
+                number = Number(p.index)
             }
         }
-
-        mergeEmitter.emit("remove-element", object)
-        mergeEmitter.emit("write-element", minimum)
+        //mergeEmitter.emit("write-element", minimum)
+        writeElement(minimum)
     }
+}
+
+function isUsedArray(array) {
+    let result = false
+    for (let p of array) {
+        if (p !== undefined)
+            result = true
+    }
+    return result
 }
 
 async function mergeFiles() {
@@ -198,29 +231,46 @@ async function mergeFiles() {
         console.log(`Итоговый файл записан`)
     })
 
-    for (let liner of liners) {
-        liner.on("end", () => {
-            removeElement(liners, liner)
+    for (let i = 0; i < liners.length; i++) {
+        liners[i].on("end", () => {
+            liners[i] = undefined
 
-            if (liners.length === 0) {
+            //console.log("liner end!!!!!!!!!!!!!!! linersCount:", linerCount)
+            linerCount--
+            if (!isUsedArray(liners)) {
+                console.log("completed=true")
                 completed = true
-                return
             }
-            mergeEmitter.emit("parse-data")
+            //mergeEmitter.emit("parse-data")
+            parseData()
+        })
+    }
+
+    for (let i = 0; i < liners.length; i++) {
+        liners[i].on("data", (data) => {
+            currentArray.push({"index": i, "data": data})
+            let liner = liners[i]
+
+            if (liner !== undefined)
+                liner.pause()
+
+            parseData()
         })
     }
 
 
-
-
-    ;(() => {
-        for (let liner of liners)
-            liner.on("data", (data) => {
-                currentArray.push({"liner": liner, "data": Number(data)})
-                liner.pause()
-                mergeEmitter.emit("parse-data")
-            })
-    })()
 }
 
-run()
+//signal.emit("start")
+
+for (let i = 1; i <= filesCount; i++) {
+    let fileName = `${filePath}test-data/${i}.txt`
+    files.push(fileName)
+}
+
+mergeFiles()
+
+
+
+
+export {filePath}

@@ -1,0 +1,12 @@
+{
+  "name": "javascript-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "vitest"
+  },
+  "author": "",
+  "license": "ISC"
+}

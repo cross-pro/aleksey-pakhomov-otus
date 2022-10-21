@@ -15,7 +15,6 @@ let signal = new EventEmitter()
 let fileIndex = 0;
 let arr = []
 
-
 const incrementIndex = () => {
     fileIndex++
 }
@@ -76,7 +75,6 @@ const separateFile = async () => {
         sortFiles()
     })
 }
-
 
 async function changeWriter() {
     if (current === filesCount - 1)
@@ -204,7 +202,7 @@ function isUsedArray(array) {
 }
 
 async function mergeFiles() {
-    /*на случай если события data генерировать уже некому, но в массиве остались назаписанные данные*/
+    /*на случай если события data генерировать уже некому, но в массиве остались незаписанные данные*/
     let data = setInterval(() => {
             if (isActive === false) {
                 if (currentArray.length === 0) {

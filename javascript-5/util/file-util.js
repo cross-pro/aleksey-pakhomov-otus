@@ -16,8 +16,8 @@ export async function createRandomFile(fileName) {
     console.log("generating random data to file: ", fileName, ". . .")
 
     const generate = async () => {
-        for (let i = 0; i < 1000000; i++) {
-            let number = await generateNumberBetween(1, 10000)
+        for (let i = 0; i < 7000000; i++) {
+            let number = await generateNumberBetween(1, 999999999999999)
             await writeLine(writeStream, number.toString())
         }
     }
@@ -43,3 +43,4 @@ function createDir(dir) {
         mkdirSync(dir);
     }
 }
+

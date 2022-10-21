@@ -1,14 +1,13 @@
 import {ReadStream, createWriteStream} from "fs"
 import {LineTransformer} from "./stream/line-transformer.js"
 import {writeLine} from "./util/write-util.js";
-import {mergeSort, removeElement} from "./util/array-util.js";
+import {mergeSort} from "./util/array-util.js";
 import {EventEmitter, once} from "events"
-import {nextTick} from "process"
 
 const filePath = "./"
 const dataFileName = `${filePath}test-data/random-file.txt`
 const resultFileName = `${filePath}test-data/result-file.txt`
-const filesCount = 2
+const filesCount = 10
 const writers = []
 let current = 0
 const files = []
@@ -142,22 +141,10 @@ let resultFile = createWriteStream(resultFileName)
 let number = 0
 let linerCount = filesCount
 let isActive = false
-let mergeEmitter = new EventEmitter()
-
-mergeEmitter.on("complete", () => {
-    console.log("merge emitter complete")
-})
 
 async function writeElement(minimum) {
     console.log('write: ', minimum, "from line", number)
     await writeLine(resultFile, minimum)
-    /*.then(() => removeWritedElement(number))
-    .then(() => {
-        if (liners[number] != undefined)
-            liners[number].resume()
-        else
-            parseData()
-    })*/
 }
 
 function removeWritedElement(index) {
@@ -175,12 +162,6 @@ async function parseData() {
     isActive = true
     console.log("start parseData(), array length:", currentArray.length)
 
-    /*if (currentArray.length === 0) {
-        liners = []
-        console.log("write closed")
-        //resultFile.end()
-    }*/
-
     if (currentArray.length < linerCount) {
         console.log("Еще набрать")
         return
@@ -195,41 +176,21 @@ async function parseData() {
             }
         }
 
-        if (minimum===Infinity) {
-            liners = []
-            console.log("write closed")
-            return
-            //resultFile.end()
-        }
-
-
         writeElement(minimum)
             .then(() => removeWritedElement(number))
 
             .then(() => {
-                console.log("then try resume")
                 if (liners[number] != undefined)
                     liners[number].resume()
-                else {
-                    console.log("line", number, " закончился после записи")
-                    //parseData()
-                }
             })
             .then(() => {
                 if (completed && currentArray.length > 0)
                     console.log('Осталось', currentArray)
             })
             .then(() => {
+                console.log("set active to false")
                 isActive = false
-                mergeEmitter.emit("complete")
             })
-           /* .then(() => {
-                if (currentArray.length === 0) {
-                    liners = []
-                    console.log("write closed")
-                    //resultFile.end()
-                }
-            })*/
     }
 }
 
@@ -243,6 +204,22 @@ function isUsedArray(array) {
 }
 
 async function mergeFiles() {
+    /*на случай если события data генерировать уже некому, но в массиве остались назаписанные данные*/
+    let data = setInterval(() => {
+            if (isActive === false) {
+                if (currentArray.length === 0) {
+                    clearInterval(data)
+                    resultFile.close()
+                } else {
+                    parseData()
+                }
+            } else {
+                console.log("set interval задача активна")
+            }
+
+        }, 500
+    )
+
     console.log("===============================")
     console.log("Слияние файлов")
 
@@ -264,17 +241,17 @@ async function mergeFiles() {
             console.log(`liner ${i} end!!!!!!!!!!!!!!! linersCount: ${linerCount}`)
 
             if (!isUsedArray(liners)) {
-                console.log("completed=true")
+                console.log("Чтение из всех потоков завершено")
                 completed = true
             }
 
-            tryParse()
+            if (!isActive) {
+                console.log("liner", i, "закончился запускаю парсинг (НЕТ)")
+                //nextTick(() => parseData())
 
-            /*if (linerCount ===0 && currentArray.length>0) {
-                parseData()
-            }*/
-            //parseData
-
+            } else {
+                console.log("liner", i, "закончился но парсинг происходит")
+            }
         })
     }
 
@@ -294,18 +271,6 @@ async function mergeFiles() {
 
 }
 
-async function tryParse() {
-    /*if (isActive) {
-        console.log("Ожидание прожолжения")
-        await once(mergeEmitter, "complete")
-    }*/
-    nextTick(()=>{parseData()})
-
-    /*setImmediate(()=>{
-
-    })*/
-
-}
 
 signal.emit("start")
 

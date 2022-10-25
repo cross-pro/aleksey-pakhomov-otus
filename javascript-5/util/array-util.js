@@ -51,11 +51,6 @@ const getMinimal = (arr) => {
 }
 
 const removeElement = (arr, element) =>{
-
-    if (arr.length===1 && arr[0] == element) {
-        arr.shift()
-    }
-
     const index = arr.indexOf(element)
     if (index > -1) {
         arr.splice(index, 1);

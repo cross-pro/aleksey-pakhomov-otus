@@ -42,6 +42,20 @@ test("test getPath for id with puppeteer", async()=>{
     console.log("actual:", actual)
     expect(actual).toBe(expected)
 
+})
+
+test("test first element", async ()=>{
+    const expected = "#header > p"
+
+    const file = await readFile("./test-data/index.html", {encoding: "utf-8"})
+    const jsDom = new JSDOM(file, {runScripts: "dangerously"})
+
+    const element = await jsDom.window.document.querySelector(expected)
+    console.log(element.tagName)
+
+    const actual = await getPath(element)
+
+    expect(actual).toBe(expected)
 
 
 })

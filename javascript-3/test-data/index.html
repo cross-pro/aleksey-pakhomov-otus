@@ -23,14 +23,18 @@
             unique selector
         </p>
         <p class="line">
-            <input type="button" id="btn" value="Click me"/>
+            <input type="button" id="btn" value="0"/>
         </p>
         <p class="line">
             test
         </p>
-
     </div>
 </div>
-
+<script>
+    const button = document.getElementById("btn")
+    button.addEventListener("click", () => {
+        button.value = parseInt(button.value) + 1
+    })
+</script>
 </body>
 </html>

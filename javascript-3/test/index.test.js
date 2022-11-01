@@ -1,9 +1,7 @@
 import {test, expect} from "vitest"
 import {getPath} from "../index.js"
-import {launch} from "puppeteer"
 import {readFile} from "fs/promises"
 import {JSDOM} from "jsdom"
-
 
 test("test load", async () => {
 
@@ -17,9 +15,8 @@ test("test load", async () => {
     const button = jsDom.window.document.getElementById("btn")
     console.log(button.value)
 
-    expect(button.value).toBe("Click me")
+    expect(button.value).toBe("0")
     button.click()
-    expect(button.value).toBe("Click me")
+    expect(button.value).toBe("1")
 
 })
-

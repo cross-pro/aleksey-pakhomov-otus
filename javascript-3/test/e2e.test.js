@@ -3,6 +3,8 @@ import puppeteer from "puppeteer"
 import http from "http"
 import {readFile} from "fs/promises"
 
+/*просто для примера использования :-)*/
+
 async function startServer() {
 
     const html = await readFile("./test-data/index.html", {encoding:"utf-8"})
@@ -36,5 +38,6 @@ test("test e2e", async ()=>{
     expect(text).toBe("1")
 
     await browser.close()
-
 })
+
+

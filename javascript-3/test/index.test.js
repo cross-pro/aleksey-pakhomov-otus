@@ -3,8 +3,8 @@ import {getPath} from "../index.js"
 import {readFile} from "fs/promises"
 import {JSDOM} from "jsdom"
 
-test("test load", async () => {
 
+test("test load", async () => {
     const file = await readFile("./test-data/index.html", {encoding: "utf-8"})
 
     const jsDom = new JSDOM(file, {runScripts: "dangerously"})
@@ -20,15 +20,15 @@ test("test load", async () => {
 
 })
 
-test("test of null", async ()=>{
+test("test of null", async () => {
     expect(await getPath(null)).toBe(null)
 })
 
-test("test of undefined", async ()=>{
+test("test of undefined", async () => {
     expect(await getPath(undefined)).toBe(null)
 })
 
-test("test getPath for id with puppeteer", async()=>{
+test("test getPath for id with puppeteer", async () => {
 
     const file = await readFile("./test-data/index.html", {encoding: "utf-8"})
     const jsDom = new JSDOM(file, {runScripts: "dangerously"})
@@ -41,21 +41,33 @@ test("test getPath for id with puppeteer", async()=>{
     let actual = await getPath(button)
     console.log("actual:", actual)
     expect(actual).toBe(expected)
-
 })
 
-test("test first element", async ()=>{
-    const expected = "#header > p"
 
-    const file = await readFile("./test-data/index.html", {encoding: "utf-8"})
-    const jsDom = new JSDOM(file, {runScripts: "dangerously"})
+/*проверяет
+* 1. переданный селектор соответствует найденному
+* 2. элемент равен елементу
+* 3. querySelectorAll возвращает нужный элемент и он один*/
+function testWrapper(description, selector) {
+    test(description, async () => {
+        const expected = selector
+        const file = await readFile("./test-data/index.html", {encoding: "utf-8"})
+        const jsDom = new JSDOM(file, {runScripts: "dangerously"})
+        const element = await jsDom.window.document.querySelector(expected)
 
-    const element = await jsDom.window.document.querySelector(expected)
-    console.log(element.tagName)
+        const actual = await getPath(element)
 
-    const actual = await getPath(element)
+        expect(actual).toBe(expected)
+        let newElement = await jsDom.window.document.querySelector(actual)
+        expect(newElement).toBe(element)
 
-    expect(actual).toBe(expected)
+        let elementAll = await jsDom.window.document.querySelectorAll(actual)
+        expect(elementAll.length).toBe(1)
+        expect(elementAll[0]).toBe(element)
+    })
+}
 
-
-})
+testWrapper("test for id by selector", "#btn")
+testWrapper("test first element", "#header > p")
+testWrapper("test several class element", "#main > p.line.first")
+testWrapper("test div", "#main > div:nth-child(3)")

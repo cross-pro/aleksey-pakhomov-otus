@@ -9,7 +9,6 @@ function buildSelector(path) {
 }
 
 function parseElement(element, path) {
-    console.log("parse:", element.tagName)
     if (element === null || element.tagName.toLowerCase() === "body") {
         return null
     }
@@ -24,8 +23,7 @@ function parseElement(element, path) {
     } else {
         if (className !== null) {
             result = tag + "." + className
-        }
-        else {
+        } else {
             result = tag
         }
     }
@@ -37,21 +35,18 @@ function parseElement(element, path) {
 }
 
 function getId(element) {
-    if (element.hasAttribute("id")) {
-        const id = element.getAttribute("id")
-        return "#" + id;
-    } else {
+    if (element.id === "")
         return null
-    }
+    else
+        return "#" + element.id
 }
 
 function getClass(element) {
-    let elementClass
-    if (element.hasAttribute("class")) {
-        elementClass = element.getAttribute("class")
-        return elementClass.replaceAll(" ", ".")
-    } else
+    if (element.className === "") {
         return null
+    } else {
+        return element.className.replaceAll(" ", ".")
+    }
 }
 
 /*если внутри блока несколько элементов возвращает позицию*/
@@ -68,4 +63,4 @@ function getUniqueSelector(element, selector) {
     }
 }
 
-export {parseElement, buildSelector, getId}
+export { parseElement, buildSelector, getId }

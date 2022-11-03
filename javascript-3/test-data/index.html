@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Test page</title>
+</head>
+<body>
+<div id="header">
+    <p>element</p>
+</div>
+<div id="content">
+    <div id="main">
+        text
+        <div>
+            test
+        </div>
+        <p class="line first">
+            test
+        </p>
+        <div>test</div>
+        <p class="line" data-testid="p-line">
+            test
+        </p>
+        <p class="line">
+            test
+        </p>
+        <p class="unique" style="color: tomato">
+            unique selector
+        </p>
+        <p class="line">
+            <input type="button" id="btn" data-testid="primary-btn" value="0" class="primary-button"/>
+        </p>
+        <p class="line">
+            test
+        </p>
+    </div>
+</div>
+<script>
+    const button = document.getElementById("btn")
+    button.addEventListener("click", () => {
+        button.value = parseInt(button.value) + 1
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "javascript-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "vitest": "^0.24.3"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fast-check": "^3.3.0",
+    "jsdom": "^20.0.2",
+    "node-html-parser": "^6.1.1",
+    "puppeteer": "^19.2.0"
+  }
+}

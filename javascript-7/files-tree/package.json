@@ -5,13 +5,26 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "es-dev-server --app-index=index.html --node-resolve --watch --open",
+    "build:modnomod": "rimraf build-modnomod && rollup -c rollup-modnomod.js",
+    "serve:modnomod": "cd rollup-modnomod && es-dev-server --app-index=index.html --compatibility=none",
+    "build:modern": "rimraf build-modern && rollup -c rollup-modern.js",
+    "serve:modern": "cd build-modern && es-dev-server --app-index=index.html --compatibility=none",
+    "build:universal": "rimraf build-universal && rollup -c rollup-universal.js",
+    "serve:universal": "cd build-universal && es-dev-server --app-index=index.html --compatibility=none",
+    "build": "npm run build:modern && npm run build:universal"
   },
   "devDependencies": {
     "eslint": "^8.27.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "vite": "^3.2.0"
+
+  },
+  "dependencies": {
+    "babel": "^6.23.0",
+    "lit-element": "^3.2.2",
+    "rollup": "^3.2.5"
   }
 }

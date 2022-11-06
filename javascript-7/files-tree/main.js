@@ -1,8 +1,12 @@
 import './styles/main.css'
 
-import {MyTreeComponent} from "./components/my-tree-component.js"
+import {HeaderComponent} from "./components/header-component.js"
+import {Tree} from "./components/tree.js"
 import {Directory} from "./components/directory.js"
+import {File} from "./components/file.js"
 
 
-customElements.define('my-component', MyTreeComponent)
+customElements.define('my-header', HeaderComponent)
+customElements.define("my-tree", Tree)
+customElements.define("my-file", File)
 customElements.define("my-directory", Directory)

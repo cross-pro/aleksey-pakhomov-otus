@@ -1,10 +1,10 @@
 import {LitElement, html} from 'lit-element'
 
-class File extends LitElement {
+class FileElement extends LitElement {
 
     constructor() {
         super()
-        this.displayItems = "none"
+        this.displayItems = "block"
 
     }
 
@@ -19,7 +19,6 @@ class File extends LitElement {
     }
 
     isFile() {
-        console.log(this.items)
         return this.items === null || this.items.length === 0
     }
 
@@ -38,7 +37,6 @@ class File extends LitElement {
                 this.displayItems = "none"
         }
     }
-
 
     render() {
         return html`
@@ -68,10 +66,10 @@ class File extends LitElement {
             <div class="items"> 
                 
             ${this.items && this.items.map(i => html`
-                <my-file id=${i.id} title=${i.title} items=${i.items} ></my-file>
+                <my-file id=${i.id} title=${i.title} items=${JSON.stringify(i.items)} ></my-file>
                 `)}
             </div>`
     }
 }
 
-export {File}
+export {FileElement}

@@ -4,22 +4,21 @@ class Tree extends LitElement {
 
     exampleData = '[{' +
         '"id":32,' +
-        '"title":"parse",' +
+        '"title":"Заголовок 1",' +
         '"items":[{' +
-        '"id":3, "title":"subtitle", "items":[]' +
-        '}] },' +
+        '"id":3, "title":"Подзаголовок", "items":[' +
+        '{"id":4, "title":"Вложенный файл"}' +
+        ']' +
+        '}]}, {"id":23, "title":"Файл 1" },' +
         '{"id":2,' +
-        '"title":"title2",' +
+        '"title":"Файл 2",' +
         '"items":[]' +
         '}]'
 
     constructor() {
         super()
         this.data = JSON.parse(this.exampleData)
-
-        console.log(this.data)
     }
-
 
 
     static get properties() {
@@ -30,16 +29,11 @@ class Tree extends LitElement {
 
     render() {
         return html`
-            <my-file id="1" title="title" items='[{"id":1,"title":"Заголовок", "items":[]},{"id":2,"title":"Заголовок2", "items":[]}]'></my-file>
-            <my-file id="2" title="title2" items="[]"></my-file>
-            
         ${this.data && this.data.map(i => html`
                 <my-file id=${i.id} title=${i.title} items='${JSON.stringify(i.items)}'></my-file>
             `)}
             `
     }
-
-
 }
 
 export {Tree}

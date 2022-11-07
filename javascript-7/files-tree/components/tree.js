@@ -3,61 +3,36 @@ import {LitElement, html} from 'lit-element'
 
 class Tree extends LitElement {
 
-    defaultFolderName = "Корневая директория"
+    exampleData = '[{' +
+        '"id":1,' +
+        '"title":"title",' +
+        '"items":[] },' +
+        '{"id":2,' +
+        '"title":"title2",' +
+        '"items":[]' +
+        '}]'
 
     constructor() {
         super()
-        this.title = this.defaultFolderName
-        this.data = {}
-        this.lastData = null
-        this.description = "что-то интересное"
+        this.data = JSON.parse(this.exampleData)
+
+        console.log(this.data)
     }
 
-    clickFolder() {
-        this.title = "Назад..."
-        this.description = "new hello xD"
-        this.lastData = this.data;
-    }
-
-    goBack() {
-        console.log("goBack()")
-        if (this.lastData === null)
-            return
-
-        this.title = this.defaultFolderName
-    }
 
 
     static get properties() {
         return {
             title: {type: String},
             data: {type: Object},
-            lastData: {type: Object}
+            isRoot: {type: String}
         };
     }
 
     render() {
         return html`
-            <style>
-                .directory-image {
-                    width: 30px;
-                    margin-right: 10px;
-                }
-                .row {
-                    display: flex;
-                    display: -webkit-flex;
-                    align-items: center;
-                    -webkit-align-items: center;
-                    font-family: sans-serif;
-                    cursor: pointer;
-                }
-            </style>
-            
-        <my-header title="${this.title}" @click="${this.goBack}"></my-header>    
-        
-        <div class="row" @click="${this.clickFolder}"><img class="directory-image" src="${'./images/directory.png'}">
-            ${this.description}
-        </div>
+            <my-file id="1" title="title" items='[{"id":1,"title":"Заголовок", "items":[]},{"id":2,"title":"Заголовок2", "items":[]}]'></my-file>
+            <my-file id="2" title="title2" items="[]"></my-file>
         `
     }
 

@@ -4,8 +4,8 @@ class File extends LitElement {
 
     constructor() {
         super()
-        this.display = "none"
-        this.items = []
+        this.displayItems = "none"
+
     }
 
     static get properties() {
@@ -14,11 +14,12 @@ class File extends LitElement {
             items: {type: Array},
             id: {type: Number},
             src: {type: String},
-            display: {type: String}
+            displayItems: {type: String}
         }
     }
 
     isFile() {
+        console.log(this.items)
         return this.items === null || this.items.length === 0
     }
 
@@ -31,12 +32,11 @@ class File extends LitElement {
 
     buildTree() {
         if (!this.isFile()) {
-            if (this.display === "none")
-                this.display = "block"
+            if (this.displayItems === "none")
+                this.displayItems = "block"
             else
-                this.display = "none"
+                this.displayItems = "none"
         }
-
     }
 
 
@@ -58,7 +58,7 @@ class File extends LitElement {
             .items {
                 position: relative;
                 margin-left: 30px;
-                display: ${this.display}
+                display: ${this.displayItems}
             }    
             </style>
             <div class="row" @click="${this.buildTree}">
@@ -67,8 +67,8 @@ class File extends LitElement {
             </div>
             <div class="items"> 
                 
-                ${this.items && this.items.map(i => html`
-                <my-file id=${i.id} title=${i.title} co items=${i.hasOwnProperty("items") ? i.items : []} ></my-file>
+            ${this.items && this.items.map(i => html`
+                <my-file id=${i.id} title=${i.title} items=${i.items} ></my-file>
                 `)}
             </div>`
     }

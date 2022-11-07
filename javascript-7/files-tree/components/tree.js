@@ -1,12 +1,13 @@
 import {LitElement, html} from 'lit-element'
 
-
 class Tree extends LitElement {
 
     exampleData = '[{' +
-        '"id":1,' +
-        '"title":"title",' +
-        '"items":[] },' +
+        '"id":32,' +
+        '"title":"parse",' +
+        '"items":[{' +
+        '"id":3, "title":"subtitle", "items":[]' +
+        '}] },' +
         '{"id":2,' +
         '"title":"title2",' +
         '"items":[]' +
@@ -23,17 +24,19 @@ class Tree extends LitElement {
 
     static get properties() {
         return {
-            title: {type: String},
-            data: {type: Object},
-            isRoot: {type: String}
-        };
+            data: {type: Object}
+        }
     }
 
     render() {
         return html`
             <my-file id="1" title="title" items='[{"id":1,"title":"Заголовок", "items":[]},{"id":2,"title":"Заголовок2", "items":[]}]'></my-file>
             <my-file id="2" title="title2" items="[]"></my-file>
-        `
+            
+        ${this.data && this.data.map(i => html`
+                <my-file id=${i.id} title=${i.title} items='${JSON.stringify(i.items)}'></my-file>
+            `)}
+            `
     }
 
 

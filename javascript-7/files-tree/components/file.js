@@ -66,8 +66,9 @@ class File extends LitElement {
               ${this.title}
             </div>
             <div class="items"> 
-                ${this.items.map(i => html`
-                <my-file id=${i.id} title=${i.title}  ></my-file>
+                
+                ${this.items && this.items.map(i => html`
+                <my-file id=${i.id} title=${i.title} co items=${i.hasOwnProperty("items") ? i.items : []} ></my-file>
                 `)}
             </div>`
     }

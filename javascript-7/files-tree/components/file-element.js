@@ -25,6 +25,8 @@ class FileElement extends LitElement {
     getImage() {
         if (this.isFile())
             return './images/file.png'
+        else if (this.displayItems === "block")
+            return './images/opened-directory.png'
         else
             return './images/directory.png'
     }
@@ -52,6 +54,7 @@ class FileElement extends LitElement {
             .image {
                     width: 30px;
                     margin-right: 10px;
+                    height: 25px;
              }
             .items {
                 position: relative;

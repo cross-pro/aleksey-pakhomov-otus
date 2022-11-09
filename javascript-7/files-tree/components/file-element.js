@@ -1,59 +1,57 @@
-import {LitElement, html} from 'lit-element'
+/* eslint-disable import/prefer-default-export */
+import { LitElement, html } from "lit-element"
 
 class FileElement extends LitElement {
+  constructor() {
+    super()
+    this.displayItems = "block"
+  }
 
-    constructor() {
-        super()
+  static get properties() {
+    return {
+      title: { type: String },
+      /* в задании только id и items, добавил title для наглядности */
+      items: { type: Array },
+      id: { type: Number },
+      src: { type: String },
+      displayItems: { type: String },
+    }
+  }
+
+  isFile() {
+    return this.items === null || this.items.length === 0
+  }
+
+  getImage() {
+    if (this.isFile()) return "./images/file.png"
+    if (this.displayItems === "block") return "./images/opened-directory.png"
+    return "./images/directory.png"
+  }
+
+  buildTree() {
+    if (!this.isFile()) {
+      if (this.displayItems === "none") {
         this.displayItems = "block"
-
+      } else this.displayItems = "none"
     }
+  }
 
-    static get properties() {
-        return {
-            title: {type: String}, /*в задании только id и items, добавил title для наглядности*/
-            items: {type: Array},
-            id: {type: Number},
-            src: {type: String},
-            displayItems: {type: String}
-        }
-    }
-
-    isFile() {
-        return this.items === null || this.items.length === 0
-    }
-
-    getImage() {
-        if (this.isFile())
-            return './images/file.png'
-        else if (this.displayItems === "block")
-            return './images/opened-directory.png'
-        else
-            return './images/directory.png'
-    }
-
-    buildTree() {
-        if (!this.isFile()) {
-            if (this.displayItems === "none")
-                this.displayItems = "block"
-            else
-                this.displayItems = "none"
-        }
-    }
-
-    render() {
-        return html`
+  render() {
+    return html`
             <style>
             .row {
-                    display: flex;
-                    display: -webkit-flex;
-                    align-items: center;
-                    -webkit-align-items: center;
-                    font-family: sans-serif;
-                    cursor: pointer;
+                display: flex;
+                display: -webkit-flex;
+                align-items: center;
+                -webkit-align-items: center;
+                font-family: sans-serif;
+                cursor: pointer;
+            }
+            .row:hover {
+                text-decoration: underline;
             }
             .image {
-                    width: 30px;
-                    margin-right: 10px;
+                    margin-right: 5px;
                     height: 25px;
              }
             .items {
@@ -62,17 +60,18 @@ class FileElement extends LitElement {
                 display: ${this.displayItems}
             }    
             </style>
+            
             <div class="row" @click="${this.buildTree}">
               <img class="image" src="${this.getImage()}">
               ${this.title}
             </div>
             <div class="items"> 
                 
-            ${this.items && this.items.map(i => html`
+            ${this.displayItems === "block" && this.items && this.items.map((i) => html`
                 <my-file id=${i.id} title=${i.title} items=${JSON.stringify(i.items)} ></my-file>
                 `)}
             </div>`
-    }
+  }
 }
 
-export {FileElement}
+export { FileElement }

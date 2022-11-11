@@ -1,5 +1,5 @@
-import {test, expect } from "vitest"
+import { test } from "vitest"
 
-test("parse data", async()=>{
+test("parse data", async () => {
 
 })

@@ -1,10 +1,12 @@
 module.exports = {
-
+  root: true,
   env: {
     browser: true,
     es2021: true,
   },
-  extends: "airbnb-base",
+  extends: [
+    "airbnb-base",
+  ],
   overrides: [],
   parserOptions: {
     ecmaVersion: "latest",
@@ -16,15 +18,12 @@ module.exports = {
     semi: ["error", "never"],
     quotes: ["error", "double", { allowTemplateLiterals: true }],
     "import/prefer-default-export": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        js: "never",
+      },
+    ],
   },
-  "import/extensions": [
-    "error",
-    "ignorePackages",
-    {
-      "js": "never",
-      "jsx": "never",
-      "ts": "never",
-      "tsx": "never"
-    }
- ]
 }

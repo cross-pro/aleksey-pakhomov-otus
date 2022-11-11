@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import "./styles/main.css"
 
 import { Tree } from "./components/tree.js"

@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { LitElement, html } from "lit-element"
 
 class FileElement extends LitElement {

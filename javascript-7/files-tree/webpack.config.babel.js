@@ -4,6 +4,28 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const EncodingPlugin = require("webpack-encoding-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const TerserWebPackPlugin = require("terser-webpack-plugin")
+const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
+
+const isDev = process.env.NODE_ENV === "development"
+const isProd = !isDev
+
+const optimization = () => {
+  const config = {
+    splitChunks: {
+      chunks: "all",
+    },
+  }
+
+  if (isProd) {
+    config.minimizer = [
+      new TerserWebPackPlugin(),
+      new CssMinimizerWebpackPlugin(),
+    ]
+  }
+
+  return config
+}
 
 module.exports = {
   context: path.resolve(__dirname, "./"),
@@ -34,15 +56,14 @@ module.exports = {
       },
     ],
   },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-    },
-  },
+  optimization: optimization(),
   plugins: [
     new HTMLWebpackPlugin({
       title: "My tree component",
       template: "./webpack.index.html",
+      minify: {
+        collapseWhitespace: isProd,
+      },
     }),
     new CleanWebpackPlugin(),
     new FaviconsWebpackPlugin("./favicon.png"),

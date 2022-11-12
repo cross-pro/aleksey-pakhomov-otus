@@ -2,4 +2,6 @@ body {
     padding-top: 1rem;
     font-family: sans-serif;
     margin: 20px;
+    border: 1px dotted green;
+    padding: 10px;
 }

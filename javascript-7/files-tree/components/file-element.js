@@ -1,4 +1,7 @@
 import { LitElement, html } from "lit-element"
+import directoryImage from "../images/directory.png"
+import openDirectoryImage from "../images/opened-directory.png"
+import fileImage from "../images/file.png"
 
 class FileElement extends LitElement {
   constructor() {
@@ -22,9 +25,9 @@ class FileElement extends LitElement {
   }
 
   getImage() {
-    if (this.isFile()) return "./images/file.png"
-    if (this.displayItems === "block") return "./images/opened-directory.png"
-    return "./images/directory.png"
+    if (this.isFile()) return fileImage
+    if (this.displayItems === "block") return openDirectoryImage
+    return directoryImage
   }
 
   buildTree() {
@@ -55,7 +58,7 @@ class FileElement extends LitElement {
              }
             .items {
                 position: relative;
-                margin-left: 30px;
+                margin-left: 28px;
                 display: ${this.displayItems}
             }    
             </style>

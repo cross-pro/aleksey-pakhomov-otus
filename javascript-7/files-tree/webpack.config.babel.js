@@ -1,4 +1,5 @@
 const path = require("path")
+const HTMLWebpackPlugin = require("html-webpack-plugin")
 
 module.exports = {
 
@@ -7,7 +8,7 @@ module.exports = {
     main: "./main.js",
   },
   output: {
-    filename: "bundle.js",
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
   },
   resolve: {
@@ -21,4 +22,7 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new HTMLWebpackPlugin(),
+  ],
 }

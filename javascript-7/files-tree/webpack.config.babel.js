@@ -33,6 +33,11 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+  },
   plugins: [
     new HTMLWebpackPlugin({
       title: "My tree component",

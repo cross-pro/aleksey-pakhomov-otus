@@ -9,11 +9,13 @@
     "test": "vitest",
     "lint": "eslint test ./ *.js",
     "fix": "eslint --fix ./ *.js",
-    "build": "webpack"
+    "build": "webpack --mode production",
+    "build-dev": "webpack --mode development"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
     "babel-register": "^6.26.0",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "eslint": "^8.27.0",
     "eslint-config-airbnb-base": "^15.0.0",

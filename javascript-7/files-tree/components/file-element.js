@@ -8,8 +8,8 @@ class FileElement extends LitElement {
 
   static get properties() {
     return {
-      title: { type: String },
       /* в задании только id и items, добавил title для наглядности */
+      title: { type: String },
       items: { type: Array },
       id: { type: Number },
       src: { type: String },

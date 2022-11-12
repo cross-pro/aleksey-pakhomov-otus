@@ -1,8 +1,9 @@
 const path = require("path")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 
 module.exports = {
-
+  context: path.resolve(__dirname, "./"),
   mode: "development",
   entry: {
     main: "./main.js",
@@ -23,6 +24,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new HTMLWebpackPlugin(),
+    new HTMLWebpackPlugin({
+      title: "My tree component",
+      template: "./webpack.index.html",
+    }),
+    new CleanWebpackPlugin(),
   ],
 }

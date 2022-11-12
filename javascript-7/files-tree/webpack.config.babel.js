@@ -27,6 +27,8 @@ const optimization = () => {
   return config
 }
 
+const fileName = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`)
+
 module.exports = {
   context: path.resolve(__dirname, "./"),
   mode: "development",
@@ -34,7 +36,7 @@ module.exports = {
     main: "./main.js",
   },
   output: {
-    filename: "[name].[contenthash].js",
+    filename: fileName("js"),
     path: path.resolve(__dirname, "dist"),
   },
   resolve: {
@@ -69,7 +71,7 @@ module.exports = {
     new FaviconsWebpackPlugin("./favicon.png"),
     new EncodingPlugin({ encoding: "UTF-8" }),
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
+      filename: fileName("css"),
     }),
   ],
   devServer: {

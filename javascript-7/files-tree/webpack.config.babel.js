@@ -3,6 +3,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const EncodingPlugin = require("webpack-encoding-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = {
   context: path.resolve(__dirname, "./"),
@@ -21,7 +22,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -46,6 +47,9 @@ module.exports = {
     new CleanWebpackPlugin(),
     new FaviconsWebpackPlugin("./favicon.png"),
     new EncodingPlugin({ encoding: "UTF-8" }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
   ],
   devServer: {
     port: 4200,

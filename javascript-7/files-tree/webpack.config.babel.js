@@ -101,6 +101,7 @@ module.exports = {
     ],
   },
   optimization: optimization(),
+  devtool: isDev ? "source-map" : undefined,
   plugins: [
     new HTMLWebpackPlugin({
       title: "My tree component",

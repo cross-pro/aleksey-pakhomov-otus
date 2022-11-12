@@ -29,6 +29,16 @@ const optimization = () => {
 
 const fileName = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`)
 
+const babelLoader = (preset) => {
+  const opts = {
+    presets: ["@babel/preset-env"],
+  }
+
+  if (preset) opts.presets.push(preset)
+
+  return opts
+}
+
 module.exports = {
   context: path.resolve(__dirname, "./"),
   mode: "development",
@@ -61,9 +71,23 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env", "@babel/preset-typescript"],
-          },
+          options: babelLoader(),
+        },
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: babelLoader(),
+        },
+      },
+      {
+        test: /\.ts$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: babelLoader("@babel/preset-typescript"),
         },
       },
     ],

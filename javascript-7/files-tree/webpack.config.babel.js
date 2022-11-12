@@ -90,6 +90,14 @@ module.exports = {
           options: babelLoader("@babel/preset-typescript"),
         },
       },
+      {
+        test: /\.jsx$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: babelLoader("@babel/preset-react"),
+        },
+      },
     ],
   },
   optimization: optimization(),

@@ -2,6 +2,7 @@ const path = require("path")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
+const EncodingPlugin = require("webpack-encoding-plugin")
 
 module.exports = {
   context: path.resolve(__dirname, "./"),
@@ -26,6 +27,10 @@ module.exports = {
         test: /\.(png|jpe?g|gif)$/i,
         use: [{ loader: "file-loader" }],
       },
+      {
+        test: /\.(ttf|woff|woff2|eot)$/i,
+        type: "asset/resource",
+      },
     ],
   },
   plugins: [
@@ -35,5 +40,6 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new FaviconsWebpackPlugin("./favicon.png"),
+    new EncodingPlugin({ encoding: "UTF-8" }),
   ],
 }

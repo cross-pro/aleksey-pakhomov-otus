@@ -46,8 +46,8 @@ class FileElement extends LitElement {
                 display: -webkit-flex;
                 align-items: center;
                 -webkit-align-items: center;
-                font-family: sans-serif;
                 cursor: pointer;
+                font-family: "Roboto";
             }
             .row:hover {
                 text-decoration: underline;

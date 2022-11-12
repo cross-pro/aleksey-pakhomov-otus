@@ -34,6 +34,8 @@
     "babel": "^6.23.0",
     "lit-element": "^3.2.2",
     "lodash": "^4.17.21",
-    "style-loader": "^3.3.1"
+    "normalize.css": "^8.0.1",
+    "style-loader": "^3.3.1",
+    "webpack-encoding-plugin": "^0.3.1"
   }
 }

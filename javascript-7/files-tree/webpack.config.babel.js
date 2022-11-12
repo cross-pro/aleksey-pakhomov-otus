@@ -47,4 +47,7 @@ module.exports = {
     new FaviconsWebpackPlugin("./favicon.png"),
     new EncodingPlugin({ encoding: "UTF-8" }),
   ],
+  devServer: {
+    port: 4200,
+  },
 }

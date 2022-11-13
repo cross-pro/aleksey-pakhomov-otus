@@ -1,11 +1,11 @@
 const path = require("path")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
-const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const EncodingPlugin = require("webpack-encoding-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const TerserWebPackPlugin = require("terser-webpack-plugin")
 const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 const isDev = process.env.NODE_ENV === "development"
 const isProd = !isDev
@@ -111,10 +111,14 @@ module.exports = {
       },
     }),
     new CleanWebpackPlugin(),
-    new FaviconsWebpackPlugin("./favicon.png"),
     new EncodingPlugin({ encoding: "UTF-8" }),
     new MiniCssExtractPlugin({
       filename: fileName("css"),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, "favicon.png"), to: path.resolve(__dirname, "dist") },
+      ],
     }),
   ],
   devServer: {

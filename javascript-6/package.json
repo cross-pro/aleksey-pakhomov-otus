@@ -1,0 +1,19 @@
+{
+  "name": "graphql-schema",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "lint": "eslint ./ *.js",
+    "fix": "eslint --fix ./ *.js"
+  },
+  "author": "aleksey.pakhomov",
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^0.25.1",
+    "eslint": "^8.27.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}

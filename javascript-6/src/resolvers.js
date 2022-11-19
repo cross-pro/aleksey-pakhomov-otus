@@ -5,6 +5,7 @@ const resolvers = {
   Query: {
     user: (parent, { id }, context, info) => findElement("id", id, users),
     users: () => users,
+    findUserByName: (parent, { name }, context, info) => findElement("name", name, users),
   },
 }
 

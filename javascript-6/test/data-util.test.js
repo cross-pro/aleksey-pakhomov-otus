@@ -17,5 +17,5 @@ test("findElement test", () => {
   expect(JSON.stringify(result)).toBe("{\"id\":1,\"name\":\"Name1\"}")
 
   result = findElement("id", 3, collection)
-  expect(result).toStrictEqual({})
+  expect(result).toBe(undefined)
 })

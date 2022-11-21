@@ -13,7 +13,7 @@ type Item {
 type Query {
   users: [User!]!
   user(id: ID!): User
-  findUserByName(name: String): User
+  findUserByName(name: String): User!
   items: [Item]!
   item(id: ID!): Item!
 }

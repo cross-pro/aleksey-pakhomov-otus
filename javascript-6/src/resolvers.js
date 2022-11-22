@@ -1,45 +1,56 @@
-import { users } from "./db"
+import {
+  items, orders, category, basket,
+} from "./db"
 import { findElement } from "./data-util"
 
 const resolvers = {
   Query: {
-    user: (parent, { id }, context, info) => findElement("id", id, users),
-    users: () => users,
-    findUserByName: (parent, { name }, context, info) => findElement("name", name, users),
+    category: (parent, { id }, context, info) => findElement("id", id, category),
+    categories: () => category,
+    items: () => items,
+    itemByName: (parent, { name }, context, info) => findElement("name", name, items),
+    item: (parent, { id }, context, info) => findElement("id", id, items),
+    itemsByCategory:
+    (parent, { categoryID }, context, info) => items.filter((p) => p.category.id == categoryID),
+    orders: () => orders,
+    order: (parent, { id }, context, info) => findElement("id", id, orders),
+    baskets: () => basket,
+    basket: (parent, { id }, context, info) => findElement("id", id, basket),
   },
-  Mutation: {
-    createUser: (parent, {
-      id, name, email, age,
-    }, context, info) => {
-      const newUser = {
-        id, name, email, age,
-      }
 
-      users.push(newUser)
+  // Mutation: {
+  //   createUser: (parent, {
+  //     id, name, email, age,
+  //   }, context, info) => {
+  //     const newUser = {
+  //       id, name, email, age,
+  //     }
 
-      return newUser
-    },
-    updateUser: (parent, {
-      id, name, email, age,
-    }, context, info) => {
-      const newUser = users.find((user) => user.id === id)
+  //     users.push(newUser)
 
-      newUser.name = name
-      newUser.email = email
-      newUser.age = age
+  //     return newUser
+  //   },
+  //   updateUser: (parent, {
+  //     id, name, email, age,
+  //   }, context, info) => {
+  //     const newUser = users.find((user) => user.id === id)
 
-      return newUser
-    },
-    deleteUser: (parent, { id }, context, info) => {
-      const userIndex = users.findIndex((user) => user.id === id)
+  //     newUser.name = name
+  //     newUser.email = email
+  //     newUser.age = age
 
-      if (userIndex === -1) throw new Error("User not found.")
+  //     return newUser
+  //   },
+  //   deleteUser: (parent, { id }, context, info) => {
+  //     const userIndex = users.findIndex((user) => user.id === id)
 
-      const deletedUsers = users.splice(userIndex, 1)
+  //     if (userIndex === -1) throw new Error("User not found.")
 
-      return deletedUsers[0]
-    },
-  },
+  //     const deletedUsers = users.splice(userIndex, 1)
+
+  //     return deletedUsers[0]
+  //   },
+  // },
 }
 
 export default resolvers

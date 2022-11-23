@@ -43,6 +43,11 @@ type Mutation {
   createItem(id: ID!, name: String!, description: String, categoryID: Int, price: Float!): Item!
   updateItem(id: ID!, name: String, description: String, categoryID: Int, price: Float): Item!
   deleteItem(id: ID!): Item!
+  createCategory(id: ID!, name: String!) : Category!
+  updateCategory(id: ID!, name: String) : Category!
+  deleteCategory(id: ID!) : Category!
+  createBasket(itemID: ID!) : Basket!
+  createOrder(id: ID!, itemID: ID!, order_status: ORDER_STATUS) : Order!
 }
 
 

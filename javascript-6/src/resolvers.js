@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 import {
   items, orders, category, basket,
@@ -46,8 +47,44 @@ const resolvers = {
       const item = items.splice(index, 1)
       return item[0]
     },
-  },
+    createCategory: (parent, { id, name }, context, info) => {
+      const newCategory = { id, name }
+      category.push(newCategory)
+      return newCategory
+    },
+    updateCategory: (parent, { id, name }, context, info) => {
+      const newCategory = findElement("id", id, category)
+      newCategory.name = name || newCategory.name
+      return newCategory
+    },
+    deleteCategory: (parent, { id }, context, info) => {
+      const isUsedCategory = items.find((p) => p.category.id == id)
+      if (isUsedCategory !== undefined) throw new Error(`Category is used`)
 
+      const newCategory = findElement("id", id, category)
+      if (newCategory === null || newCategory === undefined) throw new Error(`Category with id: ${id} not found`)
+      category.splice(newCategory, 1)
+      return newCategory
+    },
+    createBasket: (parent, { itemID }, context, info) => {
+      const exsistingItem = findElement("id", itemID, items)
+      if (exsistingItem === undefined) throw new Error(`Item with id: ${itemID} not found`)
+
+      const newBasket = {
+        item: exsistingItem,
+      }
+      if (findElement("item", exsistingItem, basket) === undefined) basket.push(newBasket)
+      return newBasket
+    },
+    createOrder: (parent, { id, itemID, order_status }, context, info) => {
+      const newOrder = {
+        id, item: findElement("id", itemID, items), order_status,
+      }
+
+      orders.push(newOrder)
+      return newOrder
+    },
+  },
 }
 
 export default resolvers

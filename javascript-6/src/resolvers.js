@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   items, orders, category, basket,
 } from "./db"
@@ -18,39 +19,35 @@ const resolvers = {
     basket: (parent, { id }, context, info) => findElement("id", id, basket),
   },
 
-  // Mutation: {
-  //   createUser: (parent, {
-  //     id, name, email, age,
-  //   }, context, info) => {
-  //     const newUser = {
-  //       id, name, email, age,
-  //     }
+  Mutation: {
+    createItem: (parent, {
+      id, name, description, categoryID, price,
+    }, context, info) => {
+      const newItem = {
+        id, name, description, category: findElement("id", categoryID, category), price,
+      }
+      items.push(newItem)
+      return newItem
+    },
+    updateItem: (parent, {
+      id, name, description, categoryID, price,
+    }, context, info) => {
+      const item = findElement("id", id, items)
+      item.name = name || item.name
+      item.description = description || item.description
+      item.category = findElement("id", categoryID, category) || item.category
+      item.price = price || item.price
+      return item
+    },
+    deleteItem: (parent, { id }, context, info) => {
+      const index = items.findIndex((p) => p.id == id)
+      if (index === -1) throw new Error("Item not found")
 
-  //     users.push(newUser)
+      const item = items.splice(index, 1)
+      return item[0]
+    },
+  },
 
-  //     return newUser
-  //   },
-  //   updateUser: (parent, {
-  //     id, name, email, age,
-  //   }, context, info) => {
-  //     const newUser = users.find((user) => user.id === id)
-
-  //     newUser.name = name
-  //     newUser.email = email
-  //     newUser.age = age
-
-  //     return newUser
-  //   },
-  //   deleteUser: (parent, { id }, context, info) => {
-  //     const userIndex = users.findIndex((user) => user.id === id)
-
-  //     if (userIndex === -1) throw new Error("User not found.")
-
-  //     const deletedUsers = users.splice(userIndex, 1)
-
-  //     return deletedUsers[0]
-  //   },
-  // },
 }
 
 export default resolvers

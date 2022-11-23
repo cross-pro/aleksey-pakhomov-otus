@@ -39,10 +39,10 @@ type Query {
   order(id: ID!): Order
 }
 
-# type Mutation {
-#   createUser(id: ID!, name: String!, email: String!, age: Int): User!
-#   updateUser(id: ID!, name: String, email: String, age: Int): User!
-#   deleteUser(id: ID!): User!
-# }
+type Mutation {
+  createItem(id: ID!, name: String!, description: String, categoryID: Int, price: Float!): Item!
+  updateItem(id: ID!, name: String, description: String, categoryID: Int, price: Float): Item!
+  deleteItem(id: ID!): Item!
+}
 
 

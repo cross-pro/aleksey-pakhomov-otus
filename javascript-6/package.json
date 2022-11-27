@@ -2,14 +2,13 @@
   "name": "graphql-schema",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "vitest",
     "lint": "eslint ./src/*.js",
     "fix": "eslint --fix ./src/*.js && eslit --fix ./test/*.js",
     "dev": "graphpack",
     "build": "graphpack build",
-    "start": "node ./src/index.js"
+    "start": "npm run build && node ./build/index.js"
   },
   "author": "aleksey.pakhomov",
   "license": "ISC",

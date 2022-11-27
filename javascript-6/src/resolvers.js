@@ -76,9 +76,9 @@ const resolvers = {
       if (findElement("item", exsistingItem, basket) === undefined) basket.push(newBasket)
       return newBasket
     },
-    createOrder: (parent, { id, itemID, order_status }, context, info) => {
+    createOrder: (parent, { id, itemID, orderStatus }, context, info) => {
       const newOrder = {
-        id, item: findElement("id", itemID, items), order_status,
+        id, item: findElement("id", itemID, items), orderStatus,
       }
 
       orders.push(newOrder)

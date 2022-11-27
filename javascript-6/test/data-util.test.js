@@ -18,4 +18,8 @@ test("findElement test", () => {
 
   result = findElement("id", 3, collection)
   expect(result).toBe(undefined)
+
+  let fake
+  result = findElement("id", 1, fake)
+  expect(result).toBe(undefined)
 })

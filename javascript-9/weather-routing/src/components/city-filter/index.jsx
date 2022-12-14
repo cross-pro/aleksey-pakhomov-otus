@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import "./index.css"
+import {CityOffer} from "../city-offer";
 
 export const CityFilter = () => {
 
@@ -21,17 +22,23 @@ export const CityFilter = () => {
     }
 
     return (
+        <div>
+            <div className="form-group search-form">
+                <input id="city" type="text" className="form-control"
+                       placeholder="Название города..."
+                       defaultValue={value}
+                       onChange={onChange}
+                       onKeyDown={handleKeyDown}
+                />
+                <button type="button" className="btn btn-primary"
+                        onClick={onSearch}
+                >Найти
+                </button>
+            </div>
 
-        <div className="form-group search-form">
-            <input id="city" type="text" className="form-control"
-                   placeholder="Название города..."
-                   defaultValue={value}
-                   onChange={onChange}
-                   onKeyDown={handleKeyDown}
-            />
-            <button type="button" className="btn btn-primary"
-            onClick={onSearch}
-            >Найти</button>
+            <CityOffer city={value}/>
+
+
         </div>
     )
 }

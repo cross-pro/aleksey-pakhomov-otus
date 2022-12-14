@@ -2,7 +2,7 @@
 const CITY_STORAGE = "cities"
 
 const getCities = () => {
-    return localStorage.getItem(CITY_STORAGE)
+    return JSON.parse(localStorage.getItem(CITY_STORAGE))
 }
 
 const findElementsFilter = (array, name) => {
@@ -11,9 +11,9 @@ const findElementsFilter = (array, name) => {
 
 }
 
-const fineCitiyByName = (name) => {
+const findCitiesByName = (name) => {
     return findElementsFilter(getCities(), name)
 }
 
 
-export {fineCitiyByName, findElementsFilter, CITY_STORAGE}
+export {getCities, findCitiesByName, findElementsFilter, CITY_STORAGE}

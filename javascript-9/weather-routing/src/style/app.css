@@ -2,3 +2,8 @@
     margin: 20px;
 }
 
+.flex {
+    display:flex;
+    flex: 1;
+    flex-direction: column;
+}

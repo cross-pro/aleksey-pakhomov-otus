@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import "./index.css"
 import {CityOffer} from "../city-offer";
 
+
 export const CityFilter = () => {
 
     let [value, setValue] = useState("")
@@ -22,7 +23,7 @@ export const CityFilter = () => {
     }
 
     return (
-        <div>
+        <div className="flex">
             <div className="form-group search-form">
                 <input id="city" type="text" className="form-control"
                        placeholder="Название города..."
@@ -37,8 +38,6 @@ export const CityFilter = () => {
             </div>
 
             <CityOffer city={value}/>
-
-
         </div>
     )
 }

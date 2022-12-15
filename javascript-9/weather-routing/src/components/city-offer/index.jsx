@@ -30,7 +30,7 @@ export const CityOffer = ({city}) => {
                 <span id="helpBlock" className="help-block cities">{data !== undefined
                 && data !== null
                 && data.length > 0
-                && data.map(p => <CityRow key={p.city} name={p.city}/>)}</span>
+                && data.map(p => <CityRow key={p.city_en} name={p.city}/>)}</span>
             </div>
         )
 }

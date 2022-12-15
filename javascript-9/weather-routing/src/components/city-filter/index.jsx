@@ -38,6 +38,7 @@ export const CityFilter = () => {
             </div>
 
             <CityOffer city={value}/>
+
         </div>
     )
 }

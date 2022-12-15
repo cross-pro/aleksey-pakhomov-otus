@@ -12,10 +12,10 @@ export const CityOffer = ({city}) => {
     }, [])
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
         let cities = []
-        if (city === undefined || city === null || city==="") {
+        if (city === undefined || city === null || city === "") {
             cities = getCities()
             setData(cities)
         }
@@ -25,12 +25,14 @@ export const CityOffer = ({city}) => {
         }
     }, [city])
 
-        return (
-            <div className="flex">
-                <span id="helpBlock" className="help-block cities">{data !== undefined
+    return (
+        <div className="flex">
+
+            <span id="helpBlock" className="help-block cities">{
+                data !== undefined
                 && data !== null
                 && data.length > 0
-                && data.map(p => <CityRow key={p.city_en} name={p.city}/>)}</span>
-            </div>
-        )
+                && data.map(p => <CityRow key={p.city_en} name={p.city} name_en={p.city_en}/>)}</span>
+        </div>
+    )
 }

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import React from "react";
 import { CityWeather } from "../city-weather";
 import { getCities } from "../../util/storage-util"
@@ -11,10 +11,14 @@ const cityRouter = () => {
 }
 
 const cityRouterDays = () => {
+
     return getCities() && getCities().map(
-        p => <Route key={p.city_en}
-            path={"/" + p.city_en + "/:days"}
-            element={<CityWeather name={p.city} days={2} />} />)
+        p =>
+            <Route key={p.citi_en + "days"}
+                path={"/" + p.city_en + "/:days"}
+                element={<CityWeather name={p.city} />}
+            />
+    )
 }
 
 export { cityRouter, cityRouterDays }

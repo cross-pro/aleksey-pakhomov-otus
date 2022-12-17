@@ -1,8 +1,14 @@
+const options = {
+month: 'long',
+day: 'numeric',
+timezone: 'UTC'
+};
+
 
 const formatDay = (day) => {
-    let d = new Date().toLocaleString("ru", {})
-    //let result = d.getMonth()+"."+d.getDay()
-    return d
+    let date = new Date();
+    date.setDate(date.getDate() + day);
+    return date.toLocaleString("ru", options)
 }
 
 export {formatDay}

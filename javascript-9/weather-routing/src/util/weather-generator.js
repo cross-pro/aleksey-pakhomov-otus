@@ -40,12 +40,11 @@ const getFull = (days) => {
         day.wind = wind()
         day.precipitation = precipitation()
         day.temerature = temerature()
+        day.index=i
 
         result.push(day)
     }
     return result
 }
-
-
 
 export { getFull }

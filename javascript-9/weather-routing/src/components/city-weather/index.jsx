@@ -21,19 +21,19 @@ export const CityWeather = ({ name, name_en }) => {
         //честно говоря не разобрался как правильно использовать относительные пути
         //чтобы к примеру при повтормном клике не добавлялось /7/7
         //если есть правильные практики, подскажите пожалуйста :-)
-        navigation("../"+name_en+"/7")
+        navigation("../../"+name_en+"/7")
     }
 
     const setTen = () => {
-        navigation("../"+name_en+"/10")
+        navigation("../../"+name_en+"/10")
     }
 
     const setTwoWeeks = () => {
-        navigation("../"+name_en+"/14")
+        navigation("../../"+name_en+"/14")
     }
 
     const setMonth = () => {
-        navigation("../"+name_en+"/30")
+        navigation("../../"+name_en+"/30")
     }
 
     useEffect(() => {

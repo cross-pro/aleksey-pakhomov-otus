@@ -4,21 +4,14 @@ import { CityWeather } from "../city-weather";
 import { getCities } from "../../util/storage-util"
 
 const cityRouter = () => {
-    return getCities() && getCities().map(
-        p => <Route key={p.city_en}
-            exact path={"/" + p.city_en}
-            element={<CityWeather name={p.city} name_en={p.city_en}/>} />)
-}
-
-const cityRouterDays = () => {
 
     return getCities() && getCities().map(
         p =>
-            <Route key={p.city_en + "day"}
-                path={"/" + p.city_en + "/:day"}
-                element={<CityWeather name={p.city} name_en={p.city_en}/>}
-            />
+            <Route key={p.city_en + "day"} path={"/" + p.city_en}>
+                <Route index element={<CityWeather name={p.city} name_en={p.city_en} />} />
+                <Route path=":day" element={<CityWeather name={p.city} name_en={p.city_en} />} />
+            </Route>
     )
 }
 
-export { cityRouter, cityRouterDays }
+export { cityRouter }

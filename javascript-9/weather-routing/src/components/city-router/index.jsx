@@ -7,7 +7,7 @@ const cityRouter = () => {
     return getCities() && getCities().map(
         p => <Route key={p.city_en}
             exact path={"/" + p.city_en}
-            element={<CityWeather name={p.city} />} />)
+            element={<CityWeather name={p.city} name_en={p.city_en}/>} />)
 }
 
 const cityRouterDays = () => {
@@ -16,7 +16,7 @@ const cityRouterDays = () => {
         p =>
             <Route key={p.city_en + "day"}
                 path={"/" + p.city_en + "/:day"}
-                element={<CityWeather name={p.city} />}
+                element={<CityWeather name={p.city} name_en={p.city_en}/>}
             />
     )
 }

@@ -10,15 +10,13 @@ export const App = () => {
 
     return (
         <div className="content">
-            <Router>
-                <DataComponent />
-                <Main />
-                <hr />
-                <Routes>
-                    {cityRouter()}
-                    {cityRouterDays()}
-                </Routes>
-            </Router>
+            <DataComponent />
+            <Main />
+            <hr />
+            <Routes>
+                {cityRouter()}
+                {cityRouterDays()}
+            </Routes>
         </div>
     )
 }

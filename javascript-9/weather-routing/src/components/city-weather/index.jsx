@@ -50,7 +50,7 @@ export const CityWeather = ({ name, name_en }) => {
         if (day == undefined) return
         if (days === day) return
         if (!isNumeric(day)) day = defaultDays
-        if (day > 30) day = 30
+        if (day > 30) return
 
         setDays(day)
         setWeather(getFull(day))

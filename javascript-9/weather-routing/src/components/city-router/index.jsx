@@ -14,8 +14,8 @@ const cityRouterDays = () => {
 
     return getCities() && getCities().map(
         p =>
-            <Route key={p.citi_en + "days"}
-                path={"/" + p.city_en + "/:days"}
+            <Route key={p.city_en + "day"}
+                path={"/" + p.city_en + "/:day"}
                 element={<CityWeather name={p.city} />}
             />
     )

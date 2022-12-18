@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {findCitiesByName, getCities} from "../../util/storage-util"
-import {CityRow} from "../city-row/index";
+import {CityRow} from "../city-row/index"
 
 export const CityOffer = ({city}) => {
 
@@ -34,5 +34,6 @@ export const CityOffer = ({city}) => {
                 && data.length > 0
                 && data.map(p => <CityRow key={p.city_en} name={p.city} name_en={p.city_en}/>)}</span>
         </div>
+
     )
 }

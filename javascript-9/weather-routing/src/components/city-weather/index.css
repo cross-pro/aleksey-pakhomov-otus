@@ -2,3 +2,10 @@
     display:flex;
     flex-wrap: wrap;
 }
+
+.day-choice {
+    margin-bottom: 1rem;
+    display:flex;
+    align-items: center;
+    
+}

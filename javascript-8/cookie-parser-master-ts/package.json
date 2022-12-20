@@ -2,7 +2,7 @@
   "name": "cookie-parser",
   "description": "Parse HTTP request cookies",
   "version": "1.4.6",
-  "author": "TJ Holowaychuk <tj@vision-media.ca> (http://tjholowaychuk.com)",
+  "author": "aleksey.pakhomov",
   "contributors": [
     "Douglas Christopher Wilson <doug@somethingdoug.com>"
   ],
@@ -12,9 +12,11 @@
     "cookie",
     "middleware"
   ],
+  "type": "module",
   "dependencies": {
     "cookie": "0.4.2",
-    "cookie-signature": "1.0.6"
+    "cookie-signature": "1.0.6",
+    "ts": "^0.2.2"
   },
   "devDependencies": {
     "eslint": "7.32.0",

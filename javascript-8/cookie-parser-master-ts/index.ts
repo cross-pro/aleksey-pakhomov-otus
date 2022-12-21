@@ -38,9 +38,7 @@ type Req = {
     signedCookies: any
 }
 
-type Res = {
-
-}
+type Res = {}
 
 function cookieParser(secret: string | Array<string>, options: unknown) {
     let secrets = !secret || Array.isArray(secret)
@@ -107,7 +105,7 @@ function JSONCookie(str: string): object | undefined {
  */
 
 function JSONCookies(obj: any): object {
-    let cookies : Array<string> = Object.keys(obj)
+    let cookies: Array<string> = Object.keys(obj)
     let key
     let val
 
@@ -141,12 +139,12 @@ function signedCookie(str: string, secret: string | Array<string>): string | und
         return str
     }
 
-    let secrets = !secret || Array.isArray(secret)
+    let secrets: string | Array<string> = !secret || Array.isArray(secret)
         ? (secret || [])
         : [secret]
 
-    for (let i = 0; i < secrets.length; i++) {
-        let val = signature.unsign(str.slice(2), secrets[i])
+    for (let i: number = 0; i < secrets.length; i++) {
+        let val: string | boolean = signature.unsign(str.slice(2), secrets[i])
 
         if (val !== false) {
             return val
@@ -166,14 +164,14 @@ function signedCookie(str: string, secret: string | Array<string>): string | und
  * @public
  */
 
-function signedCookies(obj: any, secret: string | Array<string>) : object {
+function signedCookies(obj: any, secret: string | Array<string>): object {
     let cookies: Array<string> = Object.keys(obj)
     let dec: string | undefined | boolean
     let key: string
-    let ret : any = Object.create(null)
-    let val
+    let ret: any = Object.create(null)
+    let val: string
 
-    for (let i:number = 0; i < cookies.length; i++) {
+    for (let i: number = 0; i < cookies.length; i++) {
         key = cookies[i]
         val = obj[key]
         dec = signedCookie(val, secret)

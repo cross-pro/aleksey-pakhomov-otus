@@ -40,17 +40,19 @@ type Req = {
 
 type Res = {}
 
-function cookieParser(secret: string | Array<string>, options: object) {
-    let secrets : string | Array<string> = !secret || Array.isArray(secret)
+type Action = () => void
+
+function cookieParser(secret: string | Array<string>, options: object): (req: Req, res: Res, func: Action) => void {
+    let secrets: string | Array<string> = !secret || Array.isArray(secret)
         ? (secret || [])
         : [secret]
 
-    return function cookieParser(req: Req, res: Res, next: any): any {
+    return function cookieParser(req: Req, res: Res, next: Action): void {
         if (req.cookies) {
             return next()
         }
 
-        let cookies : string = req.headers.cookie
+        let cookies: string = req.headers.cookie
 
         req.secret = secrets[0]
         req.cookies = Object.create(null)
@@ -109,7 +111,7 @@ function JSONCookies(obj: any): object {
     let key: string
     let val: object | undefined
 
-    for (let i:number = 0; i < cookies.length; i++) {
+    for (let i: number = 0; i < cookies.length; i++) {
         key = cookies[i]
         val = JSONCookie(obj[key])
 

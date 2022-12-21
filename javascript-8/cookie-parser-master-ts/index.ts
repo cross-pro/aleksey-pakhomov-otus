@@ -33,15 +33,15 @@ module.exports.signedCookies = signedCookies
 
 type Req = {
     cookies: object
-    secret: any
+    secret: string
     headers: any
     signedCookies: any
 }
 
 type Res = {}
 
-function cookieParser(secret: string | Array<string>, options: unknown) {
-    let secrets = !secret || Array.isArray(secret)
+function cookieParser(secret: string | Array<string>, options: object) {
+    let secrets : string | Array<string> = !secret || Array.isArray(secret)
         ? (secret || [])
         : [secret]
 
@@ -50,7 +50,7 @@ function cookieParser(secret: string | Array<string>, options: unknown) {
             return next()
         }
 
-        let cookies = req.headers.cookie
+        let cookies : string = req.headers.cookie
 
         req.secret = secrets[0]
         req.cookies = Object.create(null)
@@ -106,10 +106,10 @@ function JSONCookie(str: string): object | undefined {
 
 function JSONCookies(obj: any): object {
     let cookies: Array<string> = Object.keys(obj)
-    let key
-    let val
+    let key: string
+    let val: object | undefined
 
-    for (let i = 0; i < cookies.length; i++) {
+    for (let i:number = 0; i < cookies.length; i++) {
         key = cookies[i]
         val = JSONCookie(obj[key])
 

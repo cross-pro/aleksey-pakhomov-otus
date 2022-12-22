@@ -1,0 +1,13 @@
+.cities {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 20vh;
+    overflow: auto;
+    padding-bottom: 1rem;
+}
+
+.city {
+    max-width: 50vmin;
+    min-width: 25vmax;
+}

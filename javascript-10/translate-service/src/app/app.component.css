@@ -2,4 +2,6 @@
   display: flex;
   max-width: 80vw;
   margin: 20px auto;
+  flex-wrap: wrap;
+  justify-content: center;
 }

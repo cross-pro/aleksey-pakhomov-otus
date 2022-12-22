@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SettingsComponent } from './settings/settings.component';
-import { GoComponent } from './go/go.component';
-import { RecentlyAddedComponent } from './recently-added/recently-added.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { GoComponent } from './components/go/go.component';
+import { RecentlyAddedComponent } from './components/recently-added/recently-added.component';
 
 @NgModule({
   declarations: [

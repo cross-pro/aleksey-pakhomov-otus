@@ -4,4 +4,11 @@
   margin: 20px auto;
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: column;
+  align-content: center;
+}
+
+.components {
+  padding: 2rem;
+  border: 1px dotted #888;
 }

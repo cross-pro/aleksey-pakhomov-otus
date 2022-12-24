@@ -1,5 +1,6 @@
 .content {
   display: grid;
+  margin-top: 50px;
 }
 
 .components {

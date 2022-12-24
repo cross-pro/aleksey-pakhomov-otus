@@ -14,11 +14,23 @@ export class RecentlyAddedComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  dictionary : IDictionary[] = [{
+  dictionary: IDictionary[] = [{
     word: "Hello",
     translatedWord: "Привет"
-  },{
+  }, {
     word: "Bye",
-    translatedWord: "Пока, увидимся скоро!"
-  }]
+    translatedWord: "Пока"
+  }, {
+    word: "Whats` up",
+    translatedWord: "Че кого"
+  }, {
+    word: "Call me ",
+    translatedWord: "Перезвони мне"
+  },
+    {
+      word: "See you. later",
+      translatedWord: "Увидимся позже"
+    }
+
+  ]
 }

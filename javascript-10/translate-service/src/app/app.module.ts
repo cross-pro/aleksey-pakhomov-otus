@@ -11,6 +11,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { GlobalErrorComponent } from './components/global-error/global-error.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AddWordComponent } from './components/add-word/add-word.component';
+import { ChooseLanguageComponent } from './components/choose-language/choose-language.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AddWordComponent } from './components/add-word/add-word.component';
     WordComponent,
     GlobalErrorComponent,
     NavigationComponent,
-    AddWordComponent
+    AddWordComponent,
+    ChooseLanguageComponent
   ],
   imports: [
     BrowserModule,

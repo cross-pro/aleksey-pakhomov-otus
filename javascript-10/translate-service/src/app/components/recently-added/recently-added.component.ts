@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import IDictionary from "../../models/dictionary";
+import {TranslateService} from "../../services/translate/translate.service";
 
 @Component({
   selector: 'app-recently-added',
@@ -8,10 +9,13 @@ import IDictionary from "../../models/dictionary";
 })
 export class RecentlyAddedComponent implements OnInit {
 
-  constructor() {
+  constructor(private translateService : TranslateService) {
   }
 
   ngOnInit(): void {
+    this.translateService.getAll().subscribe((data)=>{
+      console.log(data)
+    })
   }
 
   dictionary: IDictionary[] = [{

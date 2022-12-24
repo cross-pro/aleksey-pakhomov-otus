@@ -11,8 +11,9 @@ export class TranslateService {
   constructor(private http : HttpClient) { }
 
   getAll() : Observable<any[]> {
-    return this.http.get<any[]>("https://fakestoreapi.com/products", {
-      params: new HttpParams().append("limit","3")
+    return this.http.get<any[]>("https://api.mymemory.translated.net/get", {
+      params: new HttpParams().append("langpair","en|ru").append("q","hello")
+
     }).pipe(
       delay(1000)
     )

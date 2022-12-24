@@ -19,6 +19,6 @@ export class RecentlyAddedComponent implements OnInit {
     translatedWord: "Привет"
   },{
     word: "Bye",
-    translatedWord: "Пока"
+    translatedWord: "Пока, увидимся скоро!"
   }]
 }

@@ -1,14 +1,7 @@
 .content {
-  display: flex;
-  max-width: 80vw;
-  margin: 20px auto;
-  flex-wrap: wrap;
-  justify-content: center;
-  flex-direction: column;
-  align-content: center;
+  display: grid;
 }
 
 .components {
   padding: 2rem;
-  border: 1px dotted #888;
 }

@@ -1,3 +1,10 @@
-<div class="word">
-  {{dictionary.word | lowercase}} - {{dictionary.translatedWord | lowercase}}
+<div class="row word">
+<div class="col-xs-6 col-md-4">
+  {{dictionary.word | lowercase}}
 </div>
+  <div class="col-xs-6 col-md-4">
+    {{dictionary.translatedWord | lowercase}}
+  </div>
+  <button class="btn btn-default col-xs-5 col-md-4">Показать перевод</button>
+</div>
+

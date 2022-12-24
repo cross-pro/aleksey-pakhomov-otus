@@ -1,8 +1,5 @@
 .last-added-word {
-  border: 1px dotted darkslategray;
-  padding: 1rem;
-}
-
-h2 {
-  color: chocolate;
+  display:flex;
+  justify-content: center;
+  margin-bottom: 1rem;
 }

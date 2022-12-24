@@ -14,4 +14,6 @@ export class WordComponent implements OnInit {
   }
 
   @Input() dictionary: IDictionary
+
+  showTranslate = false
 }

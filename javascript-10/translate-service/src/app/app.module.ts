@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './components/app/app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { GoComponent } from './components/go/go.component';

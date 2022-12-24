@@ -1,6 +1,6 @@
 <div>
   <h3 class="last-added-word">Последние добавленные слова</h3>
 
-  <app-word *ngFor="let dictionary of dictionary; let i = index" [dictionary]="dictionary"></app-word><hr/>
+  <app-word *ngFor="let store of store$ | async; let i = index" [dictionary]="store"></app-word><hr/>
 </div>
 

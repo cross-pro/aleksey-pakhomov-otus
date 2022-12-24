@@ -1,0 +1,18 @@
+.global-error {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #900;
+  color: white;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  background-color: #900;
+  color: white;
+  border: none;
+}

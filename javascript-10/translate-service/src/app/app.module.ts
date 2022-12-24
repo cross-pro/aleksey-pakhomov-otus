@@ -8,6 +8,7 @@ import { GoComponent } from './components/go/go.component';
 import { RecentlyAddedComponent } from './components/recently-added/recently-added.component';
 import { WordComponent } from './components/word/word.component';
 import {HttpClientModule} from "@angular/common/http";
+import { GlobalErrorComponent } from './components/global-error/global-error.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {HttpClientModule} from "@angular/common/http";
     SettingsComponent,
     GoComponent,
     RecentlyAddedComponent,
-    WordComponent
+    WordComponent,
+    GlobalErrorComponent
   ],
   imports: [
     BrowserModule,

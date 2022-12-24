@@ -10,6 +10,7 @@ import { WordComponent } from './components/word/word.component';
 import {HttpClientModule} from "@angular/common/http";
 import { GlobalErrorComponent } from './components/global-error/global-error.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { AddWordComponent } from './components/add-word/add-word.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     RecentlyAddedComponent,
     WordComponent,
     GlobalErrorComponent,
-    NavigationComponent
+    NavigationComponent,
+    AddWordComponent
   ],
   imports: [
     BrowserModule,

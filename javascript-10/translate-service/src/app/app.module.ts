@@ -6,13 +6,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { GoComponent } from './components/go/go.component';
 import { RecentlyAddedComponent } from './components/recently-added/recently-added.component';
+import { WordComponent } from './components/word/word.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SettingsComponent,
     GoComponent,
-    RecentlyAddedComponent
+    RecentlyAddedComponent,
+    WordComponent
   ],
   imports: [
     BrowserModule,

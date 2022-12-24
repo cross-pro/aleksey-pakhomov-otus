@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import IDictionary from "../../models/dictionary";
 
 @Component({
   selector: 'app-recently-added',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecentlyAddedComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
+  dictionary : IDictionary[] = [{
+    word: "Hello",
+    translatedWord: "Привет"
+  },{
+    word: "Bye",
+    translatedWord: "Пока"
+  }]
 }

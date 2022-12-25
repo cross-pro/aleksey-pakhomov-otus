@@ -33,7 +33,7 @@ export class ChooseLanguageComponent implements OnInit {
       Validators.pattern("^[0-9]*$"),
     ]),
     nativeLang: new FormControl<string>(this.readProperty("nativeLang")),
-    langTo: new FormControl<string>("")
+    langTo: new FormControl<string>(this.readProperty("langTo"))
   })
 
   loadData = () => {

@@ -3,7 +3,7 @@ import {ErrorService} from "../error/error.service";
 import {TranslateService} from "../translate/translate.service";
 import TranslateResponse from "../../models/translate-response";
 import {throwError} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +18,12 @@ export class WordService {
     this.translateService.translate(word).pipe(
       catchError(this.errorHandler.bind(this)))
       .subscribe((data: TranslateResponse) => {
+        console.log(data.responseStatus)
         let translated = data.responseData.translatedText
         /*согласно API стороннего ресурса, если перевод не найдет, то возвращается
-        * то же самое слово*/
-        if (translated === word) {
-          this.errorHandler("Перевод найти не удалось")
+       * то же самое слово*/
+        if (translated === word || data.responseStatus != "200") {
+          this.errorHandler("Статус ответа: " + data.responseStatus + " Текст ответа: " + translated)
         } else {
           console.log("перевод:", translated)
         }

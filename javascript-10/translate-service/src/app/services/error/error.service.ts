@@ -10,6 +10,8 @@ export class ErrorService {
 
   handle(message: string) {
     this.error$.next(message)
+    //через 5с закрывать
+    setTimeout(()=>this.clear(),5000)
   }
 
   clear() {

@@ -58,6 +58,8 @@ export class ChooseLanguageComponent implements OnInit {
   saveData = (data: IFormData) => {
     this.saveToStorage("wordCount", data.words)
     this.saveToStorage("timeToGo", data.time)
+    this.saveToStorage("nativeLang", data.nativeLang)
+    this.saveToStorage("langTo", data.langTo)
   }
 
   submit = () => {

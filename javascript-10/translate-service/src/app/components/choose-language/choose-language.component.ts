@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import IFormData from "../../models/form-data";
 
 @Component({
@@ -16,14 +16,22 @@ export class ChooseLanguageComponent implements OnInit {
     this.loadData()
   }
 
-  wordCount = "102"
+  wordCount = "10"
   timeToGo = "300"
   nativeLang = "Русский"
   langTo = "Английский"
 
   form = new FormGroup({
-    words: new FormControl<string>(this.wordCount),
-    time: new FormControl<string>(this.timeToGo),
+    words: new FormControl<string>(this.wordCount, [
+      Validators.required,
+      Validators.minLength(1),
+      Validators.pattern("^[0-9]*$"),
+    ]),
+    time: new FormControl<string>(this.timeToGo, [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.pattern("^[0-9]*$"),
+    ]),
     nativeLang: new FormControl<string>(this.readProperty("nativeLang")),
     langTo: new FormControl<string>("")
   })
@@ -56,6 +64,7 @@ export class ChooseLanguageComponent implements OnInit {
   }
 
   saveData = (data: IFormData) => {
+    if (Number.isNaN(parseInt(data.words)) || Number.isNaN(parseInt(data.time))) throw new Error("data invalid")
     this.saveToStorage("wordCount", data.words)
     this.saveToStorage("timeToGo", data.time)
     this.saveToStorage("nativeLang", data.nativeLang)
@@ -63,8 +72,21 @@ export class ChooseLanguageComponent implements OnInit {
   }
 
   submit = () => {
-    console.log(this.form.value);
-    this.saveData(this.form.value as IFormData)
+    try {
+      this.saveData(this.form.value as IFormData)
+      alert("Данные сохранены успешно")
+    } catch (e) {
+      alert("Ошибка сохренения данных")
+    }
   }
+
+  get words() {
+    return this.form.controls.words as FormControl;
+  }
+
+  get time() {
+    return this.form.controls.time as FormControl;
+  }
+
 
 }

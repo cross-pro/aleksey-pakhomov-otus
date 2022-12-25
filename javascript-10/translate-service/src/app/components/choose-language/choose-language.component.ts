@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
+import IFormData from "../../models/form-data";
 
 @Component({
   selector: 'app-choose-language',
@@ -15,7 +16,7 @@ export class ChooseLanguageComponent implements OnInit {
     this.loadData()
   }
 
-  wordCount = "10"
+  wordCount = "102"
   timeToGo = "300"
   nativeLang = "Русский"
   langTo = "Английский"
@@ -36,7 +37,7 @@ export class ChooseLanguageComponent implements OnInit {
 
   readProperty(name: string): string {
     if (!name) return ""
-    let value = localStorage.getItem("name")
+    let value = localStorage.getItem(name)
     if (value !== null)
       return value;
     else
@@ -44,17 +45,24 @@ export class ChooseLanguageComponent implements OnInit {
   }
 
   setValue(name: string, value: string): string {
-    if (this.readProperty(name)) return this.readProperty(name)
+    if (this.readProperty(name)) {
+      return this.readProperty(name)
+    }
     return value;
   }
 
-  saveData = () => {
-
+  saveToStorage(name: string, value: string) {
+    localStorage.setItem(name, value)
   }
 
+  saveData = (data: IFormData) => {
+    this.saveToStorage("wordCount", data.words)
+    this.saveToStorage("timeToGo", data.time)
+  }
 
   submit = () => {
     console.log(this.form.value);
+    this.saveData(this.form.value as IFormData)
   }
 
 }

@@ -12,6 +12,8 @@ import { GlobalErrorComponent } from './components/global-error/global-error.com
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AddWordComponent } from './components/add-word/add-word.component';
 import { ChooseLanguageComponent } from './components/choose-language/choose-language.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -23,12 +25,13 @@ import { ChooseLanguageComponent } from './components/choose-language/choose-lan
     GlobalErrorComponent,
     NavigationComponent,
     AddWordComponent,
-    ChooseLanguageComponent
+    ChooseLanguageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

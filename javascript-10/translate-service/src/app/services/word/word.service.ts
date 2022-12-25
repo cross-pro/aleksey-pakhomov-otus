@@ -4,6 +4,7 @@ import {TranslateService} from "../translate/translate.service";
 import TranslateResponse from "../../models/translate-response";
 import {throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {addWord} from "../../util/word-util";
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class WordService {
           this.errorHandler("Статус ответа: " + data.responseStatus + " Текст ответа: " + translated)
         } else {
           console.log("перевод:", translated)
+          addWord(word, translated)
         }
       })
   }

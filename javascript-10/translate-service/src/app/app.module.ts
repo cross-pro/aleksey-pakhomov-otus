@@ -12,7 +12,7 @@ import { GlobalErrorComponent } from './components/global-error/global-error.com
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AddWordComponent } from './components/add-word/add-word.component';
 import { ChooseLanguageComponent } from './components/choose-language/choose-language.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 
 @NgModule({
@@ -31,7 +31,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

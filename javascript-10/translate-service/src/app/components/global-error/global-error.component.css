@@ -6,6 +6,7 @@
   background-color: #900;
   color: white;
   position: relative;
+  z-index: 999;
 }
 
 .close-button {

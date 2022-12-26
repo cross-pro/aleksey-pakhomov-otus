@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import IFormData from "../../models/form-data";
+import {InfoService} from "../../services/info/info.service";
 
 @Component({
   selector: 'app-choose-language',
@@ -9,7 +10,7 @@ import IFormData from "../../models/form-data";
 })
 export class ChooseLanguageComponent implements OnInit {
 
-  constructor() {
+  constructor(private infoService: InfoService) {
   }
 
   ngOnInit(): void {
@@ -74,7 +75,7 @@ export class ChooseLanguageComponent implements OnInit {
   submit = () => {
     try {
       this.saveData(this.form.value as IFormData)
-      alert("Данные сохранены успешно")
+      this.infoService.handle("Данные сохранены успешно")
     } catch (e) {
       alert("Ошибка сохренения данных")
     }

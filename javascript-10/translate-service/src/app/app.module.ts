@@ -13,6 +13,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { AddWordComponent } from './components/add-word/add-word.component';
 import { ChooseLanguageComponent } from './components/choose-language/choose-language.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { InfoComponent } from './components/info/info.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
     NavigationComponent,
     AddWordComponent,
     ChooseLanguageComponent,
+    InfoComponent,
   ],
   imports: [
     BrowserModule,

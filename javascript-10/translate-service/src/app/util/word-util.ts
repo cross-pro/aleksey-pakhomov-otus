@@ -30,4 +30,14 @@ const addWord = (word: string, translate: string): void => {
   localStorage.setItem(getLangSettings(), JSON.stringify(storage))
 }
 
-export {addWord}
+const getReverseStorage = () : IDictionary[] => {
+    let storage = localStorage.getItem(getLangSettings())
+
+    let storeDB
+    if (storage != null) {
+      storeDB = JSON.parse(storage)
+    }
+    return storeDB.reverse().splice(0,10)
+}
+
+export {addWord, getReverseStorage}

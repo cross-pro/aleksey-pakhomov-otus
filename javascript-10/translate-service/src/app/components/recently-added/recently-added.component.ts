@@ -4,7 +4,6 @@ import {TranslateService} from "../../services/translate/translate.service";
 import {StoreService} from "../../services/store/store.service";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
-import {getLangSettings} from "../../util/lang-util";
 
 @Component({
   selector: 'app-recently-added',
@@ -19,9 +18,10 @@ export class RecentlyAddedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.store$ = this.storeService.getAllWords(getLangSettings()).pipe(
-      tap(()=> console.log("loading completed"))
-    );
+    this.store$ = this.storeService.getAllWords()
+      .pipe(
+        tap(() => console.log("loading completed"))
+      );
   }
 
   store$: Observable<IDictionary[]>

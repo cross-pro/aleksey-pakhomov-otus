@@ -3,6 +3,7 @@ import {Observable, of, throwError} from 'rxjs';
 import IDictionary from "../../models/dictionary";
 import {catchError} from "rxjs/operators";
 import {ErrorService} from "../error/error.service";
+import {addWord} from "../../util/word-util";
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,10 @@ export class StoreService {
   errorHandler(error: any) {
     this.errorService.handle(error.toString())
     return throwError(error)
+  }
+
+  addWord = (word:string, translated: string) => {
+    addWord(word, translated);
   }
 
 }

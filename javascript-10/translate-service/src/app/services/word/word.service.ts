@@ -4,7 +4,7 @@ import {TranslateService} from "../translate/translate.service";
 import TranslateResponse from "../../models/translate-response";
 import {throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {addWord} from "../../util/word-util";
+import {StoreService} from "../store/store.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,8 @@ import {addWord} from "../../util/word-util";
 export class WordService {
 
   constructor(private errorService: ErrorService,
-              private translateService: TranslateService) {
+              private translateService: TranslateService,
+              private storeService: StoreService) {
   }
 
   saveWord(word: string) {
@@ -27,7 +28,7 @@ export class WordService {
           this.errorHandler("Статус ответа: " + data.responseStatus + " Текст ответа: " + translated)
         } else {
           console.log("перевод:", translated)
-          addWord(word, translated)
+          this.storeService.addWord(word, translated)
         }
       })
   }

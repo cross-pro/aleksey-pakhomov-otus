@@ -5,6 +5,7 @@ import TranslateResponse from "../../models/translate-response";
 import {throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {StoreService} from "../store/store.service";
+import {MessageService} from "../message/message.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class WordService {
 
   constructor(private errorService: ErrorService,
               private translateService: TranslateService,
-              private storeService: StoreService) {
+              private storeService: StoreService,
+              private messageService: MessageService) {
   }
 
   saveWord(word: string) {
@@ -29,6 +31,11 @@ export class WordService {
         } else {
           console.log("перевод:", translated)
           this.storeService.addWord(word, translated)
+
+          /*здесь обновляется список слов на главной страницы при добавлении слова
+          * своего рода триггер
+          * если неверно, пожалуйста поправьте*/
+          this.messageService.handle("update")
         }
       })
   }

@@ -26,7 +26,6 @@ const addWord = (word: string, translate: string): void => {
 
   let row = buildWordDict(word, translate)
   storage.push(row)
-  console.log(storage)
   localStorage.setItem(getLangSettings(), JSON.stringify(storage))
 }
 

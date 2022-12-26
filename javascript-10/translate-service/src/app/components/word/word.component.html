@@ -11,7 +11,12 @@
     {{dictionary.translatedWord | lowercase}}
   </div>
 
-  <button class="btn btn-default col-xs-5 col-md-4"
+  <button *ngIf="showTranslate" class="btn btn-default col-xs-5 col-md-4"
+          (click)="showTranslate=!showTranslate"
+  >Скрыть перевод
+  </button>
+
+  <button *ngIf="!showTranslate" class="btn btn-default col-xs-5 col-md-4"
           (click)="showTranslate=!showTranslate"
   >Показать перевод
   </button>

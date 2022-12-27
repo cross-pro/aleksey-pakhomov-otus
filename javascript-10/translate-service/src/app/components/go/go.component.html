@@ -27,6 +27,7 @@
     </div>
 
     <div *ngIf="completed">
+      <h1 class="winner" *ngIf="win">Поздравляю с успешным завершение упражнения!</h1>
       <p>
         <span>Слов переведено: </span>
         <b [innerText]="result"></b>
@@ -36,7 +37,10 @@
         <b [innerText]="error"></b>
       </p>
       <div *ngIf="error!=0">
+        <hr/>
         Слова для повторения
+        <app-repeated-word *ngFor="let wordRepeated of wordRepeated" [word] = "wordRepeated"></app-repeated-word>
+
       </div>
     </div>
   </div>

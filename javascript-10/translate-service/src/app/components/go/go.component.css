@@ -25,3 +25,9 @@
   padding: 3rem;
   align-items: center;
 }
+
+.winner {
+  color: dodgerblue;
+  font-size: 20px;
+  margin-bottom: 2rem;
+}

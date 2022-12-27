@@ -39,14 +39,7 @@ const getReverseStorage = (): IDictionary[] => {
   return storeDB.reverse().splice(0, 10)
 }
 
-const readWord = (word: string): IDictionary | null => {
-  let storage: Array<IDictionary> = JSON.parse(getOrInitStorage())
-  let result = storage.find(p=>p.word.toLowerCase()===word.toLowerCase())
-  if (!result) return null
-  return result
-}
-
-const getDictionary = () :Array<IDictionary> => {
+const getDictionary = (): Array<IDictionary> => {
   let storeage = getOrInitStorage();
   return JSON.parse(storeage)
 }

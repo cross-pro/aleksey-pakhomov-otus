@@ -2,7 +2,7 @@
 
   <button *ngIf="!started" class="btn btn-default btn-lg active btn-start" (click)="start()">Начать упражнение</button>
 
-  <div *ngIf="started" class="go">
+  <div *ngIf="started && !completed" class="go">
     <span>Text</span>
     <input id="word" name="word" class="form-control" type="text" placeholder="Введите перевод"/>
     <button class="btn btn-default btn-lg active btn-check">Проверить</button>
@@ -17,6 +17,18 @@
       <b [innerText]="time"></b>
       <span> ceкунд</span>
     </div>
-
+  </div>
+  <div *ngIf="completed">
+    <p>
+      <span>Слов переведено: </span>
+      <b [innerText]="result"></b>
+    </p>
+    <p>
+      <span>С ошибкой: </span>
+      <b [innerText]="error"></b>
+    </p>
+    <div *ngIf="error!=0">
+      Слова для повторения
+    </div>
   </div>
 </div>

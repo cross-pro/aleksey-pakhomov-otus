@@ -14,7 +14,7 @@ const getOrInitStorage = (): string => {
   else return storage;
 }
 
-const buildWordDict = (word: string, translated: string) : IDictionary => {
+const buildWordDict = (word: string, translated: string): IDictionary => {
   return {
     "word": word,
     "translatedWord": translated
@@ -29,14 +29,21 @@ const addWord = (word: string, translate: string): void => {
   localStorage.setItem(getLangSettings(), JSON.stringify(storage))
 }
 
-const getReverseStorage = () : IDictionary[] => {
-    let storage = localStorage.getItem(getLangSettings())
+const getReverseStorage = (): IDictionary[] => {
+  let storage = localStorage.getItem(getLangSettings())
 
-    let storeDB
-    if (storage != null) {
-      storeDB = JSON.parse(storage)
-    }
-    return storeDB.reverse().splice(0,10)
+  let storeDB
+  if (storage != null) {
+    storeDB = JSON.parse(storage)
+  }
+  return storeDB.reverse().splice(0, 10)
 }
 
-export {addWord, getReverseStorage}
+const readWord = (word: string): IDictionary | null => {
+  let storage: Array<IDictionary> = JSON.parse(getOrInitStorage())
+  let result = storage.find(p=>p.word.toLowerCase()===word.toLowerCase())
+  if (!result) return null
+  return result
+}
+
+export {addWord, getReverseStorage, readWord}

@@ -1,34 +1,43 @@
-<div class="exercise">
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="exercise">
+    <button *ngIf="!started" class="btn btn-default btn-lg active btn-start" (click)="start()">Начать упражнение
+    </button>
 
-  <button *ngIf="!started" class="btn btn-default btn-lg active btn-start" (click)="start()">Начать упражнение</button>
-
-  <div *ngIf="started && !completed" class="go">
-    <span>Text</span>
-    <input id="word" name="word" class="form-control" type="text" placeholder="Введите перевод"/>
-    <button class="btn btn-default btn-lg active btn-check">Проверить</button>
-    <div class="result">
-      <span>Переведено слов </span>
-      <b [innerText]="result"></b>
-      <span> с ошибкой </span>
-      <b [innerText]="error"></b>
+    <div *ngIf="started && !completed" class="go">
+      <span [innerText]="word"></span>
+      <input id="translatedWord"
+             name="translatedWord"
+             class="form-control" type="text"
+             placeholder="Введите перевод"
+             formControlName="translatedWord"
+             [(ngModel)]="translatedWord"
+      />
+      <button class="btn btn-default btn-lg active btn-check" (onClick)="submit()">Проверить</button>
+      <div class="result">
+        <span>Переведено слов </span>
+        <b [innerText]="result"></b>
+        <span> с ошибкой </span>
+        <b [innerText]="error"></b>
+      </div>
+      <div class="timer">
+        <span>Осталось </span>
+        <b [innerText]="time"></b>
+        <span> ceкунд</span>
+      </div>
     </div>
-    <div class="timer">
-      <span>Осталось </span>
-      <b [innerText]="time"></b>
-      <span> ceкунд</span>
+
+    <div *ngIf="completed">
+      <p>
+        <span>Слов переведено: </span>
+        <b [innerText]="result"></b>
+      </p>
+      <p>
+        <span>С ошибкой: </span>
+        <b [innerText]="error"></b>
+      </p>
+      <div *ngIf="error!=0">
+        Слова для повторения
+      </div>
     </div>
   </div>
-  <div *ngIf="completed">
-    <p>
-      <span>Слов переведено: </span>
-      <b [innerText]="result"></b>
-    </p>
-    <p>
-      <span>С ошибкой: </span>
-      <b [innerText]="error"></b>
-    </p>
-    <div *ngIf="error!=0">
-      Слова для повторения
-    </div>
-  </div>
-</div>
+</form>

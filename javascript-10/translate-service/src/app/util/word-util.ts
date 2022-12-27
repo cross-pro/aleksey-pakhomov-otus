@@ -46,4 +46,9 @@ const readWord = (word: string): IDictionary | null => {
   return result
 }
 
-export {addWord, getReverseStorage, readWord}
+const getDictionary = () :Array<IDictionary> => {
+  let storeage = getOrInitStorage();
+  return JSON.parse(storeage)
+}
+
+export {addWord, getReverseStorage, getDictionary}

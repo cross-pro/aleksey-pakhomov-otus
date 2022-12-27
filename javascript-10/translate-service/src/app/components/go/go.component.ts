@@ -2,9 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {GoService} from "../../services/go/go.service";
 import {ErrorService} from "../../services/error/error.service";
 import {InfoService} from "../../services/info/info.service";
-import {readWord} from "../../util/word-util";
-import {interval} from "rxjs";
+import {interval, Observable} from "rxjs";
 import {take} from "rxjs/operators";
+import IDictionary from "../../models/dictionary";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {getDictionary} from "../../util/word-util";
 
 @Component({
   selector: 'app-go',
@@ -19,18 +21,33 @@ export class GoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.wordDb = getDictionary();
+    this.nextWord();
   }
 
+  wordDb : Array<IDictionary>
   started = false;
   result = 0
   error = 0
-  time = 10
+  time = 300
   completed = false
+  wordRepeated : Array<IDictionary> = []
+  word = ""
+  translatedWord = ""
+  current: IDictionary
+  counter: any
+
+  form = new FormGroup({
+    word: new FormControl<string>(this.word),
+    translatedWord: new FormControl<string>(this.translatedWord, [
+      Validators.required
+    ]),
+  })
 
   start = () => {
     this.started = true
 
-    interval(1000).pipe(
+    this.counter = interval(1000).pipe(
       take(this.time)
     ).subscribe(()=>{
       this.time--
@@ -43,25 +60,32 @@ export class GoComponent implements OnInit {
   }
 
   /*проверяет ответ*/
-  answer = (word: string, translate: string) => {
-    let lib = readWord(word)
-    if (lib == null) {
-      this.infoService.handle("Слово не найдено, добавлю 5 секунд в качестве компенсации")
-      this.time = this.time + 5
-
-    } else if (lib.word.toLowerCase() === translate.toLowerCase()) {
+  checkAnswer = (word: string, translate: string) => {
+    if (this.current.translatedWord.toLowerCase() === translate.toLowerCase()) {
       this.infoService.handle("Верный ответ")
       this.result++
     } else {
-      this.errorService.handle("Ошибка перевода")
+      this.infoService.handle("Ошибка перевода, будьте внимательнее")
       this.error++
     }
 
+    this.translatedWord = ""
     this.nextWord()
   }
 
   nextWord = () => {
+    this.current =  this.wordDb[this.getRandomInt(this.wordDb.length)]
+    this.word = this.current.word
+    return this.current;
+  }
 
+  submit = () => {
+    let data : IDictionary = this.form.value as IDictionary
+    this.checkAnswer(data.word, data.translatedWord)
+  }
+
+  getRandomInt = (max: number) => {
+    return Math.floor(Math.random() * max);
   }
 
 }

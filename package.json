@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/cross-pro/aleksey-pakhomov-otus#readme",
   "devDependencies": {
+    "vite": "^4.0.3",
     "vitest": "^0.24.3"
   }
 }

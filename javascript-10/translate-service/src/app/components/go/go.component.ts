@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {GoService} from "../../services/go/go.service";
 
 @Component({
   selector: 'app-go',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private goService: GoService) { }
 
   ngOnInit(): void {
   }
+
+  started = false;
+  result = 0
+  error = 0
+  time = 300
+
+  start = () => {
+    this.started = true
+  }
+
+
 
 }

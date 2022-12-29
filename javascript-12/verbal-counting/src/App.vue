@@ -9,7 +9,7 @@
     <Navigation/>
     <div class="content">
         <Settings/>
-        <Game/>
+       <!-- <Game/>-->
     </div>
     <!--<HelloWorld msg="Vite + Vue"/>-->
 </template>

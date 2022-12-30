@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import "./style.css"
+    import Slider from "../../components/slider/Slider.vue"
 
     const play = () => {
         console.log("play")
@@ -9,13 +10,14 @@
 <template>
     <div class="settings">
         <h3>Привет!</h3>
-        <!--<VueSlider/>-->
         <div class="statistics">
 
         </div>
 
         <div class="sets">
             <p>Настройки</p>
+
+            <Slider/>
 
             <div class="inline">
                 <input type="checkbox" id="sum" value="sum">

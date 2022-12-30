@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import "./style.css"
     import Slider from "../../components/slider/Slider.vue"
+    import Statistics from "../../components/statistics/Statistics.vue"
 
     const play = () => {
         console.log("play")
@@ -10,9 +11,7 @@
 <template>
     <div class="settings">
         <h3>Привет!</h3>
-        <div class="statistics">
-
-        </div>
+        <Statistics/>
 
         <div class="sets">
             <p>Настройки</p>
@@ -20,7 +19,7 @@
             <Slider/>
 
             <div class="inline">
-                <input type="checkbox" id="sum" value="sum">
+                <input type="checkbox" id="sum" value="sum" >
                 <label for="sum">Суммирование</label>
             </div>
             <div class="inline">
@@ -40,7 +39,9 @@
                 <label for="exponentiation">Возведение в степень</label>
             </div>
         </div>
-        <button class="btn btn-default" @click="play">Играть</button>
+        <div class="play">
+            <button class="btn btn-default" @click="play">Играть!</button>
+        </div>
     </div>
 
 </template>

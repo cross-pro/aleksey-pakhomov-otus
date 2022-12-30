@@ -28,3 +28,10 @@
     margin-right: 0.7rem;
     transform: scale(1.5);
 }
+
+.play {
+    display: flex;
+    width: 80vh;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}

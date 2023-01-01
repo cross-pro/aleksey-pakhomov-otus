@@ -1,11 +1,12 @@
 import React from 'react'
 import './App.css'
+import "./style/bootstrap.min.css"
 
 function App() {
 
   return (
     <div className="content">
-      Главная страница
+      <h1>Главная страница</h1>
     </div>
   )
 }

@@ -1,11 +1,10 @@
 import React, {createContext, useEffect, useState} from "react"
 import "./index.css"
-import {Slide} from "../slide/index";
 import {Lines} from "../lines/index";
 
 export const SliderContext = createContext({});
 
-export const Slider = ({slides} : {slides: Array<any>}) => {
+export const Slider = ({slides} : {slides: Array<JSX.Element>}) => {
     let [number, setNumber] = useState(0)
 
     //TODO разобраться с нормальным переключение без таймаута

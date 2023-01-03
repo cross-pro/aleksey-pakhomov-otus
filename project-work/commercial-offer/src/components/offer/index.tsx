@@ -1,4 +1,4 @@
-import React, {ReactComponentElement, ReactElement, ReactNode, useEffect, useState} from "react"
+import React from "react"
 import {useParams} from "react-router-dom"
 import {Slider} from "../slider"
 import {Slide} from "../slide/index";
@@ -14,7 +14,7 @@ export const Offer = () => {
 
 }
 
-const loadSlides = (): Array<any> => {
+const loadSlides = (): Array<JSX.Element> => {
     let params = useParams()
     const {id} = params
     console.log(id)

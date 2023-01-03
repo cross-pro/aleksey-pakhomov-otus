@@ -5,17 +5,15 @@ import {SlideDescription} from "../description/index";
 import "./index.css"
 
 
-export const Slide = () => {
+export const Slide = ({title, imageUrl, alt, description}:
+                          { title: string, imageUrl: string, alt: string, description: string }) => {
     return (
         <div className="slide">
-            <SlideTitle title="Косплей ведьмака"/>
+            <SlideTitle title={title}/>
             <SlideImage
-                src={"https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-8f994035-fce9-4ec4-aa7f-134b39feb806"}
-                alt={"картинка не найдена"}/>
-            <SlideDescription description="Серия игр “Ведьмак” не была бы так хороша без Цириллы.
-            Она появляется в третьей части и сразу же вызывает симпатию.
-            Однако, книжная Цири могла бы понравиться геймерам не настолько сильно.
-             Создатели игр хорошо поработали над этим персонажем, перечислим главные изменения."/>
+                src={imageUrl}
+                alt={alt}/>
+            <SlideDescription description={description}/>
         </div>
     )
 }

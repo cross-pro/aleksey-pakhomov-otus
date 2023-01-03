@@ -1,12 +1,15 @@
-import React, {useState} from "react"
+import React from "react"
 import "./index.css"
 
-export const Line = ({active} : {active: boolean}) => {
-    let [activeClass] = useState("line-active")
+export const Line = ({active, number, slideNumber, changeSlide}
+                         : { active: boolean, number: number, slideNumber: number, changeSlide: any }) => {
+
+    const fireNumber = () => {
+        changeSlide(number)
+    }
 
     return (
-        <div className={`line ${active ? activeClass : ""}`}>
-            <span></span>
+        <div onClick={fireNumber} className={`line ${(slideNumber === number) ? "line-active" : ""}`}>
         </div>
     )
 }

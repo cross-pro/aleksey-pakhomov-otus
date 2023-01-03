@@ -1,30 +1,32 @@
-import React, {createContext} from "react"
+import React, {createContext, useEffect, useState} from "react"
 import "./index.css"
 import {Slide} from "../slide/index";
 import {Lines} from "../lines/index";
 
 export const SliderContext = createContext({});
 
-const Slider = () => {
+export const Slider = ({slides} : {slides: Array<any>}) => {
+    let [number, setNumber] = useState(0)
+
+    const changeSlide = (number: number) => {
+        setNumber(number)
+    }
+
+    useEffect(()=>{
+        setNumber(0)
+    }, [])
+
+    const getSlide = ()  => {
+        return slides[number]
+    }
+
     return (
-        <div className="slider">
-            <Lines/>
-            <Slide/>
+        <div className="slider" >
+            <Lines slideNumber={number} changeSlide={changeSlide}/>
+
+            {getSlide()}
 
 
-            <SliderContext.Provider
-                value={{
-                   /* goToSlide,
-                    changeSlide,
-                    slidesCount: items.length,
-                    slideNumber: slide,
-                    items,*/
-                }}
-            >
-
-            </SliderContext.Provider>
         </div>
     )
 }
-
-export {Slider}

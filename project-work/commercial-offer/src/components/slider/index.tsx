@@ -19,8 +19,6 @@ export const Slider = ({slides} : {slides: Array<JSX.Element>}) => {
 
     }
 
-
-
     let [hideClass, setHideClass] = useState("")
 
     useEffect(()=>{

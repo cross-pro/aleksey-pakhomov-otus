@@ -14,13 +14,12 @@ export const Lines = ({slideNumber, changeSlide, slides}
             <ArrowStart slideNumber={slideNumber} changeSlide={changeSlide}/>
             <ArrowLeft slideNumber={slideNumber} changeSlide={changeSlide}/>
 
-            <Line active={true} number={0} slideNumber={slideNumber} changeSlide={changeSlide}/>
-            <Line active={false} number={1} slideNumber={slideNumber} changeSlide={changeSlide}/>
-            <Line active={false} number={2} slideNumber={slideNumber} changeSlide={changeSlide}/>
-            <Line active={false} number={3} slideNumber={slideNumber} changeSlide={changeSlide}/>
-            <Line active={false} number={4} slideNumber={slideNumber} changeSlide={changeSlide}/>
+            {slides.map((slide, index) => {
+                return <Line key={index} number={index} changeSlide={changeSlide} slideNumber={slideNumber}/>
+            })}
+
             <ArrowRight slideNumber={slideNumber} changeSlide={changeSlide}/>
-            <ArrowEnd changeSlide={changeSlide} slideSize={slides.length}/>
+            <ArrowEnd changeSlide={changeSlide} slideSize={slides.length} slideNumber={slideNumber}/>
         </div>
     )
 }

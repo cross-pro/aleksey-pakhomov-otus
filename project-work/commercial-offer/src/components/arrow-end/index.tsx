@@ -1,11 +1,12 @@
 import React from "react"
 import "./index.css"
 
-export const ArrowEnd = ({slideSize, changeSlide}: { slideSize: number, changeSlide: any }) => {
+export const ArrowEnd = ({slideSize, changeSlide, slideNumber}: { slideSize: number, changeSlide: any, slideNumber: number }) => {
 
     const goEnd = () => {
         if (slideSize === 0) return
-        changeSlide(slideSize-1)
+        if (slideNumber === slideSize - 1) return
+        changeSlide(slideSize - 1)
     }
 
     return (

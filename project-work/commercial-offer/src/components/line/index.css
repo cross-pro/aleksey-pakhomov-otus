@@ -10,12 +10,9 @@
     cursor: pointer;
 }
 
-.line:hover {
-    background-color: #7e51d3;
-}
-
 .line-active {
     background-color: #61d2a5;
     height: 0.5rem;
     margin-top: -0.1rem;
 }
+

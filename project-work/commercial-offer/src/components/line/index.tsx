@@ -9,7 +9,7 @@ export const Line = ({active, number, slideNumber, changeSlide}
     }
 
     return (
-        <div onClick={fireNumber} className={`line ${(slideNumber === number) ? "line-active" : ""}`}>
+        <div onClick={fireNumber} className={`line slide-button ${(slideNumber === number) ? "line-active" : ""}`}>
         </div>
     )
 }

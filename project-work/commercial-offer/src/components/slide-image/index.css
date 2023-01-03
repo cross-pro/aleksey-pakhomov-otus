@@ -1,5 +1,5 @@
 .slide-image {
-    max-width: 80vw;
+    max-width: 90vw;
     border-radius: 10px;
-    margin-top: 1rem;
+    margin: 0 auto;
 }

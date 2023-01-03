@@ -1,0 +1,27 @@
+.add-word {
+  display: flex;
+  justify-content: center;
+
+}
+
+input[type="text"].form-control {
+  min-width: 50vw;
+  margin-right: 10px;
+}
+
+
+@media screen and (max-width: 800px){
+  .form-inline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input[type="text"].form-control {
+    margin-right: 0px;
+  }
+
+  button {
+    min-width: 50vw;
+    margin-top: 5px;
+  }
+}

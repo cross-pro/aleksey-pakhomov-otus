@@ -1,0 +1,13 @@
+.global-info {
+  height: 50px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  background-color: white;
+  color: #008080;
+  position: absolute;
+  z-index: 999;
+  bottom: 0px;
+  right: 10px;
+  font-size: 16px;
+}

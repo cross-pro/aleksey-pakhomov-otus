@@ -1,0 +1,9 @@
+<div>
+
+  <app-add-word></app-add-word>
+
+  <hr/>
+
+  <app-word *ngFor="let store of store$ | async; let i = index" [dictionary]="store"></app-word><hr/>
+</div>
+

@@ -9,7 +9,7 @@ export const Slider = ({slides} : {slides: Array<JSX.Element>}) => {
 
     //TODO разобраться с нормальным переключение без таймаута
     const changeSlide = (number: number) => {
-        if (number>slides.length) return
+        if (number>=slides.length) return
 
         setHideClass("fade-in")
         setNumber(number)
@@ -33,7 +33,7 @@ export const Slider = ({slides} : {slides: Array<JSX.Element>}) => {
 
     return (
         <div className="slider" >
-            <Lines slideNumber={number} changeSlide={changeSlide}/>
+            <Lines slides={slides} slideNumber={number} changeSlide={changeSlide}/>
 
             <div className={`slides ${hideClass}`}>
                 {getSlide()}

@@ -4,7 +4,6 @@ import "./index.css"
 export const ArrowRight = ({slideNumber, changeSlide}: { slideNumber: number, changeSlide: any }) => {
 
     const goRight = () => {
-
         changeSlide(slideNumber+1)
     }
 

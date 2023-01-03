@@ -4,7 +4,6 @@ import "./index.css"
 export const ArrowStart = ({slideNumber, changeSlide}: { slideNumber: number, changeSlide: any }) => {
     const goStart = () => {
         if (slideNumber===0) return
-
         changeSlide(0)
     }
 

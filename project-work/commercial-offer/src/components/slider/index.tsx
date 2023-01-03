@@ -9,6 +9,8 @@ export const Slider = ({slides} : {slides: Array<JSX.Element>}) => {
 
     //TODO разобраться с нормальным переключение без таймаута
     const changeSlide = (number: number) => {
+        if (number>slides.length) return
+
         setHideClass("fade-in")
         setNumber(number)
         setTimeout(()=>{

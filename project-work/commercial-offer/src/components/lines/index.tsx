@@ -10,14 +10,14 @@ export const Lines = ({slideNumber, changeSlide}: {slideNumber: number, changeSl
 
     return (
         <div className="lines">
-            <ArrowStart />
-            <ArrowLeft/>
+            <ArrowStart slideNumber={slideNumber} changeSlide={changeSlide}/>
+            <ArrowLeft slideNumber={slideNumber} changeSlide={changeSlide}/>
             <Line active={true} number={0} slideNumber={slideNumber} changeSlide={changeSlide}/>
             <Line active={false} number={1} slideNumber={slideNumber} changeSlide={changeSlide}/>
             <Line active={false} number={2} slideNumber={slideNumber} changeSlide={changeSlide}/>
             <Line active={false} number={3} slideNumber={slideNumber} changeSlide={changeSlide}/>
             <Line active={false} number={4} slideNumber={slideNumber} changeSlide={changeSlide}/>
-            <ArrowRight />
+            <ArrowRight slideNumber={slideNumber} changeSlide={changeSlide}/>
             <ArrowEnd />
         </div>
     )

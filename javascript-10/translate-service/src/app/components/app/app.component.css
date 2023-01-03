@@ -1,0 +1,8 @@
+.content {
+  display: grid;
+  margin-top: 50px;
+}
+
+.components {
+  padding: 2rem;
+}

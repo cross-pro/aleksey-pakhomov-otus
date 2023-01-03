@@ -1,0 +1,33 @@
+.exercise {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 3rem;
+}
+
+.btn-start {
+  margin-bottom: 3rem;
+}
+
+#word {
+  margin-top: 1rem;
+}
+
+.btn-check {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.go {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 3rem;
+  align-items: center;
+}
+
+.winner {
+  color: dodgerblue;
+  font-size: 20px;
+  margin-bottom: 2rem;
+}

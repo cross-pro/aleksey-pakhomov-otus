@@ -1,0 +1,21 @@
+.navigation {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background-color: #575d60;
+  padding: 20px;
+}
+
+.mr-2 {
+  margin-right: 2px;
+}
+
+a {
+  color: white;
+}

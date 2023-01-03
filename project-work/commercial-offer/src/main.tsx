@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                     <Route index element={<App/>}/>
                 </Route>
                 <Route path={"/offer"}>
-                    <Route index element={<Offer/>}/>
+                    <Route index element={<NotFound/>}/>
                     <Route path=":id" element={<Offer/>}/>
                 </Route>
                 <Route path="*" element={<NotFound/>}/>

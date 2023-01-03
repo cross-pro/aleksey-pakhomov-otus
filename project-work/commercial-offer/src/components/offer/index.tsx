@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react"
 import {useParams} from "react-router-dom"
+import {Slider} from "../slider"
 
+/*компонент получает данные по конкретному слайду и отображает слайдер*/
 export const Offer = () => {
 
     let params = useParams()
@@ -14,16 +16,11 @@ export const Offer = () => {
         }
     }, [])
 
-    if (!pageId) {
-        return (
-            <div>Предложение не найдено</div>
-        )
-    }
-    else {
-        return (
-            <div className="offer">
-                <p>Предложение</p>
-            </div>
-        )
-    }
+
+    return (
+        <div className="offer">
+            <Slider/>
+        </div>
+    )
+
 }

@@ -2,6 +2,8 @@ import React from "react"
 import {useParams} from "react-router-dom"
 import {Slider} from "../slider"
 import {Slide} from "../slide/index";
+import { createStore } from "redux";
+import { connect, Provider } from "react-redux";
 
 /*компонент получает данные по конкретному слайду и отображает слайдер*/
 export const Offer = () => {

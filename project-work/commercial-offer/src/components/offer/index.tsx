@@ -1,20 +1,24 @@
 import React from "react"
 import {useParams} from "react-router-dom"
 import {Slider} from "../slider"
-import {Slide} from "../slide/index";
+import {Slide} from "../slide";
+import {useDispatch} from "react-redux";
+
 
 /*компонент получает данные по конкретному слайду и отображает слайдер*/
 export const Offer = () => {
 
+    loadSlides()
+
     return (
         <div className="offer">
-            <Slider slides={loadSlides()}/>
+            <Slider/>
         </div>
     )
 
 }
 
-const loadSlides = (): Array<JSX.Element> => {
+const loadSlides = () => {
     let params = useParams()
     const {id} = params
     console.log(id)
@@ -44,5 +48,14 @@ const loadSlides = (): Array<JSX.Element> => {
                        alt="Изображение не найдено"
     />)
 
-    return slides
+
+    let dispatch = useDispatch();
+
+    dispatch({
+        type: "SLIDES",
+        slides: slides
+    })
+
 }
+
+

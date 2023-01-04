@@ -1,43 +1,48 @@
-import React, {createContext, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import "./index.css"
 import {Lines} from "../lines/index";
+import {useSelector} from "react-redux";
 
-export const SliderContext = createContext({});
-
-export const Slider = ({slides} : {slides: Array<JSX.Element>}) => {
+export const Slider = () => {
     let [number, setNumber] = useState(0)
+
+    const slides = useSelector((state: any)=> {
+        return state.slides
+    })
 
     //TODO разобраться с нормальным переключение без таймаута
     const changeSlide = (number: number) => {
-        if (number>=slides.length) return
+        if (number >= slides.length) return
 
         setHideClass("fade-in")
         setNumber(number)
-        setTimeout(()=>{
+        setTimeout(() => {
             setHideClass("")
-        },1100)
+        }, 1100)
 
     }
 
     let [hideClass, setHideClass] = useState("")
 
-    useEffect(()=>{
+    useEffect(() => {
         setNumber(0)
     }, [])
 
-    const getSlide = ()  => {
+    const getSlide = () => {
         return slides[number]
     }
 
     return (
-        <div className="slider" >
-            <Lines slides={slides} slideNumber={number} changeSlide={changeSlide}/>
+        <div>
+            <div className="slider">
+                <Lines slides={slides} slideNumber={number} changeSlide={changeSlide}/>
 
-            <div className={`slides ${hideClass}`}>
-                {getSlide()}
+                <div className={`slides ${hideClass}`}>
+                    {getSlide()}
+                </div>
+
+
             </div>
-
-
 
         </div>
     )

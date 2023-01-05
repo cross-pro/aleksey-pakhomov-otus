@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom"
 import {Slider} from "../slider"
 import {Slide} from "../slide";
 import {useDispatch} from "react-redux";
-import {useQuery, gql} from "@apollo/client";
+import {useQuery, gql, useLazyQuery} from "@apollo/client";
 import {Loading} from "../loading/index";
 import ISlide from "../../models/slide";
 
@@ -18,37 +18,44 @@ const SLIDES_QUERY = gql`
 `;
 
 
-
 /*компонент получает данные по конкретному слайду и отображает слайдер*/
 export const Offer = () => {
 
+    const altText = "Изображение не найдено"
     let params = useParams()
     const {id} = params
     console.log(id)
+    let dataLoaded = false;
 
     let dispatch = useDispatch();
 
     let [loadData, setLoadData] = useState(true)
 
-    //const {data, loading, error} = useQuery(SLIDES_QUERY);
-    //console.log(data)
-    //if (loading) return <Loading/>
-    //if (error) return <pre>{error.message}</pre>
-
-    //let result = data.slides as ISlide[]
-    //console.log(result)
+    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(SLIDES_QUERY);
 
     useEffect(() => {
-        console.log("useEffect")
-        const slides = loadSlides()
-        dispatch({
-            type: "SLIDES",
-            slides: slides
-        })
-        setLoadData(false)
+        loadExpenseStatus()
+            .then((data) => {
+                const result = data.data.slides as ISlide[]
+                console.log(result)
+                const slides = loadSlides()
+                result.map((element) => {
+                    slides.push(<Slide title={element.title}
+                                       alt={altText}
+                                       description={element.description}
+                                       imageUrl={element.imageUrl}
+                    />)
+                })
+
+                dispatch({
+                    type: "SLIDES",
+                    slides: slides
+                })
+
+                dataLoaded = true
+                setLoadData(false)
+            })
     }, [])
-
-
 
 
     if (loadData) {
@@ -91,8 +98,6 @@ const loadSlides = () => {
                        description="Особенно сильно девушка из книг завидовала красотке Йеннифэр, которая заботилась о ней. Цири просто не могла слышать, как кто-то делает Йен очередной комплимент."
                        alt="Изображение не найдено"
     />)
-
-
 
 
     return slides;

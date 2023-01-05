@@ -5,9 +5,15 @@ import {ArrowLeft} from "../arrow-left/index";
 import {ArrowStart} from "../arrow-start/index";
 import {ArrowRight} from "../arrow-right/index";
 import {ArrowEnd} from "../arrow-end/index";
+import {useSelector} from "react-redux";
 
-export const Lines = ({slideNumber, changeSlide, slides}
-                          : { slideNumber: number, changeSlide: any, slides: Array<JSX.Element> }) => {
+export const Lines = ({slideNumber, slides}
+                          : { slideNumber: number, slides: Array<JSX.Element> }) => {
+
+
+    const changeSlide = useSelector((state: any) => {
+        return state.changeSlide
+    });
 
     return (
         <div className="lines">

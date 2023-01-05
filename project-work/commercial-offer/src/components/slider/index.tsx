@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
 import {Lines} from "../lines/index";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 export const Slider = () => {
     let [number, setNumber] = useState(0)
+
+    let dispatch = useDispatch()
 
     const slides = useSelector((state: any)=> {
         return state.slides
@@ -19,13 +21,16 @@ export const Slider = () => {
         setTimeout(() => {
             setHideClass("")
         }, 1100)
-
     }
 
     let [hideClass, setHideClass] = useState("")
 
     useEffect(() => {
         setNumber(0)
+        dispatch({
+            type: "CHANGE_SLIDE",
+            changeSlide: changeSlide
+        })
     }, [])
 
     const getSlide = () => {
@@ -35,7 +40,7 @@ export const Slider = () => {
     return (
         <div>
             <div className="slider">
-                <Lines slides={slides} slideNumber={number} changeSlide={changeSlide}/>
+                <Lines slides={slides} slideNumber={number} />
 
                 <div className={`slides ${hideClass}`}>
                     {getSlide()}

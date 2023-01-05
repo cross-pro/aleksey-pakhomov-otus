@@ -41,14 +41,10 @@ export const Slider = () => {
         <div>
             <div className="slider">
                 <Lines slides={slides} slideNumber={number} />
-
                 <div className={`slides ${hideClass}`}>
                     {getSlide()}
                 </div>
-
-
             </div>
-
         </div>
     )
 }

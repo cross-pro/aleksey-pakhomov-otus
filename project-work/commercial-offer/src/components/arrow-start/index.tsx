@@ -1,7 +1,13 @@
 import React from "react"
 import "./index.css"
+import {useSelector} from "react-redux";
 
-export const ArrowStart = ({slideNumber, changeSlide}: { slideNumber: number, changeSlide: any }) => {
+export const ArrowStart = ({slideNumber}: { slideNumber: number }) => {
+
+    const changeSlide = useSelector((state: any) => {
+        return state.changeSlide
+    });
+
     const goStart = () => {
         if (slideNumber===0) return
         changeSlide(0)

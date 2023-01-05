@@ -1,8 +1,13 @@
 import React from "react"
 import "./index.css"
+import {useSelector} from "react-redux";
 
-export const Line = ({number, slideNumber, changeSlide}
-                         : { number: number, slideNumber: number, changeSlide: any }) => {
+export const Line = ({number, slideNumber}
+                         : { number: number, slideNumber: number }) => {
+
+    const changeSlide = useSelector((state: any) => {
+        return state.changeSlide
+    });
 
     const fireNumber = () => {
         changeSlide(number)

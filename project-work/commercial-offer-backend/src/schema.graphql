@@ -1,59 +1,12 @@
 type Slide {
-  id: ID!
   title: String!
-  description: String!
+  description: String
   imageUrl: String!
-}
-
-type Item {
-    id: ID!
-    name: String!
-    description: String
-    category: Category!
-    price: Float!
-}
-
-type Category {
-  id: ID!
-  name: String!
-}
-
-type Basket {
-  item: Item
-}
-
-type Order {
-  id: ID!
-  item: Item!
-  orderStatus: ORDER_STATUS
-}
-
-enum ORDER_STATUS {
-  active
-  archive
+  slideId: String
 }
 
 type Query {
-  items: [Item!]
-  item(id: ID!): Item
-  itemByName(name: String): Item
-  itemsByCategory(categoryID: ID!): [Item]
-  category(id: ID!): Category
-  categories: [Category]
-  baskets: [Basket]
-  basket(id: ID!): Basket
-  orders: [Order!]
-  order(id: ID!): Order
-  slides: [Slide!]
+  slides: [Slide]
+  slidesById(slideId: String): [Slide]
 }
 
-type Mutation {
-  createItem(id: ID!, name: String!, description: String, categoryID: Int, price: Float!): Item!
-  updateItem(id: ID!, name: String, description: String, categoryID: Int, price: Float): Item!
-  deleteItem(id: ID!): Item!
-  createCategory(id: ID!, name: String!) : Category!
-  updateCategory(id: ID!, name: String) : Category!
-  deleteCategory(id: ID!) : Category!
-  createBasket(itemID: ID!) : Basket!
-  createOrder(id: ID!, itemID: ID!, orderStatus: ORDER_STATUS) : Order!
-}

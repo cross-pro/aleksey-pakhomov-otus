@@ -17139,90 +17139,44 @@ webpackContext.id = "./src sync recursive ^\\.\\/(schema|schema\\/index)\\.(gql|
 
 /***/ }),
 
-/***/ "./src/data-util.js":
-/*!**************************!*\
-  !*** ./src/data-util.js ***!
-  \**************************/
-/*! exports provided: findElement */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findElement", function() { return findElement; });
-function findElement(field, value, collection) {
-  if (!collection) return undefined;
-  return collection.find(element => element[field] == value);
-}
-
-
-/***/ }),
-
 /***/ "./src/db.js":
 /*!*******************!*\
   !*** ./src/db.js ***!
   \*******************/
-/*! exports provided: items, orders, category, basket */
+/*! exports provided: slides */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "items", function() { return items; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "orders", function() { return orders; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "category", function() { return category; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "basket", function() { return basket; });
-/* harmony import */ var _data_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data-util */ "./src/data-util.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "slides", function() { return slides; });
 // заглушка базы данных
 
-const category = [{
-  id: 1,
-  name: "Books"
+const slides = [{
+  title: "title1",
+  imageUrl: "imageUrl1",
+  description: "description1",
+  slideId: "slideId1"
 }, {
-  id: 2,
-  name: "Car"
+  title: "title2",
+  imageUrl: "imageUrl2",
+  description: "description2",
+  slideId: "slideId1"
 }, {
-  id: 3,
-  name: "Clothes"
+  title: "title3",
+  imageUrl: "imageUrl3",
+  description: "description13",
+  slideId: "slideId1"
+}, {
+  title: "title4",
+  imageUrl: "imageUrl4",
+  description: "description4",
+  slideId: "slideId2"
+}, {
+  title: "title5",
+  imageUrl: "imageUrl5",
+  description: "description5",
+  slideId: "slideId2"
 }];
-const items = [{
-  id: 1,
-  name: "Гарри поттер",
-  description: "Интересная книга",
-  category: Object(_data_util__WEBPACK_IMPORTED_MODULE_0__["findElement"])("id", 1, category),
-  price: 1200
-}, {
-  id: 2,
-  name: "Маугли",
-  description: "Для детей",
-  category: Object(_data_util__WEBPACK_IMPORTED_MODULE_0__["findElement"])("id", 1, category),
-  price: 600
-}, {
-  id: 3,
-  name: "Chevrolet Cruze",
-  description: "Как у соседа",
-  category: Object(_data_util__WEBPACK_IMPORTED_MODULE_0__["findElement"])("id", 2, category),
-  price: 355000
-}, {
-  id: 4,
-  name: "Запорожец",
-  description: "Совсем крайность",
-  category: Object(_data_util__WEBPACK_IMPORTED_MODULE_0__["findElement"])("id", 2, category),
-  price: 10300
-}, {
-  id: 5,
-  name: "Красные штаны",
-  description: "Крутой чувак",
-  category: Object(_data_util__WEBPACK_IMPORTED_MODULE_0__["findElement"])("id", 3, category),
-  price: 10300
-}, {
-  id: 6,
-  name: "Пляжные шорты",
-  description: "То, что нужно на лето, бери не пожалеешь!",
-  category: Object(_data_util__WEBPACK_IMPORTED_MODULE_0__["findElement"])("id", 3, category),
-  price: 10300
-}];
-const orders = [];
-const basket = [];
-
 
 /***/ }),
 
@@ -17236,128 +17190,13 @@ const basket = [];
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./db */ "./src/db.js");
-/* harmony import */ var _data_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data-util */ "./src/data-util.js");
-
 
 const resolvers = {
   Query: {
-    category: (parent, {
-      id
-    }, context, info) => Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", id, _db__WEBPACK_IMPORTED_MODULE_0__["category"]),
-    categories: () => _db__WEBPACK_IMPORTED_MODULE_0__["category"],
-    items: () => _db__WEBPACK_IMPORTED_MODULE_0__["items"],
-    itemByName: (parent, {
-      name
-    }, context, info) => Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("name", name, _db__WEBPACK_IMPORTED_MODULE_0__["items"]),
-    item: (parent, {
-      id
-    }, context, info) => Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", id, _db__WEBPACK_IMPORTED_MODULE_0__["items"]),
-    itemsByCategory: (parent, {
-      categoryID
-    }, context, info) => _db__WEBPACK_IMPORTED_MODULE_0__["items"].filter(p => p.category.id == categoryID),
-    orders: () => _db__WEBPACK_IMPORTED_MODULE_0__["orders"],
-    order: (parent, {
-      id
-    }, context, info) => Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", id, _db__WEBPACK_IMPORTED_MODULE_0__["orders"]),
-    baskets: () => _db__WEBPACK_IMPORTED_MODULE_0__["basket"],
-    basket: (parent, {
-      id
-    }, context, info) => Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", id, _db__WEBPACK_IMPORTED_MODULE_0__["basket"]),
-    slides: () => Object(_db__WEBPACK_IMPORTED_MODULE_0__["items"])()
-  },
-  Mutation: {
-    createItem: (parent, {
-      id,
-      name,
-      description,
-      categoryID,
-      price
-    }, context, info) => {
-      const newItem = {
-        id,
-        name,
-        description,
-        category: Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", categoryID, _db__WEBPACK_IMPORTED_MODULE_0__["category"]),
-        price
-      };
-      _db__WEBPACK_IMPORTED_MODULE_0__["items"].push(newItem);
-      return newItem;
-    },
-    updateItem: (parent, {
-      id,
-      name,
-      description,
-      categoryID,
-      price
-    }, context, info) => {
-      const item = Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", id, _db__WEBPACK_IMPORTED_MODULE_0__["items"]);
-      item.name = name || item.name;
-      item.description = description || item.description;
-      item.category = Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", categoryID, _db__WEBPACK_IMPORTED_MODULE_0__["category"]) || item.category;
-      item.price = price || item.price;
-      return item;
-    },
-    deleteItem: (parent, {
-      id
-    }, context, info) => {
-      const index = _db__WEBPACK_IMPORTED_MODULE_0__["items"].findIndex(p => p.id == id);
-      if (index === -1) throw new Error("Item not found");
-      const item = _db__WEBPACK_IMPORTED_MODULE_0__["items"].splice(index, 1);
-      return item[0];
-    },
-    createCategory: (parent, {
-      id,
-      name
-    }, context, info) => {
-      const newCategory = {
-        id,
-        name
-      };
-      _db__WEBPACK_IMPORTED_MODULE_0__["category"].push(newCategory);
-      return newCategory;
-    },
-    updateCategory: (parent, {
-      id,
-      name
-    }, context, info) => {
-      const newCategory = Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", id, _db__WEBPACK_IMPORTED_MODULE_0__["category"]);
-      newCategory.name = name || newCategory.name;
-      return newCategory;
-    },
-    deleteCategory: (parent, {
-      id
-    }, context, info) => {
-      const isUsedCategory = _db__WEBPACK_IMPORTED_MODULE_0__["items"].find(p => p.category.id == id);
-      if (isUsedCategory !== undefined) throw new Error(`Category is used`);
-      const newCategory = Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", id, _db__WEBPACK_IMPORTED_MODULE_0__["category"]);
-      if (newCategory === null || newCategory === undefined) throw new Error(`Category with id: ${id} not found`);
-      _db__WEBPACK_IMPORTED_MODULE_0__["category"].splice(newCategory, 1);
-      return newCategory;
-    },
-    createBasket: (parent, {
-      itemID
-    }, context, info) => {
-      const exsistingItem = Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", itemID, _db__WEBPACK_IMPORTED_MODULE_0__["items"]);
-      if (exsistingItem === undefined) throw new Error(`Item with id: ${itemID} not found`);
-      const newBasket = {
-        item: exsistingItem
-      };
-      if (Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("item", exsistingItem, _db__WEBPACK_IMPORTED_MODULE_0__["basket"]) === undefined) _db__WEBPACK_IMPORTED_MODULE_0__["basket"].push(newBasket);
-      return newBasket;
-    },
-    createOrder: (parent, {
-      id,
-      itemID,
-      orderStatus
-    }, context, info) => {
-      const newOrder = {
-        id,
-        item: Object(_data_util__WEBPACK_IMPORTED_MODULE_1__["findElement"])("id", itemID, _db__WEBPACK_IMPORTED_MODULE_0__["items"]),
-        orderStatus
-      };
-      _db__WEBPACK_IMPORTED_MODULE_0__["orders"].push(newOrder);
-      return newOrder;
-    }
+    slidesById: (parent, {
+      slideId
+    }, context, info) => _db__WEBPACK_IMPORTED_MODULE_0__["slides"].filter(p => p.slideId == slideId),
+    slides: () => _db__WEBPACK_IMPORTED_MODULE_0__["slides"]
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (resolvers);
@@ -17372,8 +17211,8 @@ const resolvers = {
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Slide"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"title"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"description"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"imageUrl"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Item"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"name"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"description"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"category"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"price"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Category"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"name"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Basket"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"item"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Order"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"item"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"orderStatus"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"ORDER_STATUS"}},"directives":[]}]},{"kind":"EnumTypeDefinition","name":{"kind":"Name","value":"ORDER_STATUS"},"directives":[],"values":[{"kind":"EnumValueDefinition","name":{"kind":"Name","value":"active"},"directives":[]},{"kind":"EnumValueDefinition","name":{"kind":"Name","value":"archive"},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"items"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"item"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"itemByName"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"name"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"itemsByCategory"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"categoryID"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"category"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"categories"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"baskets"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Basket"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"basket"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Basket"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"orders"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Order"}}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"order"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Order"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"slides"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Slide"}}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Mutation"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"createItem"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"name"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"description"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"categoryID"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"price"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"updateItem"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"name"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"description"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"categoryID"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"price"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"deleteItem"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"createCategory"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"name"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"updateCategory"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"name"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"deleteCategory"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"createBasket"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"itemID"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Basket"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"createOrder"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"itemID"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"orderStatus"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ORDER_STATUS"}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Order"}}},"directives":[]}]}],"loc":{"start":0,"end":1168}};
-    doc.loc.source = {"body":"type Slide {\n  id: ID!\n  title: String!\n  description: String!\n  imageUrl: String!\n}\n\ntype Item {\n    id: ID!\n    name: String!\n    description: String\n    category: Category!\n    price: Float!\n}\n\ntype Category {\n  id: ID!\n  name: String!\n}\n\ntype Basket {\n  item: Item\n}\n\ntype Order {\n  id: ID!\n  item: Item!\n  orderStatus: ORDER_STATUS\n}\n\nenum ORDER_STATUS {\n  active\n  archive\n}\n\ntype Query {\n  items: [Item!]\n  item(id: ID!): Item\n  itemByName(name: String): Item\n  itemsByCategory(categoryID: ID!): [Item]\n  category(id: ID!): Category\n  categories: [Category]\n  baskets: [Basket]\n  basket(id: ID!): Basket\n  orders: [Order!]\n  order(id: ID!): Order\n  slides: [Slide!]\n}\n\ntype Mutation {\n  createItem(id: ID!, name: String!, description: String, categoryID: Int, price: Float!): Item!\n  updateItem(id: ID!, name: String, description: String, categoryID: Int, price: Float): Item!\n  deleteItem(id: ID!): Item!\n  createCategory(id: ID!, name: String!) : Category!\n  updateCategory(id: ID!, name: String) : Category!\n  deleteCategory(id: ID!) : Category!\n  createBasket(itemID: ID!) : Basket!\n  createOrder(id: ID!, itemID: ID!, orderStatus: ORDER_STATUS) : Order!\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Slide"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"title"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"description"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"imageUrl"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"slideId"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"slides"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Slide"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"slidesById"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"slideId"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Slide"}}},"directives":[]}]}],"loc":{"start":0,"end":166}};
+    doc.loc.source = {"body":"type Slide {\n  title: String!\n  description: String\n  imageUrl: String!\n  slideId: String\n}\n\ntype Query {\n  slides: [Slide]\n  slidesById(slideId: String): [Slide]\n}\n\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};

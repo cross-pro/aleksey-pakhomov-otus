@@ -1,11 +1,12 @@
 import {
-    slides
-} from "./db"
+    getSlideById,
+    getAllSlide
+} from "./db/db-functions"
 
 const resolvers = {
     Query: {
-        slidesById: (parent, {slideId}, context, info) => slides.filter(p=>p.slideId==slideId),
-        slides: () => slides
+        slidesById: (parent, {slideId}, context, info) => getSlideById(slideId),
+        slides: () => getAllSlide()
     },
 
 }

@@ -17139,44 +17139,62 @@ webpackContext.id = "./src sync recursive ^\\.\\/(schema|schema\\/index)\\.(gql|
 
 /***/ }),
 
-/***/ "./src/db.js":
-/*!*******************!*\
-  !*** ./src/db.js ***!
-  \*******************/
-/*! exports provided: slides */
+/***/ "./src/db/db-functions.ts":
+/*!********************************!*\
+  !*** ./src/db/db-functions.ts ***!
+  \********************************/
+/*! exports provided: getSlideById, getAllSlide */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "slides", function() { return slides; });
-// заглушка базы данных
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSlideById", function() { return getSlideById; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllSlide", function() { return getAllSlide; });
+/* harmony import */ var _mongoClient__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mongoClient */ "./src/db/mongoClient.ts");
 
-const slides = [{
-  title: "title1",
-  imageUrl: "imageUrl1",
-  description: "description1",
-  slideId: "slideId1"
-}, {
-  title: "title2",
-  imageUrl: "imageUrl2",
-  description: "description2",
-  slideId: "slideId1"
-}, {
-  title: "title3",
-  imageUrl: "imageUrl3",
-  description: "description13",
-  slideId: "slideId1"
-}, {
-  title: "title4",
-  imageUrl: "imageUrl4",
-  description: "description4",
-  slideId: "slideId2"
-}, {
-  title: "title5",
-  imageUrl: "imageUrl5",
-  description: "description5",
-  slideId: "slideId2"
-}];
+const getSlideById = async slideId => {
+  const client = await Object(_mongoClient__WEBPACK_IMPORTED_MODULE_0__["mongoClient"])();
+  const slides = await client.db("personal-offer").collection("slides");
+  let result = await slides.find({
+    "slideId": slideId
+  }).toArray();
+  await client.close();
+
+  // @ts-ignore
+  return Promise.resolve(result);
+};
+const getAllSlide = async () => {
+  const client = await Object(_mongoClient__WEBPACK_IMPORTED_MODULE_0__["mongoClient"])();
+  const slides = await client.db("personal-offer").collection("slides");
+  let result = await slides.find({}).toArray();
+  await client.close();
+
+  // @ts-ignore
+  return Promise.resolve(result);
+};
+
+
+/***/ }),
+
+/***/ "./src/db/mongoClient.ts":
+/*!*******************************!*\
+  !*** ./src/db/mongoClient.ts ***!
+  \*******************************/
+/*! exports provided: mongoClient */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mongoClient", function() { return mongoClient; });
+/* harmony import */ var mongodb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongodb */ "mongodb");
+/* harmony import */ var mongodb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongodb__WEBPACK_IMPORTED_MODULE_0__);
+
+const url = "mongodb://root:rfktylfhm@192.168.88.213:27017";
+const mongoClient = async () => {
+  const client = await mongodb__WEBPACK_IMPORTED_MODULE_0__["MongoClient"].connect(url);
+  console.log("Client started!");
+  return client;
+};
 
 /***/ }),
 
@@ -17189,14 +17207,14 @@ const slides = [{
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./db */ "./src/db.js");
+/* harmony import */ var _db_db_functions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./db/db-functions */ "./src/db/db-functions.ts");
 
 const resolvers = {
   Query: {
     slidesById: (parent, {
       slideId
-    }, context, info) => _db__WEBPACK_IMPORTED_MODULE_0__["slides"].filter(p => p.slideId == slideId),
-    slides: () => _db__WEBPACK_IMPORTED_MODULE_0__["slides"]
+    }, context, info) => Object(_db_db_functions__WEBPACK_IMPORTED_MODULE_0__["getSlideById"])(slideId),
+    slides: () => Object(_db_db_functions__WEBPACK_IMPORTED_MODULE_0__["getAllSlide"])()
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (resolvers);
@@ -17742,6 +17760,17 @@ module.exports = require("loglevel");
 /***/ (function(module, exports) {
 
 module.exports = require("lru-cache");
+
+/***/ }),
+
+/***/ "mongodb":
+/*!**************************!*\
+  !*** external "mongodb" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mongodb");
 
 /***/ }),
 

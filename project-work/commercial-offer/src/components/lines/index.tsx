@@ -7,24 +7,23 @@ import {ArrowRight} from "../arrow-right/index";
 import {ArrowEnd} from "../arrow-end/index";
 import {useSelector} from "react-redux";
 
-export const Lines = ({slideNumber}
-                          : { slideNumber: number}) => {
+export const Lines = () => {
 
-    const slides : Array<JSX.Element> = useSelector((state: any)=> {
+    const slides: Array<JSX.Element> = useSelector((state: any) => {
         return state.slides
     })
 
     return (
         <div className="lines">
-            <ArrowStart slideNumber={slideNumber} />
-            <ArrowLeft slideNumber={slideNumber}/>
+            <ArrowStart />
+            <ArrowLeft/>
 
             {slides.map((slide, index) => {
-                return <Line key={index} number={index} slideNumber={slideNumber}/>
+                return <Line key={index} number={index}/>
             })}
 
-            <ArrowRight slideNumber={slideNumber}/>
-            <ArrowEnd slideNumber={slideNumber}/>
+            <ArrowRight />
+            <ArrowEnd />
         </div>
     )
 }

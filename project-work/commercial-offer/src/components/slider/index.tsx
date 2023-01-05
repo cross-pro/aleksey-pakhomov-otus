@@ -8,6 +8,7 @@ export const Slider = () => {
 
     let dispatch = useDispatch()
 
+
     const slides = useSelector((state: any)=> {
         return state.slides
     })
@@ -27,11 +28,20 @@ export const Slider = () => {
 
     useEffect(() => {
         setNumber(0)
+
         dispatch({
             type: "CHANGE_SLIDE",
             changeSlide: changeSlide
         })
+
     }, [])
+
+    useEffect(()=>{
+        dispatch({
+            type: "SLIDE_NUMBER",
+            slideNumber: number
+        })
+    }, [number])
 
     const getSlide = () => {
         return slides[number]
@@ -40,7 +50,7 @@ export const Slider = () => {
     return (
         <div>
             <div className="slider">
-                <Lines slideNumber={number} />
+                <Lines />
                 <div className={`slides ${hideClass}`}>
                     {getSlide()}
                 </div>

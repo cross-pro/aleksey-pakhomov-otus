@@ -2,7 +2,7 @@ import React from "react"
 import "./index.css"
 import {useSelector} from "react-redux";
 
-export const ArrowEnd = ({slideNumber}: { slideNumber: number }) => {
+export const ArrowEnd = () => {
 
     const changeSlide = useSelector((state: any) => {
         return state.changeSlide
@@ -10,6 +10,10 @@ export const ArrowEnd = ({slideNumber}: { slideNumber: number }) => {
 
     const slides = useSelector((state: any)=> {
         return state.slides
+    })
+
+    let slideNumber: number = useSelector((state: any) => {
+        return state.slideNumber
     })
 
     const slideSize = slides.length

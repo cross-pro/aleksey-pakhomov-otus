@@ -40,7 +40,7 @@ export const Slider = () => {
     return (
         <div>
             <div className="slider">
-                <Lines slides={slides} slideNumber={number} />
+                <Lines slideNumber={number} />
                 <div className={`slides ${hideClass}`}>
                     {getSlide()}
                 </div>

@@ -1,28 +1,72 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {useParams} from "react-router-dom"
 import {Slider} from "../slider"
 import {Slide} from "../slide";
 import {useDispatch} from "react-redux";
+import {useQuery, gql} from "@apollo/client";
+import {Loading} from "../loading/index";
+import ISlide from "../../models/slide";
+
+const SLIDES_QUERY = gql`
+    {
+        slides {
+            title,
+            imageUrl,
+            description,
+        }
+    }
+`;
+
 
 
 /*компонент получает данные по конкретному слайду и отображает слайдер*/
 export const Offer = () => {
 
-    loadSlides()
+    let params = useParams()
+    const {id} = params
+    console.log(id)
 
-    return (
-        <div className="offer">
-            <Slider/>
-        </div>
-    )
+    let dispatch = useDispatch();
+
+    let [loadData, setLoadData] = useState(true)
+
+    //const {data, loading, error} = useQuery(SLIDES_QUERY);
+    //console.log(data)
+    //if (loading) return <Loading/>
+    //if (error) return <pre>{error.message}</pre>
+
+    //let result = data.slides as ISlide[]
+    //console.log(result)
+
+    useEffect(() => {
+        console.log("useEffect")
+        const slides = loadSlides()
+        dispatch({
+            type: "SLIDES",
+            slides: slides
+        })
+        setLoadData(false)
+    }, [])
+
+
+
+
+    if (loadData) {
+        return (
+            <Loading/>
+        )
+    } else {
+        return (
+            <div className="offer">
+                <Slider/>
+            </div>
+        )
+    }
 
 }
 
 const loadSlides = () => {
-    let params = useParams()
-    const {id} = params
-    console.log(id)
-    let slides: Array<any> = []
+    let slides: Array<JSX.Element> = []
     slides.push(
         <Slide title={"Косплей цири"}
                imageUrl="https://webpulse.imgsmail.ru/imgpreview?mb=webpulse&key=pulse_cabinet-image-8f994035-fce9-4ec4-aa7f-134b39feb806"
@@ -49,13 +93,8 @@ const loadSlides = () => {
     />)
 
 
-    let dispatch = useDispatch();
 
-    dispatch({
-        type: "SLIDES",
-        slides: slides
-    })
+
+    return slides;
 
 }
-
-

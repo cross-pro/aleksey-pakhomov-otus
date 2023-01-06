@@ -5,8 +5,14 @@ type Slide {
   slideId: String
 }
 
+type Credentials {
+  login: String!
+  password: String!
+}
+
 type Query {
   slides: [Slide]
   slidesById(slideId: String): [Slide]
+  credentialsByLogin(login: String) : Credentials
 }
 

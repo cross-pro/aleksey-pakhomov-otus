@@ -29,4 +29,16 @@ const getAllSlide = async (): Promise<ISlide []> => {
 
 }
 
-export {getSlideById, getAllSlide}
+const getCredentianls = async (login: string) => {
+    const client = await mongoClient()
+
+    const slides = await client.db("personal-offer")
+        .collection("credentials")
+
+    let result = await slides.findOne({login: login})
+    await client.close();
+
+    return Promise.resolve(result)
+}
+
+export {getSlideById, getAllSlide, getCredentianls}

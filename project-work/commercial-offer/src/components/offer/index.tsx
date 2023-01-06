@@ -3,16 +3,16 @@ import {useParams} from "react-router-dom"
 import {Slider} from "../slider"
 import {Slide} from "../slide";
 import {useDispatch} from "react-redux";
-import {useQuery, gql, useLazyQuery} from "@apollo/client";
+import {gql, useLazyQuery} from "@apollo/client";
 import {Loading} from "../loading/index";
 import ISlide from "../../models/slide";
 
 const SLIDES_QUERY = gql`
-    {
-        slides {
-            title,
-            imageUrl,
-            description,
+    query GetSlideById($slideId: String) {
+        slidesById(slideId: $slideId) {
+            title
+            imageUrl
+            description
         }
     }
 `;
@@ -23,22 +23,25 @@ export const Offer = () => {
     const altText = "Изображение не найдено"
     let params = useParams()
     const {id} = params
-
     let dataLoaded = false;
 
     let dispatch = useDispatch();
 
     let [loadData, setLoadData] = useState(true)
 
-    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(SLIDES_QUERY);
+    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(SLIDES_QUERY, {
+        variables: {
+            slideId: id
+        }
+    });
 
     useEffect(() => {
         console.log(id)
         loadExpenseStatus()
             .then((data) => {
-                const result = data.data.slides as ISlide[]
+                const result = data.data.slidesById as ISlide[]
                 console.log(result)
-                const slides : Array<JSX.Element> = []
+                const slides: Array<JSX.Element> = []
                 result.map((element) => {
                     slides.push(<Slide title={element.title}
                                        alt={altText}

@@ -21,7 +21,6 @@ const SLIDES_QUERY = gql`
 /*компонент получает данные по конкретному слайду и отображает слайдер*/
 export const Offer = () => {
 
-    const altText = "Изображение не найдено"
     let params = useParams()
     const {id} = params
     let dataLoaded = false;
@@ -47,7 +46,6 @@ export const Offer = () => {
                 const slides: Array<JSX.Element> = []
                 result.map((element) => {
                     slides.push(<Slide title={element.title}
-                                       alt={altText}
                                        description={element.description}
                                        imageUrl={element.imageUrl}
                     />)

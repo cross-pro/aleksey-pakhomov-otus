@@ -7,6 +7,7 @@ function App() {
 
     let [isLoggedIn, setIsLoggedIn] = useState(false)
 
+    /*здесь должна быть авторизация JWT xD*/
     if (!isLoggedIn) {
         return (
             <Login setIsLoggedIn={setIsLoggedIn}/>

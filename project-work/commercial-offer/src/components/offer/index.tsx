@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import {gql, useLazyQuery} from "@apollo/client";
 import {Loading} from "../loading/index";
 import ISlide from "../../models/slide";
+import {NotFound} from "../not-found";
 
 const SLIDES_QUERY = gql`
     query GetSlideById($slideId: String) {
@@ -28,6 +29,7 @@ export const Offer = () => {
     let dispatch = useDispatch();
 
     let [loadData, setLoadData] = useState(true)
+    let [dataFound, setDataFound] = useState(false)
 
     const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(SLIDES_QUERY, {
         variables: {
@@ -41,6 +43,7 @@ export const Offer = () => {
             .then((data) => {
                 const result = data.data.slidesById as ISlide[]
                 console.log(result)
+                if (result.length) setDataFound(true)
                 const slides: Array<JSX.Element> = []
                 result.map((element) => {
                     slides.push(<Slide title={element.title}
@@ -64,6 +67,10 @@ export const Offer = () => {
     if (loadData) {
         return (
             <Loading/>
+        )
+    } else if (!dataFound) {
+        return (
+            <NotFound/>
         )
     } else {
         return (

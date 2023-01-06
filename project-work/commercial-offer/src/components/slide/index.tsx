@@ -8,8 +8,6 @@ import "./index.css"
 export const Slide = ({title, imageUrl, alt, description}:
                           { title: string, imageUrl: string, alt: string, description: string }) => {
 
-
-
     return (
         <div className={`slide`}>
             <SlideTitle title={title}/>

@@ -1,0 +1,21 @@
+.login-page {
+    display: flex;
+    justify-content: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid darkslateblue;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 30vh auto;
+}
+
+.login-form input {
+    margin-bottom: 0.5rem;
+    border-radius: 1px;
+}
+

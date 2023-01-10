@@ -31,7 +31,8 @@ export const PresentationList = () => {
 
     return (
         <div className="presentation-list">
-            {list && list.map((desc: IPresentationList, index: number) => {
+            <button className="btn btn-primary">Добавить презентацию</button>
+            {list.map((desc: IPresentationList, index: number) => {
                 return <Presentation key={index} description={desc.description}/>
             })}
         </div>

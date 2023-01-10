@@ -7,6 +7,7 @@ import {PresentationList} from "./components/presentation-list/index";
 function App() {
 
     let [isLoggedIn, setIsLoggedIn] = useState(true)
+    let [isEdit, setIsEdit] = useState("false")
 
     /*здесь должна быть авторизация JWT xD*/
     if (!isLoggedIn) {
@@ -16,7 +17,12 @@ function App() {
     } else {
         return (
             <div className="content">
-                <PresentationList />
+                <div className="left">
+                    <PresentationList/>
+                </div>
+                <div className="right">
+                    Редактирование элемента
+                </div>
             </div>
         )
     }

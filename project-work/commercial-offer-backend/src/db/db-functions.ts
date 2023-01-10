@@ -52,4 +52,13 @@ const getCredentianls = async (login: string) => {
     return Promise.resolve(result)
 }
 
-export {getSlideById, getAllSlide, getCredentianls}
+const getPresentations = async () => {
+    const client = await mongoClient()
+    const presentations = client.db("personal-offer").collection("presentations")
+    const result = await presentations.find().toArray()
+
+    await client.close();
+    return Promise.resolve(result)
+}
+
+export {getSlideById, getAllSlide, getCredentianls, getPresentations}

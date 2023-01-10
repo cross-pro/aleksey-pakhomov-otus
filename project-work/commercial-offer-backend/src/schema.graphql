@@ -15,9 +15,14 @@ type Presentations {
   slides: [Slide]
 }
 
+type PresentationList {
+  description: String!
+}
+
 type Query {
   slides: [Slide]
   slidesById(slideId: String): [Presentations]
   credentialsByLogin(login: String) : Credentials
+  presentations: [PresentationList]
 }
 

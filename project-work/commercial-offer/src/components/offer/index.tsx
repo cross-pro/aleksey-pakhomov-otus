@@ -7,13 +7,17 @@ import {gql, useLazyQuery} from "@apollo/client";
 import {Loading} from "../loading/index";
 import ISlide from "../../models/slide";
 import {NotFound} from "../not-found";
+import IPresentations from "../../models/presentations";
 
 const SLIDES_QUERY = gql`
     query GetSlideById($slideId: String) {
         slidesById(slideId: $slideId) {
-            title
-            imageUrl
             description
+            slides {
+                imageUrl
+                title
+                description
+            }
         }
     }
 `;
@@ -29,6 +33,7 @@ export const Offer = () => {
 
     let [loadData, setLoadData] = useState(true)
     let [dataFound, setDataFound] = useState(false)
+    let [title, setTitle] = useState("")
 
     const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(SLIDES_QUERY, {
         variables: {
@@ -37,14 +42,23 @@ export const Offer = () => {
     });
 
     useEffect(() => {
+        document.title = title
+    }, [title])
+
+    useEffect(() => {
         console.log(id)
         loadExpenseStatus()
-            .then((data) => {
-                const result = data.data.slidesById as ISlide[]
+            .then((data: any) => {
+                const result = data.data.slidesById[0] as IPresentations
                 console.log(result)
-                if (result.length) setDataFound(true)
+
+                if (result.description) setTitle(result.description)
+
+                let slideList : ISlide[] = result.slides
+
+                if (slideList.length) setDataFound(true)
                 const slides: Array<JSX.Element> = []
-                result.map((element) => {
+                slideList.map((element) => {
                     slides.push(<Slide title={element.title}
                                        description={element.description}
                                        imageUrl={element.imageUrl}

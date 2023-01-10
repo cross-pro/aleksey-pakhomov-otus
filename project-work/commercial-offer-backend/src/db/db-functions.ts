@@ -21,12 +21,9 @@ const getSlideById = async (slideId: string): Promise<any> => {
             }
         ]).toArray()
 
-    console.log(result)
     await client.close();
 
-    // @ts-ignore
-    return Promise.resolve(result as ISlide[])
-
+    return Promise.resolve(result)
 }
 
 const getAllSlide = async (): Promise<ISlide []> => {

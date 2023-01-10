@@ -10,9 +10,14 @@ type Credentials {
   password: String!
 }
 
+type Presentations {
+  description: String
+  slides: [Slide]
+}
+
 type Query {
   slides: [Slide]
-  slidesById(slideId: String): [Slide]
+  slidesById(slideId: String): [Presentations]
   credentialsByLogin(login: String) : Credentials
 }
 

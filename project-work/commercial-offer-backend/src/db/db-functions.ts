@@ -1,13 +1,27 @@
 import {mongoClient} from "./mongoClient"
-import ISlide from "../models/slide";
+import ISlide from "../models/slide"
+import {ObjectID} from "mongodb"
 
-const getSlideById = async (slideId: string): Promise<ISlide []> => {
+const getSlideById = async (slideId: string): Promise<any> => {
     const client = await mongoClient()
 
-    const slides = await client.db("personal-offer")
-        .collection("slides")
+    let id = new ObjectID(slideId)
 
-    let result = await slides.find({"slideId": slideId}).toArray()
+    let result = await client.db("personal-offer").collection('presentations').aggregate(
+        [
+            {$match: {_id: id}},
+            {
+                $lookup:
+                    {
+                        from: "slides",
+                        localField: "slides",
+                        foreignField: "_id",
+                        as: "slides",
+                    }
+            }
+        ]).toArray()
+
+    console.log(result)
     await client.close();
 
     // @ts-ignore

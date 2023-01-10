@@ -2,10 +2,11 @@ import React, {useState} from 'react'
 import './App.css'
 import "./style/bootstrap.min.css"
 import {Login} from "./components/login/index";
+import {PresentationList} from "./components/presentation-list/index";
 
 function App() {
 
-    let [isLoggedIn, setIsLoggedIn] = useState(false)
+    let [isLoggedIn, setIsLoggedIn] = useState(true)
 
     /*здесь должна быть авторизация JWT xD*/
     if (!isLoggedIn) {
@@ -15,7 +16,7 @@ function App() {
     } else {
         return (
             <div className="content">
-                <h1>Главная страница</h1>
+                <PresentationList />
             </div>
         )
     }

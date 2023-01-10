@@ -45,7 +45,7 @@ export const Login = ({setIsLoggedIn}: { setIsLoggedIn: Dispatch<SetStateAction<
         }
 
         loadExpenseStatus()
-            .then((data) => {
+            .then((data: any) => {
                 let credentials = data.data.credentialsByLogin as ICredentials
                 if (credentials.login === login && credentials.password === password) {
                     setIsLoggedIn(true)

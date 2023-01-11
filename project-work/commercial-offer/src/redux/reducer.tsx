@@ -16,6 +16,11 @@ export const reducer = (state = initialState, action: any) => {
                 ...state,
                 slideNumber: action.slideNumber
             }
+        case "EDIT_PRESENTATION":
+            return {
+                ...state,
+                presentation: action.presentation
+            }
         default:
             return state;
     }

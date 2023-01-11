@@ -3,6 +3,7 @@ import './App.css'
 import "./style/bootstrap.min.css"
 import {Login} from "./components/login/index";
 import {PresentationList} from "./components/presentation-list/index";
+import {EditPresentation} from "./components/edit-presentation/index";
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
                     <PresentationList/>
                 </div>
                 <div className="right">
-                    Редактирование элемента
+                    <EditPresentation/>
                 </div>
             </div>
         )

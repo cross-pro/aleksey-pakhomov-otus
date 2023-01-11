@@ -11,6 +11,7 @@
     min-width: 20vw;
     margin-right: 1rem;
     min-height: 90vh;
+    border-right: 1px solid #cce5ff;
 }
 
 .right {

@@ -32,6 +32,7 @@ export const PresentationList = () => {
     return (
         <div className="presentation-list">
             <button className="btn btn-primary">Добавить презентацию</button>
+            <hr/>
             {list.map((desc: IPresentationList, index: number) => {
                 return <Presentation key={index} id={desc._id} description={desc.description}/>
             })}

@@ -1,24 +1,7 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
 import {useSelector} from "react-redux";
-
-const editForm = (desc: string, slides: Array<any>) => {
-    return (
-        <div className="edit-form">
-            <div className="input-group">
-                <input type="text"
-                       className="form-control"
-                       id="title"
-                       placeholder="Введите название"
-                       required
-                       value={desc}
-                />
-                <button className="btn btn-primary btn-save">Сохранить</button>
-            </div>
-            <hr/>
-        </div>
-    )
-}
+import {EditForm} from "../edit-form/index";
 
 export const EditPresentation = () => {
 
@@ -27,17 +10,17 @@ export const EditPresentation = () => {
     });
     let [presentation, setPresentation] = useState(presentationData);
 
-    useEffect(()=>{
+    useEffect(() => {
         setPresentation(presentationData)
-    },[])
+    }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         setPresentation(presentationData)
-    },[presentationData])
+    }, [presentationData])
 
     return (
         <div className="edit-presentation">
-            {presentation ? editForm(presentation.description, []) : null}
+            {presentation ? <EditForm desc={presentation.description} slides={[]}/> : null}
         </div>
     )
 }

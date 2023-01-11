@@ -8,13 +8,13 @@
 .left {
     display: flex;
     flex-direction: column;
-    min-width: 20vw;
     margin-right: 1rem;
-    min-height: 90vh;
+    min-height: 20vh;
     border-right: 1px solid #cce5ff;
+    padding-right: 1rem;
 }
 
 .right {
     display: flex;
-    min-width: 50vw;
+    /*min-width: 50vw;*/
 }

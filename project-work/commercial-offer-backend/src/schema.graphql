@@ -16,6 +16,7 @@ type Presentations {
 }
 
 type PresentationList {
+  _id: String
   description: String!
 }
 

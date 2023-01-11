@@ -9,6 +9,7 @@ export const PresentationList = () => {
     const PRESENTATIONS_QUERY = gql`
         query GetPresentations  {
             presentations {
+                _id
                 description
             }
         }
@@ -33,7 +34,7 @@ export const PresentationList = () => {
         <div className="presentation-list">
             <button className="btn btn-primary">Добавить презентацию</button>
             {list.map((desc: IPresentationList, index: number) => {
-                return <Presentation key={index} description={desc.description}/>
+                return <Presentation key={index} id={desc._id} description={desc.description}/>
             })}
         </div>
     )

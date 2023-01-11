@@ -26,7 +26,6 @@ export const PresentationList = () => {
             console.log(listPres)
             if (listPres && listPres.length>0) setList(listPres)
         })
-
     }, [])
 
 

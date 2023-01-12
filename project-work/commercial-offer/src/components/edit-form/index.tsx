@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
+import {SlideView} from "../slide-view/index";
+import IPresentationList from "../../models/presentation-list";
+import {Presentation} from "../presentation/index";
 
 export const EditForm = ({desc, slides}: { desc: string, slides: Array<any> }) => {
 
     let [isEdit, setIsEdit] = useState(false);
     let [title, setTitle] = useState(desc)
 
-    useEffect(()=>{
+    useEffect(() => {
         setTitle(desc)
-    },[desc])
+    }, [desc])
 
     const onChange = (e: any) => {
         let value = e.target.value
@@ -32,6 +35,13 @@ export const EditForm = ({desc, slides}: { desc: string, slides: Array<any> }) =
             </div>
             <hr/>
 
+            <div className="slides">
+                {
+                    slides && slides.map((slide, index) => {
+                        return <SlideView key={index} slide={slide}/>
+                    })
+                }
+            </div>
 
         </div>
     )

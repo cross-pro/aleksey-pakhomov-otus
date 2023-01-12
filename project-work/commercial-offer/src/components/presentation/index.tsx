@@ -13,6 +13,7 @@ export const Presentation = ({description, id}: { description: string, id: strin
             slidesById(slideId: $id) {
                 description
                 slides {
+                    _id
                     imageUrl
                     title
                     description
@@ -28,7 +29,7 @@ export const Presentation = ({description, id}: { description: string, id: strin
     });
 
     const onClick = () => {
-        loadExpenseStatus().then((data)=>{
+        loadExpenseStatus().then((data) => {
             const presentation = data.data.slidesById[0] as IPresentations
 
             dispatch({

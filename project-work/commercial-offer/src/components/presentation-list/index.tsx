@@ -23,7 +23,6 @@ export const PresentationList = () => {
     useEffect(() => {
         loadExpenseStatus().then((data) => {
             const listPres = data.data.presentations
-            console.log(listPres)
             if (listPres && listPres.length>0) setList(listPres)
         })
     }, [])

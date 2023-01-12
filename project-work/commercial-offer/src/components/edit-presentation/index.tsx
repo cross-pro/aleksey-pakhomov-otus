@@ -20,7 +20,10 @@ export const EditPresentation = () => {
 
     return (
         <div className="edit-presentation">
-            {presentation ? <EditForm desc={presentation.description} slides={presentation.slides}/> : null}
+            {presentation ? <EditForm desc={presentation.description}
+                                      slides={presentation.slides}
+            _id={presentation._id}
+            /> : null}
         </div>
     )
 }

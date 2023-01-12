@@ -4,7 +4,7 @@ import {SlideView} from "../slide-view/index";
 import IPresentationList from "../../models/presentation-list";
 import {Presentation} from "../presentation/index";
 
-export const EditForm = ({desc, slides}: { desc: string, slides: Array<any> }) => {
+export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>, _id: string }) => {
 
     let [isEdit, setIsEdit] = useState(false);
     let [title, setTitle] = useState(desc)
@@ -16,6 +16,16 @@ export const EditForm = ({desc, slides}: { desc: string, slides: Array<any> }) =
     const onChange = (e: any) => {
         let value = e.target.value
         setTitle(value)
+    }
+
+    const openInNewTab = (url: string) => {
+        window.open(url, '_blank', 'noreferrer');
+    };
+
+    const watchResult = () => {
+        let appAddress = window.location.href
+        console.log(appAddress)
+        openInNewTab(appAddress+"share/"+_id)
     }
 
     return (
@@ -31,7 +41,7 @@ export const EditForm = ({desc, slides}: { desc: string, slides: Array<any> }) =
                 />
                 <button className="btn btn-primary btn-save">Сохранить</button>
                 <button className="btn btn-primary btn-add">Добавить слайд</button>
-                <button className="btn btn-primary btn-watch">Просмотр результата</button>
+                <button className="btn btn-primary btn-watch" onClick={watchResult}>Просмотр результата</button>
             </div>
             <hr/>
 

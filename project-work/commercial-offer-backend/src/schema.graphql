@@ -12,6 +12,7 @@ type Credentials {
 }
 
 type Presentations {
+  _id: String
   description: String
   slides: [Slide]
 }

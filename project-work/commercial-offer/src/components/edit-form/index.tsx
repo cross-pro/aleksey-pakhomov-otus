@@ -28,6 +28,10 @@ export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>
         openInNewTab(appAddress+"share/"+_id)
     }
 
+    const savePresentation = () => {
+
+    }
+
     return (
         <div className="edit-form">
             <div className="input-group input-form">
@@ -39,7 +43,7 @@ export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>
                        value={title}
                        onChange={onChange}
                 />
-                <button className="btn btn-primary btn-save">Сохранить</button>
+                <button className="btn btn-primary btn-save" onClick={savePresentation}>Сохранить</button>
                 <button className="btn btn-primary btn-add">Добавить слайд</button>
                 <button className="btn btn-primary btn-watch" onClick={watchResult}>Просмотр результата</button>
             </div>

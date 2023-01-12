@@ -3,7 +3,8 @@ import {
     getAllSlide,
     getCredentianls,
     getPresentations,
-updateSlide
+    updateSlide,
+    updatePresentation
 } from "./db/db-functions"
 
 const resolvers = {
@@ -16,7 +17,8 @@ const resolvers = {
 
     Mutation: {
         updateSlide: (parent, {_id, title, description, imageUrl}, context, info) =>
-            updateSlide(_id, title, description, imageUrl)
+            updateSlide(_id, title, description, imageUrl),
+        updatePresentation: (parent, {_id, description}, context, info) => updatePresentation(_id, description)
     }
 
 }

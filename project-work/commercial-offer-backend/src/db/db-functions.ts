@@ -92,4 +92,21 @@ const updateSlide = async (_id: string,
     return result
 }
 
-export {getSlideById, getAllSlide, getCredentianls, getPresentations, updateSlide}
+const updatePresentation = async(_id: string, description: string) => {
+    const client = await mongoClient()
+    const presentations = client.db("personal-offer").collection("presentations")
+    const objectId = new ObjectID(_id)
+    await presentations.updateOne(
+        {_id: objectId},
+        {
+            $set: {
+                description: description
+            }
+        }
+    )
+    let result = await getSlideById(_id)
+    console.log(result)
+    return result[0]
+}
+
+export {getSlideById, getAllSlide, getCredentianls, getPresentations, updateSlide, updatePresentation}

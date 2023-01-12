@@ -40,6 +40,14 @@ const getAllSlide = async (): Promise<ISlide []> => {
 
 }
 
+const getSlide = async (_id: string) => {
+    const client = await mongoClient()
+    const slides = client.db("personal-offer").collection("slides")
+    let objectId = new ObjectID(_id)
+    let result = await slides.findOne({_id: objectId})
+    return result
+}
+
 const getCredentianls = async (login: string) => {
     const client = await mongoClient()
 
@@ -61,4 +69,27 @@ const getPresentations = async () => {
     return Promise.resolve(result)
 }
 
-export {getSlideById, getAllSlide, getCredentianls, getPresentations}
+const updateSlide = async (_id: string,
+                           title: string,
+                           description: string,
+                           imageUrl: string) => {
+    const client = await mongoClient()
+    const slides = client.db("personal-offer").collection("slides")
+    const objectId = new ObjectID(_id)
+    console.log(_id)
+    await slides.updateOne(
+        {_id: objectId},
+        {
+            $set: {
+                title: title,
+                imageUrl: imageUrl,
+                description: description
+            }
+        }
+    )
+    let result = await getSlide(_id)
+    console.log(result)
+    return result
+}
+
+export {getSlideById, getAllSlide, getCredentianls, getPresentations, updateSlide}

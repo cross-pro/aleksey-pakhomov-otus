@@ -2,7 +2,8 @@ import {
     getSlideById,
     getAllSlide,
     getCredentianls,
-    getPresentations
+    getPresentations,
+updateSlide
 } from "./db/db-functions"
 
 const resolvers = {
@@ -12,6 +13,11 @@ const resolvers = {
         credentialsByLogin: (parent, {login}, context, info) => getCredentianls(login),
         presentations: () => getPresentations()
     },
+
+    Mutation: {
+        updateSlide: (parent, {_id, title, description, imageUrl}, context, info) =>
+            updateSlide(_id, title, description, imageUrl)
+    }
 
 }
 

@@ -109,9 +109,31 @@ const updatePresentation = async (_id: string, description: string) => {
     return result[0]
 }
 
-const insertSlide = async (title: string,
-                           description: string,
-                           imageUrl: string) => {
+const addSlideToPresentation = async (presId: string, slide) => {
+    const client = await mongoClient()
+    const presentations = client.db("personal-offer").collection("presentations")
+    const objectId = new ObjectID(presId)
+    let result = await presentations.findOne({_id: objectId})
+    console.log(result)
+
+    const slides = result.slides
+    slides.push(slide)
+
+    await presentations.updateOne(
+        {_id: objectId},
+        {
+            $set: {
+                slides: slides
+            }
+        }
+    )
+}
+
+const insertSlide = async (
+    title: string,
+    description: string,
+    imageUrl: string,
+    presId: string) => {
     const client = await mongoClient()
     const slides = client.db("personal-offer").collection("slides")
     let result = await slides.insertOne({
@@ -120,13 +142,17 @@ const insertSlide = async (title: string,
         imageUrl: imageUrl
     })
     console.log(result)
+    console.log(presId)
 
-    return {
+    let slide: ISlide = {
         _id: result.insertedId.toString(),
         title: title,
         description: description,
         imageUrl: imageUrl
-    } as ISlide
+    }
+    await addSlideToPresentation(presId, result.insertedId)
+
+    return slide as ISlide
 }
 
 export {

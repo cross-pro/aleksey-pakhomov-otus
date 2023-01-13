@@ -20,7 +20,7 @@ const resolvers = {
         updateSlide: (parent, {_id, title, description, imageUrl}, context, info) =>
             updateSlide(_id, title, description, imageUrl),
         updatePresentation: (parent, {_id, description}, context, info) => updatePresentation(_id, description),
-        addSlide: (parent, {title, description, imageUrl}, context, info) => insertSlide(title,description, imageUrl)
+        addSlide: (parent, {title, description, imageUrl, presId}, context, info) => insertSlide(title,description, imageUrl, presId)
     }
 
 }

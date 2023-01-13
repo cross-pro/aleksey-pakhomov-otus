@@ -32,5 +32,5 @@ type Query {
 type Mutation {
   updateSlide(_id: String!, title: String!, description: String, imageUrl: String!): Slide!
   updatePresentation(_id: String!, description: String!): Presentations!
-  addSlide(title: String!, description: String, imageUrl: String): Slide
+  addSlide(title: String!, description: String, imageUrl: String, presId: String!): Slide!
 }

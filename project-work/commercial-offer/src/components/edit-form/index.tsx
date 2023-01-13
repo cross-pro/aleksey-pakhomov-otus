@@ -6,26 +6,26 @@ import {UPDATE_PRESENTATION} from "../../gql/mutation"
 import {PRESENTATIONS_QUERY} from "../../gql/guery";
 import {useDispatch, useSelector} from "react-redux";
 import IPresentations from "../../models/presentations";
-import ISlide from "../../models/slide";
+    import ISlide from "../../models/slide";
 
-export const EditForm = () => {
-    let [addMode, setAddMode] = useState(false);
+    export const EditForm = () => {
+        let [addMode, setAddMode] = useState(false);
 
-    const emptySlide: ISlide = {
-        title: "",
-        description: "",
-        imageUrl: ""
-    }
-    let [newSlide, setNewSlide] = useState(emptySlide)
+        const emptySlide: ISlide = {
+            title: "",
+            description: "",
+            imageUrl: ""
+        }
+        let [newSlide, setNewSlide] = useState(emptySlide)
 
 
-    const presentation: IPresentations = useSelector((state: any) => {
-        return state.presentation
-    });
+        const presentation: IPresentations = useSelector((state: any) => {
+            return state.presentation
+        });
 
-    useEffect(() => {
-        setAddMode(false)
-    }, [presentation])
+        useEffect(() => {
+            setAddMode(false)
+        }, [presentation])
 
     const dispatch = useDispatch()
 

@@ -7,7 +7,7 @@ import {EditPresentation} from "./components/edit-presentation";
 
 function App() {
 
-    let [isLoggedIn, setIsLoggedIn] = useState(true)
+    let [isLoggedIn, setIsLoggedIn] = useState(false)
     let [isEdit, setIsEdit] = useState("false")
 
     /*здесь должна быть авторизация JWT xD*/

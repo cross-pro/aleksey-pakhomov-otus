@@ -1,35 +1,20 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import "./index.css"
 import ISlide from "../../models/slide";
-import {useMutation, gql} from '@apollo/client';
+import {useMutation} from '@apollo/client';
+import {UPDATE_SLIDE} from "../../gql/mutation";
 
 export const SlideView = ({slide}: { slide: ISlide }) => {
-    const UPDATE_SLIDE = gql`
-        mutation updateSlide(
-            $_id: String!,
-            $title: String!,
-            $imageUrl: String!,
-            $description: String,
-        )
-        {
-            updateSlide(_id: $_id,
-                title: $title,
-                imageUrl: $imageUrl,
-                description: $description
-            )
-            {
-                _id,
-                title,
-                imageUrl,
-                description
-            }
-        }
-    `;
 
     let [title, setTitle] = useState(slide.title)
     let [description, setDescription] = useState(slide.description)
     let [imageUrl, setImageUrl] = useState(slide.imageUrl)
 
+    useEffect(() => {
+        setTitle(slide.title)
+        setDescription(slide.description)
+        setImageUrl(slide.imageUrl)
+    }, [slide])
 
     const changeTitle = (e: any) => {
         setTitle(e.target.value)
@@ -54,7 +39,7 @@ export const SlideView = ({slide}: { slide: ISlide }) => {
 
     const saveForm = () => {
         updateSlide()
-}
+    }
 
     return (
         <div className="slide-view">

@@ -9,8 +9,9 @@ import {PRESENTATIONS_QUERY} from "../../gql/guery";
 export const PresentationList = () => {
 
     const dispatch = useDispatch()
+    let [title, setTitle] = useState("")
 
-    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {fetchPolicy: "no-cache" });
+    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {fetchPolicy: "no-cache"});
 
     let listData = useSelector((state: any) => {
             return state.presentationList
@@ -34,9 +35,23 @@ export const PresentationList = () => {
         getList()
     }, [])
 
+    const onChange = (e: any) => {
+        let {value} = e.target
+        setTitle(value)
+    }
+
+    const addPres = () => {
+
+        setTitle("")
+    }
+
     return (
         <div className="presentation-list">
-            <button className="btn btn-primary">Добавить презентацию</button>
+            <input type="text" value={title} onChange={onChange} className="form-control pres-title"/>
+            <button className="btn btn-primary btn-add-pres"
+                    onClick={addPres}
+            >Добавить презентацию
+            </button>
             <hr/>
             {listData && listData.map((desc: IPresentationList, index: number) => {
                 return <Presentation key={index} id={desc._id} description={desc.description}/>

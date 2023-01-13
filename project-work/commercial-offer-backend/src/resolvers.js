@@ -4,7 +4,8 @@ import {
     getCredentianls,
     getPresentations,
     updateSlide,
-    updatePresentation
+    updatePresentation,
+    insertSlide
 } from "./db/db-functions"
 
 const resolvers = {
@@ -18,7 +19,8 @@ const resolvers = {
     Mutation: {
         updateSlide: (parent, {_id, title, description, imageUrl}, context, info) =>
             updateSlide(_id, title, description, imageUrl),
-        updatePresentation: (parent, {_id, description}, context, info) => updatePresentation(_id, description)
+        updatePresentation: (parent, {_id, description}, context, info) => updatePresentation(_id, description),
+        addSlide: (parent, {title, description, imageUrl}, context, info) => insertSlide(title,description, imageUrl)
     }
 
 }

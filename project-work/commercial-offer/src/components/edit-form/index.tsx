@@ -11,7 +11,7 @@ import ISlide from "../../models/slide";
 export const EditForm = () => {
     let [addMode, setAddMode] = useState(false);
 
-    const emptySlide : ISlide= {
+    const emptySlide: ISlide = {
         title: "",
         description: "",
         imageUrl: ""
@@ -19,14 +19,13 @@ export const EditForm = () => {
     let [newSlide, setNewSlide] = useState(emptySlide)
 
 
-
     const presentation: IPresentations = useSelector((state: any) => {
         return state.presentation
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         setAddMode(false)
-    },[presentation])
+    }, [presentation])
 
     const dispatch = useDispatch()
 
@@ -101,10 +100,9 @@ export const EditForm = () => {
             <div className="slides">
 
                 {
-                    addMode &&  <Slide slide={newSlide} addNew={true}/>
+                    addMode && <Slide slide={newSlide} addNew={true}/>
                 }
                 {
-
                     presentation.slides && presentation.slides.map((slide, index) => {
                         return <Slide key={index} slide={slide} addNew={false}/>
                     })

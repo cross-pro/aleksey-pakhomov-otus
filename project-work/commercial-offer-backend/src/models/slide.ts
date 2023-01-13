@@ -3,5 +3,4 @@ export default interface ISlide {
     title: string,
     imageUrl: string,
     description: string,
-    slideId: string
 }

@@ -92,7 +92,7 @@ const updateSlide = async (_id: string,
     return result
 }
 
-const updatePresentation = async(_id: string, description: string) => {
+const updatePresentation = async (_id: string, description: string) => {
     const client = await mongoClient()
     const presentations = client.db("personal-offer").collection("presentations")
     const objectId = new ObjectID(_id)
@@ -109,4 +109,32 @@ const updatePresentation = async(_id: string, description: string) => {
     return result[0]
 }
 
-export {getSlideById, getAllSlide, getCredentianls, getPresentations, updateSlide, updatePresentation}
+const insertSlide = async (title: string,
+                           description: string,
+                           imageUrl: string) => {
+    const client = await mongoClient()
+    const slides = client.db("personal-offer").collection("slides")
+    let result = await slides.insertOne({
+        title: title,
+        description: description,
+        imageUrl: imageUrl
+    })
+    console.log(result)
+
+    return {
+        _id: result.insertedId.toString(),
+        title: title,
+        description: description,
+        imageUrl: imageUrl
+    } as ISlide
+}
+
+export {
+    getSlideById,
+    getAllSlide,
+    getCredentianls,
+    getPresentations,
+    updateSlide,
+    updatePresentation,
+    insertSlide
+}

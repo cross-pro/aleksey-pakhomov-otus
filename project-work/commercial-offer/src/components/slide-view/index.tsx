@@ -26,7 +26,6 @@ export const SlideView = ({slide}: { slide: ISlide }) => {
         }
     `;
 
-    let [_id, set_Id] = useState(slide._id)
     let [title, setTitle] = useState(slide.title)
     let [description, setDescription] = useState(slide.description)
     let [imageUrl, setImageUrl] = useState(slide.imageUrl)

@@ -10,7 +10,7 @@ export const PresentationList = () => {
 
     const dispatch = useDispatch()
 
-    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {});
+    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {fetchPolicy: "no-cache" });
 
     let listData = useSelector((state: any) => {
             return state.presentationList
@@ -33,8 +33,6 @@ export const PresentationList = () => {
     useEffect(() => {
         getList()
     }, [])
-
-
 
     return (
         <div className="presentation-list">

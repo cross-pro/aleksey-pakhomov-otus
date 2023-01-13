@@ -12,6 +12,7 @@ export const Presentation = ({description, id}: Props) => {
     const dispatch = useDispatch()
 
     const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATION_SLIDE_QUERY, {
+        fetchPolicy: "no-cache",
         variables: {
             id: id
         }

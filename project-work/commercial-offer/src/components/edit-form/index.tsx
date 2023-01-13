@@ -5,12 +5,12 @@ import {useMutation, useLazyQuery} from '@apollo/client';
 import {UPDATE_PRESENTATION} from "../../gql/mutation"
 import {PRESENTATIONS_QUERY} from "../../gql/guery";
 import {useDispatch} from "react-redux";
+import IPresentations from "../../models/presentations";
 
-export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>, _id: string }) => {
+export const EditForm = ({_id, presentation}: { _id: string, presentation: IPresentations }) => {
 
     const dispatch = useDispatch()
-    let [isEdit, setIsEdit] = useState(false);
-    let [title, setTitle] = useState(desc)
+    let [title, setTitle] = useState(presentation.description)
 
     const [updatePresentation] = useMutation(UPDATE_PRESENTATION, {
         variables: {
@@ -22,8 +22,8 @@ export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>
     const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {fetchPolicy: "no-cache"});
 
     useEffect(() => {
-        setTitle(desc)
-    }, [desc])
+        setTitle(presentation.description)
+    }, [presentation.description])
 
     const onChange = (e: any) => {
         const {value} = e.target
@@ -75,7 +75,7 @@ export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>
 
             <div className="slides">
                 {
-                    slides && slides.map((slide, index) => {
+                    presentation.slides && presentation.slides.map((slide, index) => {
                         return <SlideView key={index} slide={slide}/>
                     })
                 }

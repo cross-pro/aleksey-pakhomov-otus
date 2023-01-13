@@ -16,13 +16,14 @@ export const EditPresentation = () => {
 
     useEffect(() => {
         setPresentation(presentationData)
+        console.log("useSelector",presentationData)
     }, [presentationData])
 
     return (
         <div className="edit-presentation">
             {presentation ? <EditForm desc={presentation.description}
                                       slides={presentation.slides}
-            _id={presentation._id}
+                                      _id={presentation._id}
             /> : null}
         </div>
     )

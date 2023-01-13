@@ -1,13 +1,35 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
 import {SlideView} from "../slide-view/index";
-import IPresentationList from "../../models/presentation-list";
-import {Presentation} from "../presentation/index";
+import {useMutation, gql} from '@apollo/client';
 
 export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>, _id: string }) => {
 
     let [isEdit, setIsEdit] = useState(false);
     let [title, setTitle] = useState(desc)
+
+    const UPDATE_PRESENTATION = gql`
+        mutation updatePresentation(
+            $_id: String!,
+            $description: String!,
+        )
+        {
+            updatePresentation(
+                _id: $_id,
+                description: $description
+            )
+            {
+                _id,
+            }
+        }
+    `;
+
+    const [updatePresentation] = useMutation(UPDATE_PRESENTATION, {
+        variables: {
+            _id: _id,
+            description: title
+        }
+    })
 
     useEffect(() => {
         setTitle(desc)
@@ -29,8 +51,11 @@ export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>
     }
 
     const savePresentation = () => {
-
+        updatePresentation()
     }
+
+
+
 
     return (
         <div className="edit-form">

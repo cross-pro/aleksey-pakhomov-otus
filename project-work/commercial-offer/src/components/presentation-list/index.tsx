@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
 import {Presentation} from "../presentation/index";
-import {useLazyQuery} from "@apollo/client";
+import {useLazyQuery, useMutation} from "@apollo/client";
 import IPresentationList from "../../models/presentation-list";
 import {useDispatch, useSelector} from "react-redux";
 import {PRESENTATIONS_QUERY} from "../../gql/guery";
+import {ADD_PRES, UPDATE_PRESENTATION} from "../../gql/mutation"
 
 export const PresentationList = () => {
 
@@ -40,9 +41,19 @@ export const PresentationList = () => {
         setTitle(value)
     }
 
-    const addPres = () => {
+    const [insertPresentatation] = useMutation(ADD_PRES, {
+        variables: {
+            description: title
+        }
+    })
 
+    const addPres = () => {
+        if (!title) return
+        insertPresentatation().then(()=>{
+            getList()
+        })
         setTitle("")
+
     }
 
     return (

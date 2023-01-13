@@ -3,27 +3,13 @@ import "./index.css"
 import {useLazyQuery, gql} from "@apollo/client";
 import IPresentations from "../../models/presentations";
 import {useDispatch} from "react-redux";
+import {PRESENTATION_SLIDE_QUERY} from "../../gql/guery";
 
 export const Presentation = ({description, id}: { description: string, id: string }) => {
 
     const dispatch = useDispatch()
 
-    const PRESENTATION_QUERY = gql`
-        query GetPresentation($id: String){
-            slidesById(slideId: $id) {
-                _id
-                description
-                slides {
-                    _id
-                    imageUrl
-                    title
-                    description
-                }
-            }
-        }
-    `;
-
-    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATION_QUERY, {
+    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATION_SLIDE_QUERY, {
         variables: {
             id: id
         }

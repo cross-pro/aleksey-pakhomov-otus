@@ -1,4 +1,4 @@
-import {gql, useLazyQuery} from "@apollo/client";
+import {gql} from "@apollo/client";
 
 const PRESENTATIONS_QUERY = gql`
     query GetPresentations  {
@@ -9,4 +9,19 @@ const PRESENTATIONS_QUERY = gql`
     }
 `;
 
-export {PRESENTATIONS_QUERY}
+const PRESENTATION_SLIDE_QUERY = gql`
+    query GetPresentation($id: String){
+        slidesById(slideId: $id) {
+            _id
+            description
+            slides {
+                _id
+                imageUrl
+                title
+                description
+            }
+        }
+    }
+`;
+
+export {PRESENTATIONS_QUERY, PRESENTATION_SLIDE_QUERY}

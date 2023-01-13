@@ -5,7 +5,9 @@ import IPresentations from "../../models/presentations";
 import {useDispatch} from "react-redux";
 import {PRESENTATION_SLIDE_QUERY} from "../../gql/guery";
 
-export const Presentation = ({description, id}: { description: string, id: string }) => {
+type Props = { description: string, id: string }
+
+export const Presentation = ({description, id}: Props) => {
 
     const dispatch = useDispatch()
 
@@ -23,8 +25,6 @@ export const Presentation = ({description, id}: { description: string, id: strin
                 type: "EDIT_PRESENTATION",
                 presentation: presentation
             })
-            console.log(presentation)
-
         })
     }
 

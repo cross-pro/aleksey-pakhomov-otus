@@ -16,7 +16,7 @@ export const EditPresentation = () => {
 
     useEffect(() => {
         setPresentation(presentationData)
-        console.log("useSelector",presentationData)
+        console.log("useSelector", presentationData)
     }, [presentationData])
 
     return (

@@ -3,10 +3,12 @@ import "./index.css"
 import {Presentation} from "../presentation/index";
 import {useLazyQuery} from "@apollo/client";
 import IPresentationList from "../../models/presentation-list";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {PRESENTATIONS_QUERY} from "../../gql/guery";
 
 export const PresentationList = () => {
+
+    const dispatch = useDispatch()
 
     const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {});
 
@@ -14,32 +16,31 @@ export const PresentationList = () => {
             return state.presentationList
         }
     )
-    //state
-    let [list, setList] = useState([])
 
-    const updateList = () => {
+    const getList = () => {
         loadExpenseStatus().then((data) => {
-            listData = data.data.presentations
-            if (listData && listData.length > 0) {
-                setList(listData)
+            const {presentations} = data.data
+
+            if (presentations && presentations.length > 0) {
+                dispatch({
+                    type: "PRESENTATION_LIST",
+                    presentationList: presentations
+                })
             }
         })
     }
 
     useEffect(() => {
-        updateList()
+        getList()
     }, [])
 
-    useEffect(() => {
-        if (listData) setList(listData)
-    }, [listData])
 
 
     return (
         <div className="presentation-list">
             <button className="btn btn-primary">Добавить презентацию</button>
             <hr/>
-            {list.map((desc: IPresentationList, index: number) => {
+            {listData && listData.map((desc: IPresentationList, index: number) => {
                 return <Presentation key={index} id={desc._id} description={desc.description}/>
             })}
         </div>

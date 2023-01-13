@@ -5,7 +5,8 @@ import {
     getPresentations,
     updateSlide,
     updatePresentation,
-    insertSlide
+    insertSlide,
+    insertPres
 } from "./db/db-functions"
 
 const resolvers = {
@@ -20,7 +21,8 @@ const resolvers = {
         updateSlide: (parent, {_id, title, description, imageUrl}, context, info) =>
             updateSlide(_id, title, description, imageUrl),
         updatePresentation: (parent, {_id, description}, context, info) => updatePresentation(_id, description),
-        addSlide: (parent, {title, description, imageUrl, presId}, context, info) => insertSlide(title,description, imageUrl, presId)
+        addSlide: (parent, {title, description, imageUrl, presId}, context, info) => insertSlide(title, description, imageUrl, presId),
+        addPres: (parent, {description}, context, info) => insertPres(description)
     }
 
 }

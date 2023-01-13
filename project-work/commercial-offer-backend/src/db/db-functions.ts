@@ -155,6 +155,20 @@ const insertSlide = async (
     return slide as ISlide
 }
 
+const insertPres = async (description: string) => {
+    const client = await mongoClient()
+    const presentations = client.db("personal-offer").collection("presentations")
+    const result = await presentations.insertOne({
+        description: description,
+        slides: []
+    })
+    const id = result.insertedId
+    return {
+        _id: id,
+        description: description
+    }
+}
+
 export {
     getSlideById,
     getAllSlide,
@@ -162,5 +176,6 @@ export {
     getPresentations,
     updateSlide,
     updatePresentation,
-    insertSlide
+    insertSlide,
+    insertPres
 }

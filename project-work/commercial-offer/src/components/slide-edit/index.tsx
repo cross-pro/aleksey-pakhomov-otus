@@ -4,16 +4,18 @@ import ISlide from "../../models/slide";
 import {useMutation} from '@apollo/client';
 import {UPDATE_SLIDE} from "../../gql/mutation";
 
-export const SlideView = ({slide}: { slide: ISlide }) => {
+export const Slide = ({slide, addNew}: { slide: ISlide, addNew: boolean }) => {
 
     let [title, setTitle] = useState(slide.title)
     let [description, setDescription] = useState(slide.description)
     let [imageUrl, setImageUrl] = useState(slide.imageUrl)
 
     useEffect(() => {
-        setTitle(slide.title)
-        setDescription(slide.description)
-        setImageUrl(slide.imageUrl)
+        if (slide) {
+            setTitle(slide.title)
+            setDescription(slide.description)
+            setImageUrl(slide.imageUrl)
+        }
     }, [slide])
 
     const changeTitle = (e: any) => {
@@ -38,7 +40,12 @@ export const SlideView = ({slide}: { slide: ISlide }) => {
     })
 
     const saveForm = () => {
-        updateSlide()
+        if (addNew) addSlide()
+        else updateSlide()
+    }
+
+    const addSlide = () => {
+        console.log("addslide")
     }
 
     return (
@@ -65,7 +72,7 @@ export const SlideView = ({slide}: { slide: ISlide }) => {
             <div className="col-sm-10">
                 <button className="btn btn-primary"
                         onClick={saveForm}
-                >Сохранить
+                >{addNew ? "Добавить" : "Сохранить"}
                 </button>
             </div>
         </div>

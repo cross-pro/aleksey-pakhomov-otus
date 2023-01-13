@@ -1,17 +1,32 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
-import {SlideView} from "../slide-view/index";
+import {Slide} from "../slide-edit/index";
 import {useMutation, useLazyQuery} from '@apollo/client';
 import {UPDATE_PRESENTATION} from "../../gql/mutation"
 import {PRESENTATIONS_QUERY} from "../../gql/guery";
 import {useDispatch, useSelector} from "react-redux";
 import IPresentations from "../../models/presentations";
+import ISlide from "../../models/slide";
 
 export const EditForm = () => {
+    let [addMode, setAddMode] = useState(false);
+
+    const emptySlide : ISlide= {
+        title: "",
+        description: "",
+        imageUrl: ""
+    }
+    let [newSlide, setNewSlide] = useState(emptySlide)
+
+
 
     const presentation: IPresentations = useSelector((state: any) => {
         return state.presentation
     });
+
+    useEffect(()=>{
+        setAddMode(false)
+    },[presentation])
 
     const dispatch = useDispatch()
 
@@ -47,6 +62,10 @@ export const EditForm = () => {
         openInNewTab(appAddress + "share/" + presentation._id)
     }
 
+    const addSlide = () => {
+        setAddMode(true)
+    }
+
     const savePresentation = () => {
         updatePresentation().then(() => {
             /*обновление списка презентаций после обновления имени элемента*/
@@ -74,15 +93,20 @@ export const EditForm = () => {
                        onChange={onChange}
                 />
                 <button className="btn btn-primary btn-save" onClick={savePresentation}>Сохранить</button>
-                <button className="btn btn-primary btn-add">Добавить слайд</button>
+                <button className="btn btn-primary btn-add" onClick={addSlide}>Добавить слайд</button>
                 <button className="btn btn-primary btn-watch" onClick={watchResult}>Просмотр результата</button>
             </div>
             <hr/>
 
             <div className="slides">
+
                 {
+                    addMode &&  <Slide slide={newSlide} addNew={true}/>
+                }
+                {
+
                     presentation.slides && presentation.slides.map((slide, index) => {
-                        return <SlideView key={index} slide={slide}/>
+                        return <Slide key={index} slide={slide} addNew={false}/>
                     })
                 }
             </div>

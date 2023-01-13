@@ -4,30 +4,37 @@ import {SlideView} from "../slide-view/index";
 import {useMutation, useLazyQuery} from '@apollo/client';
 import {UPDATE_PRESENTATION} from "../../gql/mutation"
 import {PRESENTATIONS_QUERY} from "../../gql/guery";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import IPresentations from "../../models/presentations";
 
-export const EditForm = ({_id, presentation}: { _id: string, presentation: IPresentations }) => {
+export const EditForm = () => {
+
+    const presentation: IPresentations = useSelector((state: any) => {
+        return state.presentation
+    });
 
     const dispatch = useDispatch()
-    let [title, setTitle] = useState(presentation.description)
 
     const [updatePresentation] = useMutation(UPDATE_PRESENTATION, {
         variables: {
-            _id: _id,
-            description: title
+            _id: presentation._id,
+            description: presentation.description
         }
     })
 
     const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {fetchPolicy: "no-cache"});
 
-    useEffect(() => {
-        setTitle(presentation.description)
-    }, [presentation.description])
 
     const onChange = (e: any) => {
         const {value} = e.target
-        setTitle(value)
+
+        let newPresentation = {...presentation}
+        newPresentation.description = value
+
+        dispatch({
+            type: "EDIT_PRESENTATION",
+            presentation: newPresentation
+        })
     }
 
     const openInNewTab = (url: string) => {
@@ -37,7 +44,7 @@ export const EditForm = ({_id, presentation}: { _id: string, presentation: IPres
     const watchResult = () => {
         let appAddress = window.location.href
         console.log(appAddress)
-        openInNewTab(appAddress + "share/" + _id)
+        openInNewTab(appAddress + "share/" + presentation._id)
     }
 
     const savePresentation = () => {
@@ -55,7 +62,6 @@ export const EditForm = ({_id, presentation}: { _id: string, presentation: IPres
         })
     }
 
-
     return (
         <div className="edit-form">
             <div className="input-group input-form">
@@ -64,7 +70,7 @@ export const EditForm = ({_id, presentation}: { _id: string, presentation: IPres
                        id="title"
                        placeholder="Введите название"
                        required
-                       value={title}
+                       value={presentation.description}
                        onChange={onChange}
                 />
                 <button className="btn btn-primary btn-save" onClick={savePresentation}>Сохранить</button>

@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react"
 import "./index.css"
 import ISlide from "../../models/slide";
 import {useMutation} from '@apollo/client';
-import {UPDATE_SLIDE} from "../../gql/mutation";
+import {UPDATE_SLIDE, ADD_SLIDE} from "../../gql/mutation";
 
-export const Slide = ({slide, addNew}: { slide: ISlide, addNew: boolean }) => {
+type Props = { slide: ISlide, addNew: boolean, presId: string }
+
+export const Slide = ({slide, addNew, presId}: Props) => {
 
     let [title, setTitle] = useState(slide.title)
     let [description, setDescription] = useState(slide.description)
@@ -39,13 +41,22 @@ export const Slide = ({slide, addNew}: { slide: ISlide, addNew: boolean }) => {
         }
     })
 
+    const [addSlideToDB] = useMutation(ADD_SLIDE, {
+        variables: {
+            title: title,
+            description: description,
+            imageUrl: imageUrl,
+            presId: presId
+        }
+    })
+
     const saveForm = () => {
         if (addNew) addSlide()
         else updateSlide()
     }
 
     const addSlide = () => {
-        console.log("addslide")
+        addSlideToDB()
     }
 
     return (

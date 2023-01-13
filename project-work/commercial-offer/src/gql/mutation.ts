@@ -38,4 +38,23 @@ const UPDATE_SLIDE = gql`
     }
 `;
 
-export {UPDATE_PRESENTATION, UPDATE_SLIDE}
+const ADD_SLIDE = gql`
+    mutation addSlide(
+        $title: String!,
+        $description: String,
+        $imageUrl: String!,
+        $presId: String!
+    ){
+        addSlide(title: $title,
+            description: $description,
+            imageUrl: $imageUrl,
+            presId: $presId) {
+            _id
+            title
+            description
+            imageUrl
+        }
+    }
+`;
+
+export {UPDATE_PRESENTATION, UPDATE_SLIDE, ADD_SLIDE}

@@ -21,6 +21,11 @@ export const reducer = (state = initialState, action: any) => {
                 ...state,
                 presentation: action.presentation
             }
+        case "PRESENTATION_LIST":
+            return {
+                ...state,
+                presentationList: action.presentationList
+            }
         default:
             return state;
     }

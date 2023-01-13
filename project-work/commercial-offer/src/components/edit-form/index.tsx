@@ -1,28 +1,16 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
 import {SlideView} from "../slide-view/index";
-import {useMutation, gql} from '@apollo/client';
+import {useMutation, gql, useLazyQuery} from '@apollo/client';
+import {UPDATE_PRESENTATION} from "../../gql/mutation"
+import {PRESENTATIONS_QUERY} from "../../gql/guery";
+import {useDispatch} from "react-redux";
 
 export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>, _id: string }) => {
 
+    const dispatcher = useDispatch()
     let [isEdit, setIsEdit] = useState(false);
     let [title, setTitle] = useState(desc)
-
-    const UPDATE_PRESENTATION = gql`
-        mutation updatePresentation(
-            $_id: String!,
-            $description: String!,
-        )
-        {
-            updatePresentation(
-                _id: $_id,
-                description: $description
-            )
-            {
-                _id,
-            }
-        }
-    `;
 
     const [updatePresentation] = useMutation(UPDATE_PRESENTATION, {
         variables: {
@@ -30,6 +18,8 @@ export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>
             description: title
         }
     })
+
+    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {fetchPolicy: "no-cache" });
 
     useEffect(() => {
         setTitle(desc)
@@ -51,10 +41,19 @@ export const EditForm = ({desc, slides, _id}: { desc: string, slides: Array<any>
     }
 
     const savePresentation = () => {
-        updatePresentation()
+        updatePresentation().then(()=>{
+            /*обновление списка презентаций после обновления имени элемента*/
+            loadExpenseStatus().then((data) => {
+                const listPres = data.data.presentations
+                if (listPres && listPres.length > 0) {
+                    dispatcher({
+                        type: "PRESENTATION_LIST",
+                        presentationList: listPres
+                    })
+                }
+            })
+        })
     }
-
-
 
 
     return (

@@ -1,31 +1,38 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
 import {Presentation} from "../presentation/index";
-import {gql, useLazyQuery} from "@apollo/client";
+import {useLazyQuery} from "@apollo/client";
 import IPresentationList from "../../models/presentation-list";
+import {useDispatch, useSelector} from "react-redux";
+import {PRESENTATIONS_QUERY} from "../../gql/guery";
 
 export const PresentationList = () => {
 
-    const PRESENTATIONS_QUERY = gql`
-        query GetPresentations  {
-            presentations {
-                _id
-                description
-            }
-        }
-    `;
-
     const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATIONS_QUERY, {});
 
+    let listData = useSelector((state: any) => {
+            return state.presentationList
+        }
+    )
     //state
     let [list, setList] = useState([])
 
-    useEffect(() => {
+    const updateList = () => {
         loadExpenseStatus().then((data) => {
-            const listPres = data.data.presentations
-            if (listPres && listPres.length>0) setList(listPres)
+            listData = data.data.presentations
+            if (listData && listData.length > 0) {
+                setList(listData)
+            }
         })
+    }
+
+    useEffect(() => {
+        updateList()
     }, [])
+
+    useEffect(() => {
+        if (listData) setList(listData)
+    }, [listData])
 
 
     return (

@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from "react"
 import "./index.css"
 import ISlide from "../../models/slide";
-import {useMutation} from '@apollo/client';
+import {useLazyQuery, useMutation} from '@apollo/client';
 import {UPDATE_SLIDE, ADD_SLIDE} from "../../gql/mutation";
+import {PRESENTATION_SLIDE_QUERY} from "../../gql/guery";
+import IPresentations from "../../models/presentations";
+import {useDispatch} from "react-redux";
 
 type Props = { slide: ISlide, addNew: boolean, presId: string }
 
 export const Slide = ({slide, addNew, presId}: Props) => {
+
+    const dispatch = useDispatch()
 
     let [title, setTitle] = useState(slide.title)
     let [description, setDescription] = useState(slide.description)
@@ -55,8 +60,24 @@ export const Slide = ({slide, addNew, presId}: Props) => {
         else updateSlide()
     }
 
+    const [loadExpenseStatus, {loading, error, data}] = useLazyQuery(PRESENTATION_SLIDE_QUERY, {
+        fetchPolicy: "no-cache",
+        variables: {
+            id: presId
+        }
+    });
+
     const addSlide = () => {
-        addSlideToDB()
+        addSlideToDB().then(() => {
+            loadExpenseStatus().then((data) => {
+                const presentation = data.data.slidesById[0] as IPresentations
+
+                dispatch({
+                    type: "EDIT_PRESENTATION",
+                    presentation: presentation
+                })
+            })
+        })
     }
 
     return (

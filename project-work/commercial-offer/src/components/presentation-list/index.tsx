@@ -5,7 +5,7 @@ import {useLazyQuery, useMutation} from "@apollo/client";
 import IPresentationList from "../../models/presentation-list";
 import {useDispatch, useSelector} from "react-redux";
 import {PRESENTATIONS_QUERY} from "../../gql/guery";
-import {ADD_PRES, UPDATE_PRESENTATION} from "../../gql/mutation"
+import {ADD_PRES} from "../../gql/mutation"
 
 export const PresentationList = () => {
 
@@ -24,10 +24,10 @@ export const PresentationList = () => {
             const {presentations} = data.data
 
             if (presentations && presentations.length > 0) {
-                dispatch({
-                    type: "PRESENTATION_LIST",
-                    presentationList: presentations
-                })
+                    dispatch({
+                        type: "PRESENTATION_LIST",
+                        presentationList: presentations
+                    })
             }
         })
     }
@@ -49,7 +49,7 @@ export const PresentationList = () => {
 
     const addPres = () => {
         if (!title) return
-        insertPresentatation().then(()=>{
+        insertPresentatation().then(() => {
             getList()
         })
         setTitle("")

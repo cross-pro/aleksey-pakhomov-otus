@@ -1,0 +1,20 @@
+@import-normalize;
+
+.content {
+    margin: 1rem;
+    display: flex;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+    min-height: 20vh;
+    border-right: 1px solid #cce5ff;
+    padding-right: 1rem;
+}
+
+.right {
+    display: flex;
+    /*min-width: 50vw;*/
+}

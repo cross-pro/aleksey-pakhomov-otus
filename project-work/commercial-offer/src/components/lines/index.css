@@ -1,0 +1,21 @@
+.lines {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    color: #7777;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.arrow {
+    margin-top: -0.45rem;
+    cursor: pointer;
+}
+
+.slide-button:hover {
+    background-color: #7e51d3;
+}
+
+.arrow:hover {
+    color: #7e51d3;
+}

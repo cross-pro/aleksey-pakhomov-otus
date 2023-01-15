@@ -3,6 +3,7 @@
     max-width: 50vw;
     display: flex;
     flex-direction: column;
+    width: 20rem;
 }
 
 .number-line {
@@ -18,6 +19,7 @@
     height: 3rem;
     box-sizing: border-box;
     border: none;
+    cursor: pointer;
 }
 
 .action-button {
@@ -27,6 +29,15 @@
     height: 3rem;
     box-sizing: border-box;
     border: none;
+    cursor: pointer;
+}
+
+.number-button:hover  {
+    background-color: orangered;
+}
+
+.action-button:hover {
+    background-color: rgb(182, 161, 134);
 }
 
 .action-line {
@@ -41,6 +52,7 @@
     background-color: whitesmoke;
     border: none;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .exercise-line {

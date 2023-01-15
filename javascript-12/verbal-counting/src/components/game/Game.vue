@@ -9,6 +9,11 @@
 </style>
 
 <template>
+    <div class="action-line">
+        <input type="button" class="cancel-button" value="X отмена"/>
+        <input type="button" class="timer" value="5:00" />
+    </div>
+
     <div class="game">
         <div class="number-line">
             <input class="number-button" type="button" value="1" />

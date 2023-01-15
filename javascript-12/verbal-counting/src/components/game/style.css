@@ -26,3 +26,17 @@
     height: 3rem;
     box-sizing: border-box;
 }
+
+.action-line {
+    display:flex;
+    justify-content: space-between;
+    margin: 1rem;
+}
+
+.action-line input[type="button"] {
+    padding: 0.5rem;
+    color: #888;
+    background-color: whitesmoke;
+    border: none;
+    box-sizing: border-box;
+}

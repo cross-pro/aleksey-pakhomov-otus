@@ -30,5 +30,4 @@ const loadSettings = () => {
     return settings
 }
 
-
 export { loadSettings, save }

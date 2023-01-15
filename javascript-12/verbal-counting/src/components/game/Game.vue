@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import { onMounted } from "vue"
+import ISettings from "../../models/settings";
+import { loadSettings } from "../../util/storage-util"
 
-
+onMounted(()=>{
+    console.log("start game")
+    let settings: ISettings = loadSettings()
+})
 
 </script>
 

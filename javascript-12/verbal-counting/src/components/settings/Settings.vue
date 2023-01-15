@@ -6,12 +6,7 @@ import { onMounted } from "vue"
 import { loadSettings, save } from "../../util/storage-util"
 import ISettings from "../../models/settings"
 
-const play = () => {
-    console.log("play")
-}
-
 let storage: ISettings = loadSettings()
-
 
 onMounted(() => {
     storage = loadSettings()
@@ -102,7 +97,7 @@ const saveExp = () => {
             </div>
         </div>
         <div class="play">
-            <a href="#/game" class="btn btn-default btn-play" @click="play">Играть!</a>
+            <a href="#/game" class="btn btn-default btn-play">Играть!</a>
         </div>
     </div>
 

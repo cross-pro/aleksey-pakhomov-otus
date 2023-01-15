@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue"
 import ISettings from "../../models/settings";
 import { loadSettings } from "../../util/storage-util"
-import { generateExample } from "../../util/exercise-generator"
+import { generateRandom, generateResult } from "../../util/exercise-generator"
 
 
 let settings: ISettings = loadSettings()
@@ -20,9 +20,10 @@ const generateSecret = () => {
     return result;
 }
 
-let numberStart = 1
+let numberStart = generateRandom(settings.difficult)
 let number1 = ref(generateSecret())
 let number2 = ref(generateSecret())
+let result = ref(generateResult(numberStart, settings.difficult))
 
 const getSeconds = () => {
     switch (seconds) {
@@ -65,7 +66,6 @@ const startTimer = () => {
 }
 
 const setExample = () => {
-    let example = generateExample()
 }
 
 let position = 0
@@ -141,7 +141,7 @@ const clickForward = () => {
 }
 
 const clickHelp = () => {
-
+    alert("Необходимо решить пример")
 }
 
 const clickCheck = () => {
@@ -169,7 +169,7 @@ const clickCheck = () => {
     </div>
     <div class="exercise-line">
         <div class="text-operation">=</div>
-        <div class="text-number">6</div>
+        <div class="text-number">{{ result }}</div>
     </div>
 
     <div class="game">

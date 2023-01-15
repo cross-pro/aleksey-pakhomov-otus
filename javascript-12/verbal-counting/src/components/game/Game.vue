@@ -15,11 +15,11 @@
     </div>
 
     <div class="exercise-line">
-        <div class="text-number">1</div>
+        <div class="text-number text-start">1</div>
         <div class="text-operation">+</div>
-        <div class="text-number">2</div>
+        <div class="text-number secret-number">&nbsp;</div>
         <div class="text-operation">+</div>
-        <div class="text-number">3</div>
+        <div class="text-number secret-number">&nbsp;</div>
     </div>
     <div class="exercise-line">
         <div class="text-operation">=</div>

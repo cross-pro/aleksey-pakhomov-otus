@@ -94,4 +94,13 @@
 .text-number, .text-operation {
     font-size: 3rem;
     color: #8888;
+    margin-left: 0.5rem;
+}
+
+.secret-number {
+    text-decoration: underline;
+}
+
+.text-start {
+    color: black;
 }

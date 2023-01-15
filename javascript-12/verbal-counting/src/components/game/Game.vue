@@ -10,7 +10,7 @@
 
 <template>
     <div class="action-line">
-        <input type="button" class="cancel-button" value="X отмена" />
+        <a href="#/settings" class="cancel-button">X отмена</a>
         <input type="button" class="timer" value="5:00" />
     </div>
 
@@ -19,7 +19,7 @@
         <input type="text" class="value-button" value="value1" readonly/>
         <input type="button" class="value-button" value="value1"/>
         <input type="text" class="value-button" value="value1" readonly/>
-        
+
     </div>
     <div class="exercise-line">
         <input type="button" value="=" />

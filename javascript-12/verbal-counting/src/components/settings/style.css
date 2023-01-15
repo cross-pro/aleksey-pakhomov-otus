@@ -35,3 +35,8 @@
     justify-content: flex-end;
     margin-top: 2rem;
 }
+
+.btn-play {
+    border: 1px solid blanchedalmond;
+    color: black;
+}

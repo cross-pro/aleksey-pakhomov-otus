@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="play">
-            <button class="btn btn-default" @click="play">Играть!</button>
+            <a href="#/game" class="btn btn-default btn-play" @click="play">Играть!</a>
         </div>
     </div>
 

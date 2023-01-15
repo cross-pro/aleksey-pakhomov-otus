@@ -84,3 +84,14 @@
 .cancel-button:hover {
     text-decoration: none;
 }
+
+.value-button {
+    box-sizing: border-box;
+    border: none;
+    background-color: white;
+}
+
+.text-number, .text-operation {
+    font-size: 3rem;
+    color: #8888;
+}

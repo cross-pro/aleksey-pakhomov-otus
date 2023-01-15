@@ -15,15 +15,15 @@
     </div>
 
     <div class="exercise-line">
-        <input type="button" class="value-button" value="value1"/>
-        <input type="text" class="value-button" value="value1" readonly/>
-        <input type="button" class="value-button" value="value1"/>
-        <input type="text" class="value-button" value="value1" readonly/>
-
+        <div class="text-number">1</div>
+        <div class="text-operation">+</div>
+        <div class="text-number">2</div>
+        <div class="text-operation">+</div>
+        <div class="text-number">3</div>
     </div>
     <div class="exercise-line">
-        <input type="button" value="=" />
-        <input type="button" class="result" value="result" />
+        <div class="text-operation">=</div>
+        <div class="text-number">6</div>
     </div>
 
     <div class="game">

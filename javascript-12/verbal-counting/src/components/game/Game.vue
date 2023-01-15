@@ -5,13 +5,25 @@
 </script>
 
 <style>
-  @import './style.css';
+@import './style.css';
 </style>
 
 <template>
     <div class="action-line">
-        <input type="button" class="cancel-button" value="X отмена"/>
+        <input type="button" class="cancel-button" value="X отмена" />
         <input type="button" class="timer" value="5:00" />
+    </div>
+
+    <div class="exercise-line">
+        <input type="button" class="value-button" value="value1"/>
+        <input type="text" class="value-button" value="value1" readonly/>
+        <input type="button" class="value-button" value="value1"/>
+        <input type="text" class="value-button" value="value1" readonly/>
+        
+    </div>
+    <div class="exercise-line">
+        <input type="button" value="=" />
+        <input type="button" class="result" value="result" />
     </div>
 
     <div class="game">

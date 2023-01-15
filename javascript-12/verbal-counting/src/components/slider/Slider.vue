@@ -69,5 +69,3 @@ const decreaseLevel = () => {
 
     </div>
 </template>
-
-

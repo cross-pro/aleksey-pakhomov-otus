@@ -10,8 +10,10 @@ let storage: ISettings = loadSettings()
 
 onMounted(() => {
     storage = loadSettings()
-    console.log(storage)
 })
+
+
+
 
 const saveSum = () => {
     if (storage.sum) {

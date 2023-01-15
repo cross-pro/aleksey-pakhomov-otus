@@ -1,12 +1,69 @@
 <script setup lang="ts">
-import { onMounted } from "vue"
+import { onMounted, ref } from "vue"
 import ISettings from "../../models/settings";
 import { loadSettings } from "../../util/storage-util"
 
-onMounted(()=>{
+
+let settings: ISettings = loadSettings()
+
+let time = ref(settings.time)
+let minutes = settings.time
+let timerId: number
+let seconds = 0
+
+
+const getSeconds = () => {
+    switch (seconds) {
+        case 0: return "00"
+        case 1: return "01"
+        case 2: return "02"
+        case 3: return "03"
+        case 4: return "04"
+        case 5: return "05"
+        case 6: return "06"
+        case 7: return "07"
+        case 8: return "08"
+        case 9: return "09"
+        default: return seconds;
+    }
+}
+
+const setTimerValue = () => {
+    let value = minutes + ":" + getSeconds()
+    return value
+}
+
+const startTimer = () => {
+    time.value = setTimerValue()
+    timerId = setInterval(() => {
+        if (seconds === 0) {
+            seconds = 59
+            minutes = minutes - 1
+        } else {
+            seconds--
+        }
+        if (minutes === 0 && seconds === 0) {
+            clearInterval(timerId)
+            time.value="0:00"
+            alert("Время вышло")
+            return
+        }
+        time.value = setTimerValue()
+    }, 1000)
+}
+
+
+
+onMounted(() => {
     console.log("start game")
-    let settings: ISettings = loadSettings()
+    startTimer()
 })
+
+
+const onCancel = () => {
+    clearInterval(timerId)
+}
+
 
 </script>
 
@@ -16,8 +73,8 @@ onMounted(()=>{
 
 <template>
     <div class="action-line">
-        <a href="#/settings" class="cancel-button">X отмена</a>
-        <input type="button" class="timer" value="5:00" />
+        <a href="#/settings" class="cancel-button" @click="onCancel">X отмена</a>
+        <span class="timer">{{ time }}</span>
     </div>
 
     <div class="exercise-line">

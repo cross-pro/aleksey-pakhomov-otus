@@ -145,7 +145,15 @@ const clickHelp = () => {
 }
 
 const clickCheck = () => {
+    let actual = numberStart + parseInt(number1.value) + parseInt(number2.value)
+    if (actual === result.value) alert("Верно")
+    else alert("Неверно")
 
+    numberStart = generateRandom(settings.difficult)
+    number1 = ref(generateSecret())
+    number2 = ref(generateSecret())
+    result = ref(generateResult(numberStart, settings.difficult))
+    position = 0
 }
 
 </script>

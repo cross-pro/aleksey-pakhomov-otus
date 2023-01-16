@@ -9,12 +9,13 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "graphpack": "^1.0.9",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
-    "graphpack": "^1.0.9",
     "vitest": "^0.25.1"
   },
   "dependencies": {
-    "graphql": "^15.8.0"
+    "graphql": "^15.8.0",
+    "mongodb": "^4.13.0"
   }
 }

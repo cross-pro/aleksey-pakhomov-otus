@@ -1,0 +1,111 @@
+.game {
+    margin: 2rem auto;
+    max-width: 50vw;
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+}
+
+.number-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.number-button {
+    background-color: orange;
+    border-radius: 3rem;
+    width: 3rem;
+    height: 3rem;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+}
+
+.action-button {
+    background-color: #888;
+    border-radius: 3rem;
+    width: 3rem;
+    height: 3rem;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+}
+
+.number-button:hover  {
+    background-color: orangered;
+}
+
+.action-button:hover {
+    background-color: rgb(182, 161, 134);
+}
+
+.action-line {
+    display:flex;
+    justify-content: space-between;
+    margin: 1rem;
+}
+
+.action-line input[type="button"] {
+    padding: 1rem;
+    color: #888;
+    background-color: whitesmoke;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.exercise-line {
+    display: flex;
+    max-width: 35vw;
+    margin: 0 auto;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.exercise-line input[type="button"] {
+    padding: 1rem;
+    color: #888;
+    background-color: whitesmoke;
+    border: none;
+    box-sizing: border-box;
+    margin: 0.5rem;
+}
+
+.cancel-button {
+    color: black;
+    border: 1px solid blanchedalmond;
+    display: flex;
+    align-items: center;
+    border-radius: 0.5rem;
+    padding-left:0.5rem;
+    padding-right: 0.5rem;
+}
+.cancel-button:hover {
+    text-decoration: none;
+}
+
+.value-button {
+    box-sizing: border-box;
+    border: none;
+    background-color: white;
+}
+
+.text-number, .text-operation {
+    font-size: 3rem;
+    color: #8888;
+    margin-left: 0.5rem;
+}
+
+.secret-number {
+    text-decoration: underline;
+}
+
+.text-start {
+    color: black;
+}
+
+.timer {
+    color: #8888;
+    font-size: 2rem;
+}

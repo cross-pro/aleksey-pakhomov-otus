@@ -1,0 +1,8 @@
+.slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}

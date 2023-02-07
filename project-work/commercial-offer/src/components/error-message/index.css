@@ -1,0 +1,13 @@
+.error-message {
+    background-color: tomato;
+    position: fixed;
+    top: 0;
+    reight: 0;
+    left: 0;
+    height: 2rem;
+    color: white;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
